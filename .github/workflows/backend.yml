@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-#    paths:
-#      - 'backend/**'
+    paths:
+      - 'backend/**'
   workflow_dispatch:
 
 env:
@@ -39,3 +39,6 @@ jobs:
           REPO_PATH_WITH_RUN_NUMBER=$FULL_REPO_PATH:${{ env.IMAGE_TAG }}
           docker tag $FULL_REPO_PATH $REPO_PATH_WITH_RUN_NUMBER
           docker push $REPO_PATH_WITH_RUN_NUMBER
+
+      - name: Redeploy elastic beanstalk to use the image with the latest tage
+        run: aws elasticbeanstalk update-environment --application-name "sep6-server" --environment-name "sep6-server" --version-label=1
