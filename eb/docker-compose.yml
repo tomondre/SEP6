@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  frontend:
+    image: "849514279839.dkr.ecr.eu-central-1.amazonaws.com/sep6-frontend"
+    ports:
+      - "8080:8080"
+  backend:
+    image: "849514279839.dkr.ecr.eu-central-1.amazonaws.com/sep6-backend"
+    ports:
+      - "3000:3000"
