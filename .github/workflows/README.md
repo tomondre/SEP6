@@ -89,7 +89,7 @@ In order to also have an information about the workflow run that has created the
   run: aws elasticbeanstalk update-environment --application-name "sep6-server" --environment-name "sep6-server" --version-label=1
 ```
 In order to update the docker image running in the cloud, `aws elasticbeanstalk update-environment` is executed. This command needs three arguments. 
-The `--application-name` and `--sep6-server` are used to point to the elastic beanstalk setup to be updated,
+The `--application-name` and `--environment-name` are used to point to the elastic beanstalk setup to be updated,
 and `--version-label` contains the version of the app to be updated. In our case, the version label points to 1 that contains `docker-compose.yml` file. This file is then used by docker to get information about to images to pull and their respective port mappings. 
 The images are then pulled and redeployed to the server running the appications. </br>
 NOTE: The docker-compose.yml in the version 1 is a prerequisite for this command to work. After it has been created, there is no need for changes anymore.
