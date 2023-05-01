@@ -13,7 +13,7 @@ env:
   IMAGE_TAG: ${{ github.run_number }}
 
 jobs:
-  CI:
+  CI-CD:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
