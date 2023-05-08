@@ -42,3 +42,4 @@ jobs:
 
       - name: Redeploy elastic beanstalk to use the image with the latest tag
         run: aws elasticbeanstalk update-environment --application-name "sep6-server" --environment-name "sep6-server" --version-label=1
+
