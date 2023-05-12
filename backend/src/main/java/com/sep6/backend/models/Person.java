@@ -1,10 +1,9 @@
 package com.sep6.backend.models;
 
 import java.util.Date;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Person {
@@ -18,4 +17,6 @@ public class Person {
     private String biography;
     private Date deathDate;
     private String profileImg;
+    @ManyToMany
+    private List<Movie> movies;
 }
