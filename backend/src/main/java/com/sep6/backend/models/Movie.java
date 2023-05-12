@@ -19,5 +19,7 @@ public class Movie {
     private String language;
     private int boxOffice;
     @ManyToMany
+    private List<Genre> genres;
+    @ManyToMany
     private List<Person> people;
 }
