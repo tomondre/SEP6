@@ -33,7 +33,7 @@ jobs:
         working-directory: backend
         run: |
           FULL_REPO_PATH=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}
-          docker build -t $FULL_REPO_PATH --build-arg DB_HOST=${{ secrets.DB_HOST }} --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} .
+          docker build -t $FULL_REPO_PATH .
           docker push $FULL_REPO_PATH
           
           REPO_PATH_WITH_RUN_NUMBER=$FULL_REPO_PATH:${{ env.IMAGE_TAG }}

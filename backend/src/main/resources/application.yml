@@ -25,3 +25,13 @@ application:
       expiration: 1800000 # 30 minutes
       refresh-token:
         expiration: 14400000 # 4 hours
+management:
+  endpoints:
+    enabled-by-default: false
+    health:
+      enabled: true
+    web:
+      exposure:
+        include: health,info
+    beans:
+      cache.time-to-live: 5s
