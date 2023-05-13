@@ -5,6 +5,8 @@ import com.sep6.backend.models.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class GenresRepositoryImpl implements GenresRepository {
     private GenresJpaRepository jpaRepository;
@@ -12,5 +14,10 @@ public class GenresRepositoryImpl implements GenresRepository {
     @Autowired
     public GenresRepositoryImpl(GenresJpaRepository jpaRepository) {
         this.jpaRepository = jpaRepository;
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return jpaRepository.findAll();
     }
 }
