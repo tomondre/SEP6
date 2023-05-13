@@ -1,5 +1,6 @@
 package com.sep6.backend.controller;
 
+import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.service.MoviesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,14 @@ public class MoviesController {
 
     @GetMapping
     public List<Movie> getMovies(
-            @RequestParam(name = "search", required = false) String search
+            @RequestParam(name = "search", required = false) String search,
+            @RequestParam(name = "genreId", required = false) String genreId
     ) {
         if (search != null) {
             return service.getMoviesBySearch(search);
+        } else if (genreId != null && !genreId.isEmpty()) {
+            var genreIdInt = Integer.parseInt(genreId);
+            return service.getMoviesByGenreId(genreIdInt);
         }
             return service.getMovies();
     }

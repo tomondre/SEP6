@@ -53,4 +53,9 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     public List<Movie> getMoviesBySearch(String search) {
         return jpaRepository.findByTitleContainingIgnoreCase(search);
     }
+
+    @Override
+    public List<Movie> getMoviesByGenreId(int genreId) {
+        return jpaRepository.findByGenresId(genreId);
+    }
 }

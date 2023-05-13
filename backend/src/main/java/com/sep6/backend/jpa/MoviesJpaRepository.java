@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface MoviesJpaRepository extends JpaRepository<Movie, Integer> {
-    public List<Movie> findByTitleContainingIgnoreCase(String search);
+    List<Movie> findByTitleContainingIgnoreCase(String search);
+    List<Movie> findByGenresId(int genreId);
 }

@@ -7,6 +7,6 @@ import java.util.List;
 public interface MoviesService {
     Movie createMovie(Movie movie);
     List<Movie> getMovies();
-
     List<Movie> getMoviesBySearch(String search);
+    List<Movie> getMoviesByGenreId(int genreId);
 }
