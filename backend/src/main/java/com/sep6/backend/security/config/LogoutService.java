@@ -1,6 +1,6 @@
 package com.sep6.backend.security.config;
 
-import com.sep6.backend.jpa.TokenRepository;
+import com.sep6.backend.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
 
-    private final TokenRepository tokenRepository;
+    private final TokenRepository tokenJpaRepository;
 
     @Override
     public void logout(
@@ -27,12 +27,12 @@ public class LogoutService implements LogoutHandler {
             return;
         }
         jwt = authHeader.substring(7);
-        var storedToken = tokenRepository.findByToken(jwt)
-                                         .orElse(null);
+        var storedToken = tokenJpaRepository.findByToken(jwt)
+                                            .orElse(null);
         if (storedToken != null) {
             storedToken.setExpired(true);
             storedToken.setRevoked(true);
-            tokenRepository.save(storedToken);
+            tokenJpaRepository.save(storedToken);
             SecurityContextHolder.clearContext();
         }
     }
