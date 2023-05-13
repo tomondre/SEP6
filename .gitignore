@@ -4,3 +4,12 @@
 .idea/vcs.xml
 .idea/modules.xml
 .idea/SEP6.iml
+backend/src/main/resources/application.properties
+frontend/.idea/vcs.xml
+frontend/.idea/modules.xml
+frontend/.idea/frontend.iml
+frontend/.idea/aws.xml
+backend/gradle/wrapper/gradle-wrapper.properties
+backend/gradle/wrapper/gradle-wrapper.jar
+.idea/aws.xml
+backend/gradle/wrapper/gradle-wrapper.jar

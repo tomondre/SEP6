@@ -1,7 +1,7 @@
 package com.sep6.backend.jpa;
 
-import org.springframework.stereotype.Repository;
+import com.sep6.backend.models.Person;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public class PeopleJpaRepository {
+public interface PeopleJpaRepository extends CrudRepository<Person, Integer> {
 }
