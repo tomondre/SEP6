@@ -21,13 +21,15 @@ server:
 management:
   endpoints:
     enabled-by-default: false
-    health:
-      enabled: true
     web:
       exposure:
         include: health,info
+  endpoint:
+    health:
+      enabled: true
     beans:
-      cache.time-to-live: 5s
+      cache:
+        time-to-live: 5s
 
 application:
   security:
