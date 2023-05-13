@@ -17,6 +17,6 @@ public class Person {
     private String biography;
     private Date deathDate;
     private String profileImg;
-    @ManyToMany
+    @ManyToMany(mappedBy = "people")
     private List<Movie> movies;
 }

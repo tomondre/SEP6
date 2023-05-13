@@ -19,7 +19,15 @@ public class Movie {
     private String language;
     private int boxOffice;
     @ManyToMany
+    @JoinTable(
+            name = "genre_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
     @ManyToMany
+    @JoinTable(
+            name = "person_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> people;
 }
