@@ -5,6 +5,8 @@ import com.sep6.backend.repository.GenresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GenresServiceImpl implements GenresService {
     private GenresRepository repository;
@@ -12,5 +14,10 @@ public class GenresServiceImpl implements GenresService {
     @Autowired
     public GenresServiceImpl(GenresRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return repository.getAllGenres();
     }
 }
