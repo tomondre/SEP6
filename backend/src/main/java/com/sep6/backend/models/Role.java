@@ -14,7 +14,7 @@ import static com.sep6.backend.models.Permission.*;
 @RequiredArgsConstructor
 public enum Role {
 
-    USER(Collections.emptySet()),
+    USER(Collections.emptySet())
 //    ADMIN(
 //            Set.of(
 //                    ADMIN_READ,
