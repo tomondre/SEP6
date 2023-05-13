@@ -43,4 +43,14 @@ public class MoviesRepositoryImpl implements MoviesRepository{
 
         return jpaRepository.save(movie);
     }
+
+    @Override
+    public List<Movie> getMovies() {
+        return jpaRepository.findAll();
+    }
+
+    @Override
+    public List<Movie> getMoviesBySearch(String search) {
+        return jpaRepository.findByTitleContainingIgnoreCase(search);
+    }
 }

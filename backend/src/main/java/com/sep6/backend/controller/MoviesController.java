@@ -1,13 +1,11 @@
 package com.sep6.backend.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.service.MoviesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -24,4 +22,16 @@ public class MoviesController {
     public Movie createMovie(@RequestBody Movie movie) {
         return service.createMovie(movie);
     }
+
+    @GetMapping
+    public List<Movie> getMovies(
+            @RequestParam(name = "search", required = false) String search
+    ) {
+        if (search != null) {
+            return service.getMoviesBySearch(search);
+        }
+            return service.getMovies();
+    }
+
+
 }
