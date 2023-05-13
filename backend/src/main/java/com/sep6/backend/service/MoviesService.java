@@ -9,4 +9,5 @@ public interface MoviesService {
     List<Movie> getMovies();
     List<Movie> getMoviesBySearch(String search);
     List<Movie> getMoviesByGenreId(int genreId);
+    Movie getMovieById(int id);
 }

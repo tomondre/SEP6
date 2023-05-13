@@ -36,4 +36,9 @@ public class MoviesServiceImpl implements MoviesService {
     public List<Movie> getMoviesByGenreId(int genreId) {
         return repository.getMoviesByGenreId(genreId);
     }
+
+    @Override
+    public Movie getMovieById(int id) {
+        return repository.getMovieById(id);
+    }
 }
