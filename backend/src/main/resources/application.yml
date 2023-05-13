@@ -3,7 +3,25 @@ spring:
     username: ${DB_USERNAME}
     url: jdbc:mysql://${DB_HOST}
     password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
 server:
   port: '3000'
   error:
     include-message: always
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      expiration: 1800000 # 30 minutes
+      refresh-token:
+        expiration: 14400000 # 4 hours
