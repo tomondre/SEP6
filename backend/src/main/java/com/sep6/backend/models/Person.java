@@ -6,7 +6,15 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Person {
     @Id
@@ -25,91 +33,4 @@ public class Person {
     @ManyToMany(mappedBy = "people")
     @JsonIgnore
     private List<Movie> movies;
-
-    public Person() {
-    }
-
-    public Person(int id, PersonType type, Date dateOfBirth, String placeOfBirth, char gender, String biography, Date deathDate, String profileImg, List<Movie> movies) {
-        this.id = id;
-        this.type = type;
-        this.dateOfBirth = dateOfBirth;
-        this.placeOfBirth = placeOfBirth;
-        this.gender = gender;
-        this.biography = biography;
-        this.deathDate = deathDate;
-        this.profileImg = profileImg;
-        this.movies = movies;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public PersonType getType() {
-        return type;
-    }
-
-    public void setType(PersonType type) {
-        this.type = type;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPlaceOfBirth() {
-        return placeOfBirth;
-    }
-
-    public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
-    }
-
-    public char getGender() {
-        return gender;
-    }
-
-    public void setGender(char gender) {
-        this.gender = gender;
-    }
-
-    public String getBiography() {
-        return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
-
-    public Date getDeathDate() {
-        return deathDate;
-    }
-
-    public void setDeathDate(Date deathDate) {
-        this.deathDate = deathDate;
-    }
-
-    public String getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
-    }
-
-    public List<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-    }
 }
