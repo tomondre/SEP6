@@ -1,12 +1,12 @@
 package com.sep6.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sep6.backend.jpa.AccountsJpaRepository;
-import com.sep6.backend.jpa.TokenRepository;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.auth.AuthenticationRequest;
 import com.sep6.backend.models.auth.AuthenticationResponse;
 import com.sep6.backend.models.auth.RegisterRequest;
+import com.sep6.backend.repository.AccountsRepository;
+import com.sep6.backend.repository.TokenRepository;
 import com.sep6.backend.security.config.JwtService;
 import com.sep6.backend.security.token.Token;
 import com.sep6.backend.security.token.TokenType;
@@ -25,8 +25,8 @@ import java.sql.Date;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-    private final AccountsJpaRepository repository;
-    private final TokenRepository tokenRepository;
+    private final AccountsRepository repository;
+    private final TokenRepository tokenJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -80,18 +80,18 @@ public class AuthenticationService {
                          .expired(false)
                          .revoked(false)
                          .build();
-        tokenRepository.save(token);
+        tokenJpaRepository.save(token);
     }
 
     private void revokeAllUserTokens(Account user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+        var validUserTokens = tokenJpaRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
             token.setExpired(true);
             token.setRevoked(true);
         });
-        tokenRepository.saveAll(validUserTokens);
+        tokenJpaRepository.saveAll(validUserTokens);
     }
 
     public void refreshToken(
