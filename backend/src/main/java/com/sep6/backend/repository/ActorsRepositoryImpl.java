@@ -18,16 +18,16 @@ public class ActorsRepositoryImpl implements ActorsRepository{
 
     @Override
     public List<Person> getActors() {
-        return jpaRepository.getAllByType(PersonType.ACTOR.toString());
+        return jpaRepository.getAllByType(PersonType.ACTOR);
     }
 
     @Override
     public List<Person> getActorsBySearch(String search) {
-        return jpaRepository.findAllByTypeAndName(PersonType.ACTOR.toString(), search);
+        return jpaRepository.findAllByTypeAndNameContainingIgnoreCase(PersonType.ACTOR, search);
     }
 
     @Override
     public Person getActorById(int id) {
-        return jpaRepository.findByTypeAndId(PersonType.ACTOR.toString(), id);
+        return jpaRepository.findByTypeAndId(PersonType.ACTOR, id);
     }
 }

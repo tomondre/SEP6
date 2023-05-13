@@ -25,7 +25,7 @@ public class ActorsController {
     }
 
     @GetMapping(value = "/{id}")
-    public Person getPersonById(@PathVariable int id) {
+    public Person getActorById(@PathVariable int id) {
         return service.getActorById(id);
     }
 }
