@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Person {
     @Id
     private int id;
+    private String name;
     @Enumerated(EnumType.STRING)
     private PersonType type;
     @JsonFormat(pattern="yyyy-MM-dd")

@@ -7,6 +7,8 @@ import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Person;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,5 +40,31 @@ public class MoviesRepositoryImpl implements MoviesRepository{
         }
 
         return jpaRepository.save(movie);
+    }
+
+    @Override
+    public List<Movie> getMovies() {
+        return jpaRepository.findAll();
+    }
+
+    @Override
+    public List<Movie> getMoviesBySearch(String search) {
+        return jpaRepository.findByTitleContainingIgnoreCase(search);
+    }
+
+    @Override
+    public List<Movie> getMoviesByGenreId(int genreId) {
+        return jpaRepository.findByGenresId(genreId);
+    }
+
+    @Override
+    public Movie getMovieById(int id) {
+        return jpaRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Movie> getLatestMovies(int actualLimit) {
+        Pageable pageable = PageRequest.of(0, actualLimit);
+        return jpaRepository.findAllByOrderByReleaseDateDesc(pageable);
     }
 }

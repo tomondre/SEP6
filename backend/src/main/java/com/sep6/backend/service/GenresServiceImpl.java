@@ -6,8 +6,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GenresServiceImpl implements GenresService {
     private GenresRepository repository;
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return repository.getAllGenres();
+    }
 }
