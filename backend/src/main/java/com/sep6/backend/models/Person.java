@@ -11,6 +11,7 @@ import jakarta.persistence.*;
 public class Person {
     @Id
     private int id;
+    private String name;
     @Enumerated(EnumType.STRING)
     private PersonType type;
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -29,8 +30,9 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id, PersonType type, Date dateOfBirth, String placeOfBirth, char gender, String biography, Date deathDate, String profileImg, List<Movie> movies) {
+    public Person(int id, String name, PersonType type, Date dateOfBirth, String placeOfBirth, char gender, String biography, Date deathDate, String profileImg, List<Movie> movies) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.dateOfBirth = dateOfBirth;
         this.placeOfBirth = placeOfBirth;
@@ -39,6 +41,14 @@ public class Person {
         this.deathDate = deathDate;
         this.profileImg = profileImg;
         this.movies = movies;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
