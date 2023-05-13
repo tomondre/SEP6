@@ -42,4 +42,10 @@ public class MoviesController {
     public Movie getMovieById(@PathVariable int id) {
         return service.getMovieById(id);
     }
+
+    @GetMapping(value = "/latest")
+    public List<Movie> getLatestMovies(@RequestParam(name = "limit", required = false) String limit) {
+        int actualLimit = limit != null && !limit.isEmpty()? Integer.parseInt(limit): 10;
+        return service.getLatestMovies(actualLimit);
+    }
 }

@@ -41,4 +41,9 @@ public class MoviesServiceImpl implements MoviesService {
     public Movie getMovieById(int id) {
         return repository.getMovieById(id);
     }
+
+    @Override
+    public List<Movie> getLatestMovies(int actualLimit) {
+        return repository.getLatestMovies(actualLimit);
+    }
 }
