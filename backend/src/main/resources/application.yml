@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: ${DB_USERNAME}
+    url: jdbc:mysql://${DB_HOST}
+    password: ${DB_PASSWORD}
+server:
+  port: '3000'
+  error:
+    include-message: always
