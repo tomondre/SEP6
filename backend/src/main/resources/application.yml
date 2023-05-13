@@ -7,3 +7,14 @@ server:
   port: '3000'
   error:
     include-message: always
+
+management:
+  endpoints:
+    enabled-by-default: false
+    health:
+      enabled: true
+    web:
+      exposure:
+        include: health,info
+    beans:
+      cache.time-to-live: 5s
