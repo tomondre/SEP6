@@ -2,6 +2,7 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Person;
+import com.sep6.backend.models.PersonType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,11 +19,16 @@ public class DirectorsRepositoryImpl implements DirectorsRepository{
 
     @Override
     public List<Person> getDirectors() {
-        return null;
+        return jpaRepository.getAllByType(PersonType.DIRECTOR);
     }
 
     @Override
     public List<Person> getDirectorsBySearch(String search) {
-        return null;
+        return jpaRepository.findAllByTypeAndNameContainingIgnoreCase(PersonType.DIRECTOR, search);
+    }
+
+    @Override
+    public Person getDirectorsById(int id) {
+        return jpaRepository.findByTypeAndId(PersonType.DIRECTOR, id);
     }
 }

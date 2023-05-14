@@ -7,4 +7,5 @@ import java.util.List;
 public interface DirectorsRepository {
     List<Person> getDirectors();
     List<Person> getDirectorsBySearch(String search);
+    Person getDirectorsById(int id);
 }

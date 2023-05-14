@@ -30,5 +30,4 @@ public class DirectorsController {
     public Person getDirectorById(@PathVariable int id) {
         return service.getDirectorsById(id);
     }
-
 }
