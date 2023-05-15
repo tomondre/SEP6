@@ -5,7 +5,7 @@ WORKDIR /home/gradle/
 
 RUN gradle build --no-daemon
 
-EXPOSE 3000
+EXPOSE 8000
 
 FROM openjdk:17.0.2-jdk
 
