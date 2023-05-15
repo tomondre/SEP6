@@ -32,6 +32,7 @@ public class Account implements UserDetails
     private String profilePictureUrl;
     private Date dateOfBirth;
     private String gender;
+    private boolean isEnabled;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -77,6 +78,6 @@ public class Account implements UserDetails
     @Override
     public boolean isEnabled()
     {
-        return true;
+        return isEnabled;
     }
 }
