@@ -1,12 +1,14 @@
 
 import './App.css';
 import React from 'react';
+import Navbar from './Components/Navbar'
 
 function App() {
   const logo = require('./logo.svg');
 
   return (
     <div className="App">
+      <Navbar />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
