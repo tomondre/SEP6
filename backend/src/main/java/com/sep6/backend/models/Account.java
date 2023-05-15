@@ -32,6 +32,9 @@ public class Account implements UserDetails
     private String profilePictureUrl;
     private Date dateOfBirth;
     private String gender;
+    @OneToMany(mappedBy = "account")
+    @Column(name = "reviews_id")
+    private List<Review> reviews;
 
     @Enumerated(EnumType.STRING)
     private Role role;

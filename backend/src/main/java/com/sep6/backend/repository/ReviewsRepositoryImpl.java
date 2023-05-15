@@ -2,27 +2,25 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.MoviesJpaRepository;
 import com.sep6.backend.jpa.ReviewsJpaRepository;
+import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class ReviewsRepositoryImpl implements ReviewsRepository {
     private ReviewsJpaRepository jpaRepository;
     private MoviesRepository moviesRepository;
+    private AccountsRepository accountsRepository;
     @PersistenceContext
     private EntityManager entityManager;
-
-
-    public ReviewsRepositoryImpl(ReviewsJpaRepository jpaRepository, MoviesRepository moviesRepository) {
-        this.jpaRepository = jpaRepository;
-        this.moviesRepository = moviesRepository;
-    }
 
     @Override
     public List<Review> getMovieReviews(int id) {
@@ -34,7 +32,11 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
         if (review.getCreatedOn() == null)
             review.setCreatedOn(LocalDateTime.now());
         Movie movieById = moviesRepository.getMovieById(review.getMovieId());
+        Account account = accountsRepository.getAccountById(review.getAccountId());
+
         review.setMovie(movieById);
+        review.setAccount(account);
+
         return jpaRepository.save(review);
     }
 
