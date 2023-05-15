@@ -3,13 +3,13 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Person;
 import com.sep6.backend.models.PersonType;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class DirectorsRepositoryImpl implements DirectorsRepository{
     private PeopleJpaRepository jpaRepository;
 

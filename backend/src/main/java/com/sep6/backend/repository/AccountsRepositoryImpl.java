@@ -2,14 +2,13 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AccountsRepositoryImpl implements AccountsRepository{
 
     private AccountsJpaRepository jpaRepository;
