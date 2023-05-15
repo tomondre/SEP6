@@ -55,4 +55,11 @@ public class ReviewsServiceImpl implements ReviewsService {
         recalculateRatingByMovieId(review.getMovieId());
         return updatedReview;
     }
+
+    @Override
+    public Review deleteMovieReview(int reviewId, int movieId) {
+        Review review = repository.deleteReview(reviewId);
+        recalculateRatingByMovieId(movieId);
+        return review;
+    }
 }

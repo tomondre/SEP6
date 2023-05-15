@@ -47,6 +47,11 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
         return jpaRepository.save(reviewById);
     }
 
+    @Override
+    public Review deleteReview(int reviewId) {
+        return jpaRepository.deleteById(reviewId);
+    }
+
     public Review getReviewById(int id) {
         return jpaRepository.findById(id);
     }

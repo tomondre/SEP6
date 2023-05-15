@@ -71,8 +71,8 @@ public class MoviesController {
         return reviewsService.updateMovieReview(review);
     }
 
-//    @DeleteMapping(value = "/{movieId}/reviews/{reviewId}")
-//    public Review deleteMovieRating(@PathVariable int movieId, @PathVariable int reviewId) {
-//
-//    }
+    @DeleteMapping(value = "/{movieId}/reviews/{reviewId}")
+    public Review deleteMovieReview(@PathVariable int movieId, @PathVariable int reviewId) {
+        return reviewsService.deleteMovieReview(reviewId, movieId);
+    }
 }

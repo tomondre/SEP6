@@ -10,4 +10,5 @@ public interface ReviewsService {
     Review createMovieReview(Review review);
     void recalculateRatingByMovie(Movie movie);
     Review updateMovieReview(Review review);
+    Review deleteMovieReview(int reviewId, int movieId);
 }

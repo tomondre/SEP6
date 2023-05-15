@@ -8,4 +8,5 @@ public interface ReviewsRepository {
     List<Review> getMovieReviews(int id);
     Review createMovieReview(Review review);
     Review updateMovieReview(Review review);
+    Review deleteReview(int reviewId);
 }
