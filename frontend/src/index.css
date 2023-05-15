@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Rubik-Light";
+  src: local("Rubik-Light"), url("./Fonts/Rubik-Light.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Rubik-ExtraBold";
+  src: local("Rubik-ExtraBold"), url("./Fonts/Rubik-ExtraBold.ttf") format("truetype");
+  font-weight: normal;
+}
