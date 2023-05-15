@@ -17,7 +17,7 @@ const SignUpField = (props:any) => {
     );
   };
 
-  const useStyles = makeStyles()(() => ({
+  const useStyles:any = makeStyles()(() => ({
     
     container:{
         display:'grid',
