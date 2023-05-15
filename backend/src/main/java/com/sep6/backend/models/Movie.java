@@ -39,11 +39,15 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> people;
+    @OneToMany(mappedBy = "movie")
+    @Column(name = "reviews_id")
+    private List<Review> reviews;
+    private double rating;
 
     public Movie() {
     }
 
-    public Movie(int id, String title, String description, String posterUrl, int runtime, String language, int boxOffice, int budget, String status, Date releaseDate, List<Genre> genres, List<Person> people) {
+    public Movie(int id, String title, String description, String posterUrl, int runtime, String language, int boxOffice, int budget, String status, Date releaseDate, List<Genre> genres, List<Person> people, List<Review> reviews, double rating) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -56,6 +60,8 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.genres = genres;
         this.people = people;
+        this.reviews = reviews;
+        this.rating = rating;
     }
 
     public int getId() {
@@ -152,5 +158,21 @@ public class Movie {
 
     public void setPeople(List<Person> people) {
         this.people = people;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
