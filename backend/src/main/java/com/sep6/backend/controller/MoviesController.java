@@ -3,6 +3,7 @@ package com.sep6.backend.controller;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.service.MoviesService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +12,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
+@AllArgsConstructor
 public class MoviesController {
     private MoviesService service;
-
-    @Autowired
-    public MoviesController(MoviesService service) {
-        this.service = service;
-    }
 
     @PostMapping
     public Movie createMovie(@RequestBody Movie movie) {

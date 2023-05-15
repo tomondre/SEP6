@@ -3,13 +3,13 @@ package com.sep6.backend.service;
 
 import com.sep6.backend.models.Person;
 import com.sep6.backend.repository.DirectorsRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class DirectorsServiceImpl implements DirectorsService {
     private DirectorsRepository repository;
 

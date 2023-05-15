@@ -6,7 +6,7 @@ import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Person;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class MoviesRepositoryImpl implements MoviesRepository{
     private MoviesJpaRepository jpaRepository;
     private PeopleJpaRepository peopleJpaRepository;

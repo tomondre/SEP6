@@ -2,13 +2,13 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.GenresJpaRepository;
 import com.sep6.backend.models.Genre;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class GenresRepositoryImpl implements GenresRepository {
     private GenresJpaRepository jpaRepository;
 
