@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Button } from "@mui/material"
 import { makeStyles } from "tss-react/mui";
 import { Colors }  from '../Constants/Colors';
@@ -8,11 +8,10 @@ const SignUpField = (props:any) => {
     const { classes } = useStyles();
 
     return (
-      <div className={classes.container}>
+      <div className={classes.container} >
         <Typography variant="h5" className={classes.label}>{props.label}
         </Typography>
-        <input className={classes.data} type="text" 
-        value={props.data}/>
+        <input className={classes.inputField}  type={props.typeOF}/>
       </div>
     );
   };
@@ -38,7 +37,7 @@ const SignUpField = (props:any) => {
         marginBottom: '1rem'
         //color:Colors.light_blue,
       },
-      data:{
+      inputField:{
         width: '38.5rem',
         height: '2.5rem',
         background: Colors.light_blue,
