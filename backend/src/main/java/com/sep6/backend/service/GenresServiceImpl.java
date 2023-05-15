@@ -2,14 +2,14 @@ package com.sep6.backend.service;
 
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.repository.GenresRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class GenresServiceImpl implements GenresService {
     private GenresRepository repository;
 

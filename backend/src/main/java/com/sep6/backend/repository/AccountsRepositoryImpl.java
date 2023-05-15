@@ -3,9 +3,6 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

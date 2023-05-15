@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/api/v1/auth/**",
+                        "/auth/**",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
@@ -47,12 +47,12 @@ public class SecurityConfiguration {
                 .permitAll()
 
 
-//                .requestMatchers("/api/v1/example").hasAnyRole(USER.name())
+//                .requestMatchers("/example").hasAnyRole(USER.name())
 
-//                .requestMatchers(GET, "/api/v1/example/**").hasAnyAuthority(ADMIN_READ.name())
-//                .requestMatchers(POST, "/api/v1/example/**").hasAnyAuthority(ADMIN_CREATE.name())
-//                .requestMatchers(PUT, "/api/v1/example/**").hasAnyAuthority(ADMIN_UPDATE.name())
-//                .requestMatchers(DELETE, "/api/v1/example/**").hasAnyAuthority(ADMIN_DELETE.name())
+//                .requestMatchers(GET, "/example/**").hasAnyAuthority(ADMIN_READ.name())
+//                .requestMatchers(POST, "/example/**").hasAnyAuthority(ADMIN_CREATE.name())
+//                .requestMatchers(PUT, "/example/**").hasAnyAuthority(ADMIN_UPDATE.name())
+//                .requestMatchers(DELETE, "/example/**").hasAnyAuthority(ADMIN_DELETE.name())
 
                 .anyRequest()
                 .authenticated()
@@ -63,7 +63,7 @@ public class SecurityConfiguration {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout()
-                .logoutUrl("/api/v1/auth/logout")
+                .logoutUrl("/auth/logout")
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
         ;
