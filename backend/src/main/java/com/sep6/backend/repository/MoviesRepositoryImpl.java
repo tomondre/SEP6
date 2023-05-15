@@ -6,6 +6,7 @@ import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Person;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -14,16 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class MoviesRepositoryImpl implements MoviesRepository{
     private MoviesJpaRepository jpaRepository;
     private PeopleJpaRepository peopleJpaRepository;
     private GenresJpaRepository genresJpaRepository;
-
-    public MoviesRepositoryImpl(MoviesJpaRepository jpaRepository, PeopleJpaRepository peopleJpaRepository, GenresJpaRepository genresJpaRepository) {
-        this.jpaRepository = jpaRepository;
-        this.peopleJpaRepository = peopleJpaRepository;
-        this.genresJpaRepository = genresJpaRepository;
-    }
 
     @Override
     public Movie createMovie(Movie movie) {
