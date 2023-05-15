@@ -3,18 +3,36 @@ spring:
     username: ${DB_USERNAME}
     url: jdbc:mysql://${DB_HOST}
     password: ${DB_PASSWORD}
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
 server:
-  port: '3000'
+  port: '8000'
   error:
     include-message: always
+
 management:
   endpoints:
     enabled-by-default: false
-  health:
-    enabled: true
-  web:
-    exposure:
-      include: health,info
-  beans:
-    cache:
-      time-to-live: 5s
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      enabled: true
+    beans:
+      cache:
+        time-to-live: 5s
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      expiration: 1800000 # 30 minutes
+      refresh-token:
+        expiration: 14400000 # 4 hours

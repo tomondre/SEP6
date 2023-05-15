@@ -2,20 +2,15 @@ package com.sep6.backend.service;
 
 import com.sep6.backend.models.Person;
 import com.sep6.backend.repository.ActorsRepository;
-import com.sep6.backend.repository.ActorsRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ActorsServiceImpl implements ActorsService {
     private ActorsRepository repository;
-
-    @Autowired
-    public ActorsServiceImpl(ActorsRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Person> getActorsBySearch(String search) {
