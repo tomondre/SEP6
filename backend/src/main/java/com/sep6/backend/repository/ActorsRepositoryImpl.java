@@ -3,21 +3,20 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Person;
 import com.sep6.backend.models.PersonType;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
-public class ActorsRepositoryImpl implements ActorsRepository{
+@AllArgsConstructor
+public class ActorsRepositoryImpl implements ActorsRepository
+{
     private PeopleJpaRepository jpaRepository;
 
-    @Autowired
-    public ActorsRepositoryImpl(PeopleJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
-
     @Override
-    public List<Person> getActors() {
+    public List<Person> getActors()
+    {
         return jpaRepository.getAllByType(PersonType.ACTOR);
     }
 

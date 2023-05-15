@@ -5,7 +5,7 @@ WORKDIR /home/gradle/
 
 RUN gradle build --no-daemon
 
-EXPOSE 3000
+EXPOSE 8000
 
 FROM openjdk:17.0.2-jdk
 
@@ -17,6 +17,9 @@ ENV DB_PASSWORD=$DB_PASSWORD
 
 ARG DB_USERNAME
 ENV DB_USERNAME=$DB_USERNAME
+
+ARG JWT_SECRET_KEY
+ENV JWT_SECRET_KEY=$JWT_SECRET_KEY
 
 COPY --from=build /home/gradle/build/libs/*-SNAPSHOT.jar ./app.jar
 

@@ -3,19 +3,15 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Person;
 import com.sep6.backend.models.PersonType;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class DirectorsRepositoryImpl implements DirectorsRepository{
     private PeopleJpaRepository jpaRepository;
-
-    @Autowired
-    public DirectorsRepositoryImpl(PeopleJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
 
     @Override
     public List<Person> getDirectors() {

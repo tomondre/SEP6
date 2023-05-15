@@ -2,19 +2,16 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.GenresJpaRepository;
 import com.sep6.backend.models.Genre;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class GenresRepositoryImpl implements GenresRepository {
     private GenresJpaRepository jpaRepository;
 
-    @Autowired
-    public GenresRepositoryImpl(GenresJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
 
     @Override
     public List<Genre> getAllGenres() {

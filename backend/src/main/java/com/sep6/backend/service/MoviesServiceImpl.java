@@ -3,19 +3,17 @@ package com.sep6.backend.service;
 
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.repository.MoviesRepository;
+import lombok.AllArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MoviesServiceImpl implements MoviesService {
     private MoviesRepository repository;
-
-    @Autowired
-    public MoviesServiceImpl(MoviesRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Movie createMovie(Movie movie) {

@@ -13,3 +13,6 @@ backend/gradle/wrapper/gradle-wrapper.properties
 backend/gradle/wrapper/gradle-wrapper.jar
 .idea/aws.xml
 backend/gradle/wrapper/gradle-wrapper.jar
+backend/src/main/resources/application-local.yml
+backend/src/main/java/com/sep6/backend/security/config/SecurityConfiguration.java
+backend/src/main/java/com/sep6/backend/security/config/SecurityConfiguration.java
