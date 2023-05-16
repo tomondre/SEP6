@@ -33,8 +33,6 @@ public class Account implements UserDetails
     private boolean isEnabled;
     @OneToMany(mappedBy = "account")
     @Column(name = "reviews_id")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
     private List<Review> reviews;
 
     @Enumerated(EnumType.STRING)
