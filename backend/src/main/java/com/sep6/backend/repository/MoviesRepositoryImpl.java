@@ -69,6 +69,12 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
+    public List<Movie> getPaginatedMovies(int pageInt) {
+        PageRequest page = PageRequest.of(pageInt, 10);
+        return jpaRepository.findAll(page).getContent();
+    }
+
+    @Override
     public Movie updateMovieRatingById(int movieId, double rating) {
         Movie movieById = getMovieById(movieId);
         movieById.setRating(rating);

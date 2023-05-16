@@ -44,4 +44,9 @@ public class MoviesServiceImpl implements MoviesService {
     public List<Movie> getLatestMovies(int actualLimit) {
         return repository.getLatestMovies(actualLimit);
     }
+
+    @Override
+    public List<Movie> getPaginatedMovies(int pageInt) {
+        return repository.getPaginatedMovies(pageInt);
+    }
 }
