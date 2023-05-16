@@ -47,4 +47,8 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> people;
+    @OneToMany(mappedBy = "movie")
+    @Column(name = "reviews_id")
+    private List<Review> reviews;
+    private double rating;
 }

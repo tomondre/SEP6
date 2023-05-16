@@ -14,4 +14,5 @@ public interface MoviesJpaRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findByGenresId(int genreId);
     List<Movie> findAllByOrderByReleaseDateDesc(Pageable pageable);
     Page<Movie> findAll(Pageable page);
+    Movie findById(int id);
 }
