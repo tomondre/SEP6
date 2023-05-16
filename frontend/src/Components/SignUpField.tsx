@@ -9,7 +9,8 @@ const SignUpField = (props:any) => {
 
     return (
       <div className={classes.container}>
-        <Typography variant="h5" className={classes.label}>{props.label}
+        <Typography variant="h5" className={classes.label}>
+          {props.label}
         </Typography>
         <input className={classes.data} type="text" 
         value={props.data}/>
@@ -23,25 +24,18 @@ const SignUpField = (props:any) => {
         display:'grid',
         justifyContent: 'center',
         alignItems:'center',
-        margin:'1rem'
+        margin:'1rem 0'
       },
       label:{
-        width: '13.125rem',
-        height: '1.563rem',
         textAlign:'start',
-        fontSize:'1.625rem',
-        fontStyle:'normal',
-        fontFamily:'Rubik',
-        fontWeight:'800',
         lineHeight:'1.938rem',
         marginTop: '1rem',
         marginBottom: '1rem'
-        //color:Colors.light_blue,
       },
       data:{
         width: '38.5rem',
         height: '2.5rem',
-        background: Colors.light_blue,
+        background: Colors.lightCyan,
         border: '0.063rem',
         borderRadius: '0.625rem',
         
