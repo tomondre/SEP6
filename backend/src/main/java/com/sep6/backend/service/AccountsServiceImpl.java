@@ -21,12 +21,6 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     public FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request) {
-//        Movie movieById = moviesRepository.getMovieReferenceById(request.getMovieId());
-//
-//        Account accountById = repository.getAccountReferenceById(request.getAccountId());
-//        accountById.getFavourites().add(movieById);
-//
-//        repository.editAccount(accountById.getId(), accountById);
         repository.addMovieToAccountFavourites(request.getAccountId(), request.getMovieId());
         return request;
     }
