@@ -1,28 +1,42 @@
 import React, { ReactNode } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './Navbar';
+import { makeStyles } from "tss-react/mui";
+import background from '../images/Background-Photo.webp'
+import { Colors } from '../Constants/Colors';
+
 
 type LayoutProps = {
     children: ReactNode;
   };
 
   const Layout = ({ children }: LayoutProps) => {
+    const { classes } = useStyles();
+
     return (
-        <>
-          {/* Place your header, navigation, or any other common components here */}
+        <div className={classes.mainLayout}>
+
          <Navbar/>
   
-          {/* Place the content of the wrapped page here */}
-          <main>
+          <main >
             {children}
           </main>
   
-          {/* Add your footer component or other common components here */}
-          <footer>
-            <h2>there</h2>
-          </footer>
-        </>
+        </div>
     );
   };
+
+const useStyles = makeStyles()(() => ({
+    mainLayout:{
+        backgroundImage: `url(${background})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+
+        backgroundColor: Colors.black50,
+        height: '100vh',
+        // width: '100%'
+    }
+}));
 
   export default Layout;

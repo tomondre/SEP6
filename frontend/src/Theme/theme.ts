@@ -48,7 +48,7 @@ export const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 contained: {
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.red1,
                     color: Colors.lightCyan,
                     borderRadius: '1.25rem',
                     fontSize: '3.1rem',
@@ -56,7 +56,7 @@ export const theme = createTheme({
                     transition: 'background-color 0.5s ease-in-out',
                     height: '5.9rem',
                     '&:hover': {
-                        backgroundColor: Colors.darkPurple,
+                        backgroundColor: Colors.red2,
                         color: Colors.lightCyan,
                     },
                 },
@@ -71,44 +71,53 @@ export const theme = createTheme({
         h1: {
             fontSize: '6.3rem',
             fontWeight: '800',
+            lineHeight: '1.2rem',
             color: Colors.lightCyan,
+            [media.breakpoints.down('sm')]: {
+                fontSize: '3.4rem'
+            }
         },
         h2: {
             fontSize: '4.5rem',
             fontWeight: '800',
+            lineHeight: '1.2rem',
             color: Colors.lightCyan,
-            [media.breakpoints.up('ultraWide')]: {
-                fontSize: '5rem'
+            [media.breakpoints.down('sm')]: {
+                fontSize: '2.75rem'
             }
         },
         h3: {
             fontSize: '3.1rem',
             fontWeight: '800',
+            lineHeight: '1.2rem',
             color: Colors.lightCyan,
-            [media.breakpoints.up('ultraWide')]: {
-                fontSize: '3.5rem'
+            [media.breakpoints.down('sm')]: {
+                fontSize: '2.1rem'
             }
         },
         h4: {
             fontSize: '2.25rem',
             fontWeight: '800',
+            lineHeight: '1.2rem',
             color: Colors.lightCyan,
-            [media.breakpoints.up('ultraWide')]: {
-                fontSize: '3rem'
+            [media.breakpoints.down('sm')]: {
+                fontSize: '1.75rem'
             }
         },
         h5: {
             fontSize: '1.5rem',
             fontWeight: '800',
+            lineHeight: '1.2rem',
             color: Colors.lightCyan,
-            [media.breakpoints.up('ultraWide')]: {
-                fontSize: '2rem'
+            [media.breakpoints.down('sm')]: {
+                fontSize: '1.4rem'
             }
         },
         h6: {
             fontSize: '1.1rem',
             fontWeight: '800',
-            color: Colors.lightCyan
+            lineHeight: '1.2rem',
+            color: Colors.lightCyan,
         },
         p: {
             fontSize: '0.75rem',

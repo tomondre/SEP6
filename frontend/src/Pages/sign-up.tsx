@@ -50,7 +50,7 @@ const useStyles = makeStyles()(() => ({
     fontStyle:'normal',
     fontFamily:'Rubik',
     fontWeight:'800',
-    color:Colors.light_blue,
+    color:Colors.lightCyan,
     width:'16rem',
     height: '3rem',
     background: Colors.red1,
@@ -66,7 +66,7 @@ const useStyles = makeStyles()(() => ({
   },
   firstLine: {
     border: '0.25rem solid',
-    borderColor: Colors.black1,
+    borderColor: Colors.black,
     height: '0rem',
     width:'14rem',
     margin: '1rem'
@@ -74,7 +74,7 @@ const useStyles = makeStyles()(() => ({
   },
   secondLine: {
     border: '0.25rem solid',
-    borderColor: Colors.black1,
+    borderColor: Colors.black,
     height: '0rem',
     width:'14rem',
     margin: '1rem'

@@ -1,40 +1,42 @@
 import React, { ChangeEvent } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { TextField, IconButton } from '@mui/material';
+import { TextField, IconButton, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { Colors } from '../Constants/Colors';
 
 const SearchBar = () => {
   const { classes } = useStyles();
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    // Handle search functionality
     console.log(event.target.value);
   };
 
   return (
-    <div className={classes.searchContainer}>
-      <TextField
+        <TextField
         className={classes.searchInput}
         variant="outlined"
         placeholder="Search..."
         onChange={handleSearch}
-      />
-      <IconButton color="primary" aria-label="search">
-        <SearchIcon />
-      </IconButton>
-    </div>
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        />
   );
 };
 
 const useStyles = makeStyles()(() => ({
-    searchContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      maxWidth: 300,
-      margin: '0 auto',
-    },
     searchInput: {
       flexGrow: 1,
+      background: Colors.white80,
+      borderRadius: '0.5rem',
+      width: '32rem',
+      height: '3.5rem'
     },
   }));
 
