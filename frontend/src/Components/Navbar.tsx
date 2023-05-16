@@ -74,7 +74,8 @@ const useStyles = makeStyles()(() => ({
     backgroundColor: Colors.black75,
     padding: '1rem 4rem',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    // marginBottom:'3rem',
   },
   textContainer:{
     display:'grid',

@@ -18,7 +18,7 @@ type LayoutProps = {
 
          <Navbar/>
   
-          <main >
+          <main className={classes.mainContainer}>
             {children}
           </main>
   
@@ -28,14 +28,13 @@ type LayoutProps = {
 
 const useStyles = makeStyles()(() => ({
     mainLayout:{
-        backgroundImage: `url(${background})`,
-        backgroundRepeat: "no-repeat",
+        backgroundImage: `url(${background}) `,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-
-        backgroundColor: Colors.black50,
         height: '100vh',
-        // width: '100%'
+    },
+    mainContainer:{
+      padding: '3rem'
     }
 }));
 

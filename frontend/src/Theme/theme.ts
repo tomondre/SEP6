@@ -55,6 +55,7 @@ export const theme = createTheme({
                     padding: '1.25 1.8rem',
                     transition: 'background-color 0.5s ease-in-out',
                     height: '5.9rem',
+                    fontFamily: 'Rubik-ExtraBold',
                     '&:hover': {
                         backgroundColor: Colors.red2,
                         color: Colors.lightCyan,
@@ -66,6 +67,7 @@ export const theme = createTheme({
     },
     typography: {
         fontFamily: 'Rubik-ExtraBold',
+
         //thin: 300 bold: 800
 
         h1: {
