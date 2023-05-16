@@ -47,4 +47,9 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     {
         return jpaRepository.save(user);
     }
+
+    @Override
+    public Account getAccountById(int accountId) {
+        return jpaRepository.findById(accountId);
+    }
 }

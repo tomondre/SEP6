@@ -10,4 +10,5 @@ public interface AccountsRepository {
     void deleteAccount(int id);
 
     Account save(Account user);
+    Account getAccountById(int accountId);
 }
