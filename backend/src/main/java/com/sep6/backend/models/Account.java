@@ -2,16 +2,14 @@ package com.sep6.backend.models;
 
 import com.sep6.backend.security.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -32,13 +30,23 @@ public class Account implements UserDetails
     private String profilePictureUrl;
     private Date dateOfBirth;
     private String gender;
+    private boolean isEnabled;
+    @OneToMany(mappedBy = "account")
+    @Column(name = "reviews_id")
+    private List<Review> reviews;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Token> tokens;
 
+    @ManyToMany(mappedBy = "favouredBy")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Movie> favourites;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
@@ -77,6 +85,6 @@ public class Account implements UserDetails
     @Override
     public boolean isEnabled()
     {
-        return true;
+        return isEnabled;
     }
 }
