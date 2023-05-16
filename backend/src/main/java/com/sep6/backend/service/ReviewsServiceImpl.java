@@ -4,20 +4,16 @@ import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.repository.MoviesRepository;
 import com.sep6.backend.repository.ReviewsRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ReviewsServiceImpl implements ReviewsService {
     private ReviewsRepository repository;
     private MoviesRepository moviesRepository;
-
-    public ReviewsServiceImpl(ReviewsRepository repository, MoviesRepository moviesRepository) {
-        this.repository = repository;
-        this.moviesRepository = moviesRepository;
-    }
-
     @Override
     public List<Review> getMovieReviews(int id) {
         return repository.getMovieReviews(id);
