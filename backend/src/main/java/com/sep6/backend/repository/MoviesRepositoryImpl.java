@@ -74,4 +74,9 @@ public class MoviesRepositoryImpl implements MoviesRepository{
         movieById.setRating(rating);
         return jpaRepository.save(movieById);
     }
+
+    @Override
+    public Movie getMovieByIdReference(int movieId) {
+        return jpaRepository.getReferenceById(movieId);
+    }
 }

@@ -1,7 +1,7 @@
 package com.sep6.backend.repository;
 
 import com.sep6.backend.models.Account;
-
+import com.sep6.backend.models.FavouriteRequest;
 import java.util.Optional;
 
 public interface AccountsRepository {
