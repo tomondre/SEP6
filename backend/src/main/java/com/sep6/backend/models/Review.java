@@ -32,6 +32,7 @@ public class Review {
     private int movieId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JsonIgnore
     private Account account;
     @Column(name = "account_id", insertable=false, updatable=false)
     private int accountId;
