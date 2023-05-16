@@ -2,6 +2,7 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.TokenJpaRepository;
 import com.sep6.backend.security.token.Token;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class TokenRepositoryImpl implements TokenRepository
 {
     private TokenJpaRepository jpaRepository;
