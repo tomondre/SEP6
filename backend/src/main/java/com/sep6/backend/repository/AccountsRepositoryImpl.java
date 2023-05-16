@@ -50,6 +50,6 @@ public class AccountsRepositoryImpl implements AccountsRepository{
 
     @Override
     public Account getAccountById(int accountId) {
-        return jpaRepository.findById(accountId);
+        return jpaRepository.findById(accountId).get();
     }
 }
