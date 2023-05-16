@@ -10,8 +10,6 @@ import java.util.List;
 
 @Data
 @Builder
-@ToString(exclude = "movies")
-@EqualsAndHashCode(exclude = "movies")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
