@@ -32,6 +32,7 @@ public class Account implements UserDetails
     private String profilePictureUrl;
     private Date dateOfBirth;
     private String gender;
+    private boolean isEnabled;
     @OneToMany(mappedBy = "account")
     @Column(name = "reviews_id")
     private List<Review> reviews;
@@ -82,6 +83,6 @@ public class Account implements UserDetails
     @Override
     public boolean isEnabled()
     {
-        return true;
+        return isEnabled;
     }
 }
