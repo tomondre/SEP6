@@ -19,6 +19,29 @@ public class AccountsRepositoryImpl implements AccountsRepository{
         return jpaRepository.findByEmail(email);
     }
 
+    public Optional<Account> editAccount(int id, Account account)
+    {
+        Optional<Account> toEdit = jpaRepository.findById(id);
+
+        if (toEdit.isPresent()){
+            Account edited = toEdit.get();
+            edited.setEmail(account.getEmail());
+            edited.setName(account.getName());
+            edited.setCountry(account.getCountry());
+            edited.setProfilePictureUrl(account.getProfilePictureUrl());
+            edited.setPassword(account.getPassword());
+            edited.setEnabled(account.isEnabled());
+            return Optional.of(jpaRepository.save(edited));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void deleteAccount(int id)
+    {
+        jpaRepository.disableAccount(id);
+    }
+
     @Override
     public Account save(Account user)
     {
