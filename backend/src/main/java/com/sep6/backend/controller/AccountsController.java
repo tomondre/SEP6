@@ -14,7 +14,7 @@ public class AccountsController {
 
     private AccountsService service;
 
-    @PostMapping(value = "{id}")
+    @PutMapping(value = "{id}")
     public void editAccount(@PathVariable int id, @RequestBody Account account){
         //TODO: return status codes
         service.editAccount(id, account);
