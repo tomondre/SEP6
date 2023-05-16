@@ -42,6 +42,8 @@ public class Account implements UserDetails
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
+    @OneToMany(mappedBy = "favouredByAccounts")
+    private List<Movie> favourites;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()

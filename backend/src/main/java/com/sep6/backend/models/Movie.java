@@ -51,4 +51,8 @@ public class Movie {
     @Column(name = "reviews_id")
     private List<Review> reviews;
     private double rating;
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Account favouredByAccounts;
 }
