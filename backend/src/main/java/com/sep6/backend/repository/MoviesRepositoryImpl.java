@@ -82,7 +82,7 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
-    public Movie getMovieByIdReference(int movieId) {
+    public Movie getMovieReferenceById(int movieId) {
         return jpaRepository.getReferenceById(movieId);
     }
 }

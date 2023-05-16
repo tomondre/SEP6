@@ -3,14 +3,13 @@ package com.sep6.backend.service;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
-import com.sep6.backend.models.Account;
 import com.sep6.backend.repository.AccountsRepository;
 import com.sep6.backend.repository.MoviesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -22,11 +21,24 @@ public class AccountsServiceImpl implements AccountsService {
 
     @Override
     public FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request) {
-        Movie movieByIdReference = moviesRepository.getMovieByIdReference(request.getMovieId());
-        Account accountById = repository.getAccountById(request.getAccountId());
-        accountById.getFavourites().add(movieByIdReference);
-        repository.updateAccount(accountById);
+//        Movie movieById = moviesRepository.getMovieReferenceById(request.getMovieId());
+//
+//        Account accountById = repository.getAccountReferenceById(request.getAccountId());
+//        accountById.getFavourites().add(movieById);
+//
+//        repository.editAccount(accountById.getId(), accountById);
+        repository.addMovieToAccountFavourites(request.getAccountId(), request.getMovieId());
         return request;
+    }
+
+    @Override
+    public Set<Movie> getAccountFavourites(int id) {
+        return repository.getAccountFavouritesById(id);
+    }
+
+    @Override
+    public void deleteAccountFavourite(int accountId, int movieId) {
+        repository.deleteAccountFavourite(accountId, movieId);
     }
 
     @Override

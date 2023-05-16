@@ -13,6 +13,5 @@ public interface MoviesRepository {
     List<Movie> getLatestMovies(int actualLimit);
     List<Movie> getPaginatedMovies(int pageInt);
     Movie updateMovieRatingById(int movieId, double rating);
-
-    Movie getMovieByIdReference(int movieId);
+    Movie getMovieReferenceById(int id);
 }
