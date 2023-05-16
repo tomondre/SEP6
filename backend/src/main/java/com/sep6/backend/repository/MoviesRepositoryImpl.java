@@ -67,4 +67,10 @@ public class MoviesRepositoryImpl implements MoviesRepository{
         Pageable pageable = PageRequest.of(0, actualLimit);
         return jpaRepository.findAllByOrderByReleaseDateDesc(pageable);
     }
+
+    @Override
+    public List<Movie> getPaginatedMovies(int pageInt) {
+        PageRequest page = PageRequest.of(pageInt, 10);
+        return jpaRepository.findAll(page).getContent();
+    }
 }
