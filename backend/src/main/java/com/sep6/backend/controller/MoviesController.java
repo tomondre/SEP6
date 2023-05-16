@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -27,16 +28,25 @@ public class MoviesController {
 
     @GetMapping
     public List<Movie> getMovies(
-            @RequestParam(name = "search", required = false) String search,
-            @RequestParam(name = "genreId", required = false) String genreId
+            @RequestParam(name = "search", required = false) Optional<String> search,
+            @RequestParam(name = "genreId", required = false) Optional<String> genreId,
+            @RequestParam(name = "page", required = false) Optional<String> page
     ) {
-        if (search != null) {
-            return service.getMoviesBySearch(search);
-        } else if (genreId != null && !genreId.isEmpty()) {
-            var genreIdInt = Integer.parseInt(genreId);
+        if (search.isPresent()) {
+            return service.getMoviesBySearch(search.get());
+        }
+
+        if (genreId.isPresent() && !genreId.get().isEmpty()) {
+            int genreIdInt = Integer.parseInt(genreId.get());
             return service.getMoviesByGenreId(genreIdInt);
         }
-            return service.getMovies();
+
+        if (page.isPresent() && !page.get().isEmpty()) {
+            int pageInt = Integer.parseInt(page.get());
+            return service.getPaginatedMovies(pageInt);
+        }
+
+        return service.getMovies();
     }
 
     @GetMapping(value = "/{id}")
