@@ -2,12 +2,10 @@ import { Typography } from "@mui/material";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
 
-
 type MovieCardProps = {
   poster: string;
   title: string;
 };
-
 
 const MovieCard: React.FC<MovieCardProps> = ({ poster, title }) => {
   const { classes } = useStyles();
