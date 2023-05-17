@@ -42,6 +42,7 @@ public class AuthenticationService {
                           .dateOfBirth(Date.valueOf(request.getDateOfBirth()))
                           .gender(request.getGender())
                           .role(request.getRole())
+                          .isEnabled(true)
                           .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
