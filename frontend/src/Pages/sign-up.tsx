@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState }  from "react";
 import { makeStyles } from "tss-react/mui";
-import { Typography, Button, OutlinedInput } from "@mui/material"
+import { Typography, Button, OutlinedInput, Link } from "@mui/material"
+
 import { Colors }  from '../Constants/Colors';
 import SignUpField from "../Components/SignUpField";
 import { useNavigate } from "react-router-dom";
@@ -69,16 +70,21 @@ const SignUp = () => {
         
         
         <div>
-        <Button className={classes.sign_up_button} type="submit" variant="contained">Register</Button>
+        <Button  type="submit" variant="contained">Register</Button>
+
         </div>
     </form>
     <div className={classes.already}>
-      <div className={classes.firstLine}></div>
-      <div>Already a member?</div>
-      <div className={classes.secondLine}></div>
+      <div className={classes.line}></div>
+      <Typography variant="h5">Already a member?</Typography>
+      <div className={classes.line}></div>
     </div>
     <div>
-    <a href="/login">Login</a>
+
+    <Link href="/login">
+      <Typography variant="h4">Login</Typography>
+    </Link>
+
     </div>
     
 
@@ -92,20 +98,6 @@ const useStyles = makeStyles()(() => ({
     justifyContent: 'center',
     alignItems:'center'
   },
-  
-  sign_up_button:{
-    textAlign: 'center',
-    fontSize:'2.188rem',
-    fontStyle:'normal',
-    fontFamily:'Rubik',
-    fontWeight:'800',
-    color:Colors.light_blue,
-    width:'16rem',
-    height: '3rem',
-    background: Colors.red1,
-    borderRadius: '1.25rem',
-    margin:'2rem'
-  },
   already:{
     display:'flex',
     alignItems:'center',
@@ -113,20 +105,13 @@ const useStyles = makeStyles()(() => ({
     margin:'2rem'
 
   },
-  firstLine: {
+  line: {
     border: '0.25rem solid',
-    borderColor: Colors.black1,
+    borderColor: Colors.lightCyan,
     height: '0rem',
     width:'14rem',
     margin: '1rem'
     
-  },
-  secondLine: {
-    border: '0.25rem solid',
-    borderColor: Colors.black1,
-    height: '0rem',
-    width:'14rem',
-    margin: '1rem'
   },
   genderLabel:{
     width: '13.125rem',
