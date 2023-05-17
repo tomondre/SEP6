@@ -55,7 +55,7 @@ public class SecurityConfiguration {
 //                .requestMatchers(DELETE, "/example/**").hasAnyAuthority(ADMIN_DELETE.name())
 
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
