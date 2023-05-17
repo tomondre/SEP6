@@ -76,18 +76,18 @@ const useStyles = makeStyles()(() => ({
   },
   
   login_button:{
-    textAlign: 'center',
-    fontSize:'2.188rem',
-    fontStyle:'normal',
-    fontFamily:'Rubik',
-    fontWeight:'800',
-    color:Colors.lightCyan,
+  //   // textAlign: 'center',
+   fontSize:'2.188rem',
+  //   // fontStyle:'normal',
+  //   // fontFamily:'Rubik',
+  //   // fontWeight:'800',
+  //   //color:Colors.lightCyan,
     width:'16rem',
     height: '3rem',
-    background: Colors.red1,
-    borderRadius: '1.25rem',
+  //   //background: Colors.red1,
+  //   //borderRadius: '1.25rem',
     margin:'2rem'
-  },
+   },
   group:{
     display:'flex',
     alignItems:'center',
