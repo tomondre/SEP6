@@ -1,13 +1,10 @@
 import React, { ChangeEvent, useState }  from "react";
 import { makeStyles } from "tss-react/mui";
 import { Typography, Button, OutlinedInput, Link } from "@mui/material"
-
 import { Colors }  from '../Constants/Colors';
-import SignUpField from "../Components/SignUpField";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../Services/authentication";
 import { useForm } from "react-hook-form";
-import logo from "../images/Logo.png";
 
 type Account = {
     name: string,
@@ -34,7 +31,7 @@ const SignUp = () => {
   //e.preventDefault();
 
     try {
-      await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender).then(
+      await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender, data.dateOfBirth).then(
         (response) => {
           navigate("/");
           window.location.reload();
@@ -51,27 +48,40 @@ const SignUp = () => {
   return (
     <>
     <form className={classes.sign_up_form} onSubmit={onSubmit}>
-        <div>
-        <img src={logo} className={classes.image} alt="profile_picture" />
+        <Typography variant="h1"> Sign Up</Typography>
+        
+        <div className={classes.fieldContainer}>
+        <Typography variant="h5" className={classes.label}> Name</Typography>
+        <OutlinedInput label="Name" className={classes.input} {...register("name")} required/>
         </div>
-        <OutlinedInput label="Name"  {...register("name")} required/>
-        <OutlinedInput label="Email"     {...register("email")} required/>
-        <OutlinedInput label="Username"    {...register("username")} required/>
-        <OutlinedInput label="Password"  type="password"  {...register("password")}  required/>
-        <OutlinedInput label="Country"   {...register("country")}  required/>
-        <Typography variant="h5" className={classes.genderLabel}>Gender</Typography>
-        <div> 
-        <input type="radio" value="Male"   {...register("gender")} defaultChecked /> Male
-      
-        <input type="radio" value="Female" {...register("gender")}  /> Female
-        <input type="radio" value="Other" {...register("gender")}  /> Other
+        <div className={classes.fieldContainer}>
+        <Typography variant="h5" className={classes.label}> Email</Typography>
+        <OutlinedInput label="Email"  className={classes.input}   {...register("email")} required/>
         </div>
-        
-        
-        
+        <div className={classes.fieldContainer}>
+        <Typography variant="h5" className={classes.label}> Username</Typography>
+        <OutlinedInput label="Username"  className={classes.input}  {...register("username")} required/>
+        </div>
+        <div className={classes.fieldContainer}>
+        <Typography variant="h5" className={classes.label}> Password</Typography>
+        <OutlinedInput label="Password" className={classes.input} type="password"  {...register("password")}  required/>
+        </div>
+        <div className={classes.fieldContainer}>
+        <Typography variant="h5" className={classes.label}> Date of birth</Typography>
+        <OutlinedInput label="DateOfBirth" placeholder='yyyy-mm-dd' className={classes.input} type="text"  {...register("dateOfBirth")}  required/>
+        </div>
+        <div className={classes.fieldContainer}>
+        <Typography variant="h5" className={classes.label}> Country</Typography>
+        <OutlinedInput label="Country" className={classes.input}  {...register("country")}  required/>
+        </div>
+        <Typography variant="h5" className={classes.label}>Gender</Typography>
+        <div className={classes.radioContainer}> 
+        <input type="radio" value="Male" className={classes.radioInput} {...register("gender")} defaultChecked /> Male
+        <input type="radio" value="Female" className={classes.radioInput} {...register("gender")}  /> Female
+        <input type="radio" value="Other" className={classes.radioInput} {...register("gender")}  /> Other
+        </div>
         <div>
-        <Button  type="submit" variant="contained">Register</Button>
-
+        <Button className={classes.sign_up_button} type="submit" variant="contained">Register</Button>
         </div>
     </form>
     <div className={classes.already}>
@@ -105,6 +115,26 @@ const useStyles = makeStyles()(() => ({
     margin:'2rem'
 
   },
+  fieldContainer:{
+    display:'grid',
+    justifyContent: 'center',
+    alignItems:'center',
+    margin:'1rem 0'
+  },
+  label:{
+    textAlign:'start',
+    lineHeight:'1.938rem',
+    marginTop: '1rem',
+    marginBottom: '1rem'
+  },
+  input:{
+    width: '38.5rem',
+    height: '2.5rem',
+    background: Colors.lightCyan,
+    border: '0.063rem',
+    borderRadius: '0.625rem',
+    
+  },
   line: {
     border: '0.25rem solid',
     borderColor: Colors.lightCyan,
@@ -113,22 +143,37 @@ const useStyles = makeStyles()(() => ({
     margin: '1rem'
     
   },
-  genderLabel:{
-    width: '13.125rem',
-    height: '1.563rem',
-    textAlign:'start',
-    fontSize:'1.625rem',
-    fontStyle:'normal',
-    fontFamily:'Rubik',
-    fontWeight:'800',
-    lineHeight:'1.938rem',
-    margin: '1rem'
-    //color:Colors.light_blue,
-  },
   image:{
     image: {
       borderRadius: '1rem 0 0 1rem'
       }
+  },
+  radioContainer:{
+    color:Colors.lightCyan,
+    textAlign:'start',
+    marginTop: '1rem',
+    marginBottom: '1rem',
+    fontSize:'1.5rem'
+  },
+  radioInput:{
+    marginLeft:'4rem',
+    marginRight:'0.5rem'
+  },
+  sign_up_button:{
+    textAlign: 'center',
+    fontSize:'2.188rem',
+    fontStyle:'normal',
+    fontFamily:'Rubik',
+    fontWeight:'800',
+    color:Colors.lightCyan,
+    width:'16rem',
+    height: '3rem',
+    background: Colors.red1,
+    borderRadius: '1.25rem',
+    margin:'2rem'
+  },
+  calendar:{
+    color:Colors.lightCyan,
   }
 }));
 
