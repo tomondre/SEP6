@@ -1,26 +1,39 @@
-import React, { useState }  from "react";
+import React, { ChangeEvent, useState }  from "react";
 import { makeStyles } from "tss-react/mui";
-import { Typography, Button } from "@mui/material"
+import { Typography, Button, OutlinedInput } from "@mui/material"
 import { Colors }  from '../Constants/Colors';
 import SignUpField from "../Components/SignUpField";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../Services/authentication";
+import { useForm } from "react-hook-form";
+import logo from "../images/Logo.png";
 
+type Account = {
+    name: string,
+    username: string,
+    email: string,
+    password: string,
+    country: string,
+    profilePictureUrl: string,
+    dateOfBirth: string,
+    gender: string,
+    role:string
+};
 
 const SignUp = () => {
 
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSignup = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    console.log(name, email, username, password)
+  const { register, setValue, handleSubmit, formState: { errors } } = useForm<Account>();
+  const onSubmit = handleSubmit(data => handleSignup(data));
+
+
+  const handleSignup = async (data: Account) => {
+  //e.preventDefault();
+
     try {
-      await AuthService.signup(name,email,username, password).then(
+      await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender).then(
         (response) => {
           navigate("/");
           window.location.reload();
@@ -36,14 +49,25 @@ const SignUp = () => {
 
   return (
     <>
-     <Typography variant="h1">
-          SignUp
-        </Typography>
-    <form className={classes.sign_up_form} onSubmit={handleSignup}>
-        <SignUpField label="Name" value={name} typeOF="text" onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value)} required/>
-        <SignUpField label="Email" value={email} typeOF="text" onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEmail(e.target.value)} required/>
-        <SignUpField label="Username" value={username} typeOFe="text" onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setUsername(e.target.value)} required/>
-        <SignUpField label="Password" value={password} typeOF="password" onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPassword(e.target.value)} required/>
+    <form className={classes.sign_up_form} onSubmit={onSubmit}>
+        <div>
+        <img src={logo} className={classes.image} alt="profile_picture" />
+        </div>
+        <OutlinedInput label="Name"  {...register("name")} required/>
+        <OutlinedInput label="Email"     {...register("email")} required/>
+        <OutlinedInput label="Username"    {...register("username")} required/>
+        <OutlinedInput label="Password"  type="password"  {...register("password")}  required/>
+        <OutlinedInput label="Country"   {...register("country")}  required/>
+        <Typography variant="h5" className={classes.genderLabel}>Gender</Typography>
+        <div> 
+        <input type="radio" value="Male"   {...register("gender")} defaultChecked /> Male
+      
+        <input type="radio" value="Female" {...register("gender")}  /> Female
+        <input type="radio" value="Other" {...register("gender")}  /> Other
+        </div>
+        
+        
+        
         <div>
         <Button className={classes.sign_up_button} type="submit" variant="contained">Register</Button>
         </div>
@@ -103,6 +127,23 @@ const useStyles = makeStyles()(() => ({
     height: '0rem',
     width:'14rem',
     margin: '1rem'
+  },
+  genderLabel:{
+    width: '13.125rem',
+    height: '1.563rem',
+    textAlign:'start',
+    fontSize:'1.625rem',
+    fontStyle:'normal',
+    fontFamily:'Rubik',
+    fontWeight:'800',
+    lineHeight:'1.938rem',
+    margin: '1rem'
+    //color:Colors.light_blue,
+  },
+  image:{
+    image: {
+      borderRadius: '1rem 0 0 1rem'
+      }
   }
 }));
 

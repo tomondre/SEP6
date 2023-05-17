@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Typography, Button } from "@mui/material"
 import { makeStyles } from "tss-react/mui";
 import { Colors }  from '../Constants/Colors';
@@ -11,7 +11,7 @@ const SignUpField = (props:any) => {
       <div className={classes.container} >
         <Typography variant="h5" className={classes.label}>{props.label}
         </Typography>
-        <input className={classes.inputField}  type={props.typeOF}/>
+        <input className={classes.inputField}  type={props.typeOF} onChange= {props.set}/>
       </div>
     );
   };
