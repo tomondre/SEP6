@@ -12,7 +12,7 @@ public interface AccountsRepository {
     void deleteAccount(int id);
 
     Account save(Account user);
-    Account getAccountById(int accountId);
+    Optional<Account> getAccountById(int accountId);
     Account getAccountReferenceById(int id);
     Set<Movie> getAccountFavouritesById(int id);
     void addMovieToAccountFavourites(int accountId, int movieId);

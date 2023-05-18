@@ -8,7 +8,7 @@ import com.sep6.backend.repository.MoviesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+
 import java.util.Set;
 
 @Service
@@ -36,10 +36,10 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Optional<Account> editAccount(int id, Account account)
+    public Account editAccount(int id, Account account)
     {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        return repository.editAccount(id, account);
+        return repository.editAccount(id, account).orElseThrow();
     }
 
     @Override
