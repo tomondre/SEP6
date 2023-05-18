@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/actors")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class ActorsController {
     private ActorsService service;
 

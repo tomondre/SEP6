@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
-//import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { Colors } from '../Constants/Colors';
 
@@ -18,15 +18,15 @@ const SearchBar = () => {
         variant="outlined"
         placeholder="Search..."
         onChange={handleSearch}
-        // InputProps={{
-        //   startAdornment: (
-        //     <InputAdornment position="start">
-        //       <IconButton>
-        //         <SearchIcon />
-        //       </IconButton>
-        //     </InputAdornment>
-        //   ),
-        // }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IconButton>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
         />
   );
 };
