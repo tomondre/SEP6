@@ -20,14 +20,16 @@ public class ReviewsServiceImpl implements ReviewsService {
     }
 
     @Override
-    public Review createMovieReview(Review review) {
+    public Review createMovieReview(Review review)
+    {
         Review createdReview = repository.createMovieReview(review);
         recalculateRatingByMovieId(review.getMovieId());
         return createdReview;
     }
 
-    public void recalculateRatingByMovieId(int movieId) {
-        Movie movieById = moviesRepository.getMovieById(movieId);
+    public void recalculateRatingByMovieId(int movieId)
+    {
+        Movie movieById = moviesRepository.getMovieById(movieId).orElseThrow();
         recalculateRatingByMovie(movieById);
     }
 

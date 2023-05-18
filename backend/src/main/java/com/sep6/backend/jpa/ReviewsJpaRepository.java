@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface ReviewsJpaRepository extends CrudRepository<Review, Integer> {
     List<Review> findReviewsByMovieId(int movie_id);
-    Review findById(int id);
+    Optional<Review> findById(int id);
     Review deleteById(int id);
 }

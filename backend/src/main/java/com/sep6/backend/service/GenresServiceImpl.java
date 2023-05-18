@@ -3,7 +3,6 @@ package com.sep6.backend.service;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.repository.GenresRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +15,11 @@ public class GenresServiceImpl implements GenresService {
     @Override
     public List<Genre> getAllGenres() {
         return repository.getAllGenres();
+    }
+
+    @Override
+    public Genre save(Genre genre)
+    {
+        return repository.save(genre);
     }
 }
