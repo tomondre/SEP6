@@ -11,5 +11,6 @@ public interface ActorsRepository {
     List<PersonProjection> getActors();
     List<PersonProjection> getActorsBySearch(String search);
     Person save(Person person);
-    Optional<PersonMoviesProjection> getActorById(int id);
+    PersonMoviesProjection getActorById(int id);
+    Optional<Person> findById(int id);
 }

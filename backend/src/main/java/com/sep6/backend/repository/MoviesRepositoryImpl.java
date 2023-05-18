@@ -78,7 +78,7 @@ public class MoviesRepositoryImpl implements MoviesRepository{
 
     @Override
     public Movie updateMovieRatingById(int movieId, double rating) {
-        Movie movieById = getMovieById(movieId);
+        Movie movieById = getMovieById(movieId).get();
         movieById.setRating(rating);
         return jpaRepository.save(movieById);
     }

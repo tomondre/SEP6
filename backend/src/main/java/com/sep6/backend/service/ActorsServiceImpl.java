@@ -24,7 +24,7 @@ public class ActorsServiceImpl implements ActorsService {
     }
 
     @Override
-    public Optional<PersonMoviesProjection> getActorById(int id) {
+    public PersonMoviesProjection getActorById(int id) {
         return repository.getActorById(id);
     }
 }
