@@ -31,5 +31,6 @@ public class Person {
     @ManyToMany(mappedBy = "people")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private List<Movie> movies;
 }

@@ -1,6 +1,7 @@
 package com.sep6.backend.service;
 
-import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.repository.ActorsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,17 @@ public class ActorsServiceImpl implements ActorsService {
     private ActorsRepository repository;
 
     @Override
-    public List<Person> getActorsBySearch(String search) {
+    public List<PersonProjection> getActorsBySearch(String search) {
         return repository.getActorsBySearch(search);
     }
 
     @Override
-    public List<Person> getActors() {
+    public List<PersonProjection> getActors() {
         return repository.getActors();
     }
 
     @Override
-    public Person getActorById(int id) {
+    public PersonMoviesProjection getActorById(int id) {
         return repository.getActorById(id);
     }
 }

@@ -2,9 +2,10 @@ package com.sep6.backend.controller;
 
 
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.service.DirectorsService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class DirectorsController {
     private DirectorsService service;
 
     @GetMapping
-    public List<Person> getDirectors(@RequestParam(name = "search", required = false) String search) {
+    public List<PersonProjection> getDirectors(@RequestParam(name = "search", required = false) String search) {
         if (search != null) {
             return service.getDirectorsBySearch(search);
         }
@@ -24,7 +25,7 @@ public class DirectorsController {
     }
 
     @GetMapping(value = "/{id}")
-    public Person getDirectorById(@PathVariable int id) {
+    public PersonMoviesProjection getDirectorById(@PathVariable int id) {
         return service.getDirectorsById(id);
     }
 }

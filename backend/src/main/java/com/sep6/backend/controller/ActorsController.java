@@ -1,5 +1,7 @@
 package com.sep6.backend.controller;
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.service.ActorsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ public class ActorsController {
     private ActorsService service;
 
     @GetMapping
-    public List<Person> getActors(@RequestParam(name = "search", required = false) String search) {
+    public List<PersonProjection> getActors(@RequestParam(name = "search", required = false) String search) {
         if (search != null) {
             return service.getActorsBySearch(search);
         }
@@ -22,7 +24,7 @@ public class ActorsController {
     }
 
     @GetMapping(value = "/{id}")
-    public Person getActorById(@PathVariable int id) {
+    public PersonMoviesProjection getActorById(@PathVariable int id) {
         return service.getActorById(id);
     }
 }
