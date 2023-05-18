@@ -1,23 +1,33 @@
 
 import axios from '../api/axios';
-import { useParams } from 'react-router-dom';
 
 const API_URL = "/actors";
 
+interface Actor {
+  id: number;
+  name: string;
+  type: string;
+  dateOfBirth: string;
+  placeOfBirth: string;
+  gender: string;
+  biography: string;
+  deathDate: string;
+  profileImg: string;
+}
 
 
-  const getSpecificActor = async (id: number) => {
-    try 
-    {
-        const response = await axios.get(`${API_URL}/${id}`)
-        return response.data;
-    } 
-    catch (error) 
-    {
-      console.error(error);
+  const getSpecificActor = async (id: number): Promise<Actor> => {
+    try {
+        const response = await axios.get(`${API_URL}/${id}`);
+
+        const actor = response.data;
+        return actor as Actor;
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        throw error;
     }
+};
 
-  };
 
   const actorService = {
     getSpecificActor

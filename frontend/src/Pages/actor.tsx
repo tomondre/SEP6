@@ -6,10 +6,10 @@ import { Grid, IconButton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import actorService from "../Services/actor-service";
 import StarIcon from "@mui/icons-material/Star";
-import { yellow } from "@mui/material/colors";
 import { Colors } from "../Constants/Colors";
 
-type Actor = {
+interface Actor {
+  id: number;
   name: string;
   type: string;
   dateOfBirth: string;
@@ -18,14 +18,28 @@ type Actor = {
   biography: string;
   deathDate: string;
   profileImg: string;
-};
+}
 
 const ActorPage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const actor = actorService.getSpecificActor(116);
-  console.log(actor);
+  const [actor, setActor] = useState<Actor>();
+
   const logo = require("../images/shrek.png");
+
+  useEffect(() => {
+    const fetchActor = async () => {
+      try {
+        const actor = await actorService.getSpecificActor(116);
+        setActor(actor);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    };
+
+    fetchActor();
+  });
+  console.log(actor)
 
   const mockedMovies = [
     { id: 1, poster: logo, title: "Shrek" },
@@ -39,47 +53,37 @@ const ActorPage = () => {
   return (
     <>
       <Grid className={classes.container}>
-
         <Grid>
           <img src={logo} className={classes.image} alt="actor" />
         </Grid>
 
         <Grid className={classes.actorDetails}>
+          <Grid className={classes.ratingGroup}>
+            <StarIcon className={classes.star} />
+            <Grid className={classes.rating}>Rating</Grid>
+            <Grid className={classes.ratingGoal}>/ 10</Grid>
+          </Grid>
 
-        <Grid className={classes.ratingGroup}>
-            <StarIcon className={classes.star}/>
-            <Grid className={classes.rating}>
-            Rating
-            </Grid>
-            <Grid className={classes.ratingGoal}>
-            /  10
-            </Grid>
-        </Grid>
+          <Grid className={classes.actorName}>
+            <Typography variant="h1">{actor?.name}</Typography>
+          </Grid>
 
-        <Grid className={classes.actorName}>
-        <Typography variant="h1">Name</Typography>
-        </Grid>
-
-        <Grid className={classes.specifications}>
+          <Grid className={classes.specifications}>
             <Grid className={classes.type}>
-            <Typography variant="h6">Type</Typography>
+              <Typography variant="h6">Type</Typography>
             </Grid>
             <Grid className={classes.dateOfBirth}>
-            <Typography variant="h6">DateOfBirth</Typography>
+              <Typography variant="h6">DateOfBirth</Typography>
             </Grid>
             <Grid className={classes.deathDate}>
-            <Typography variant="h6">DeathDate(if any)</Typography>
+              <Typography variant="h6">DeathDate(if any)</Typography>
             </Grid>
-        </Grid>
+          </Grid>
 
-        <Grid>
-          <Typography variant="h6">Biography</Typography>
+          <Grid>
+            <Typography variant="h6">Biography</Typography>
+          </Grid>
         </Grid>
-        
-
-        </Grid>
-        
-        
       </Grid>
 
       <Grid item container>
@@ -95,69 +99,68 @@ const ActorPage = () => {
 
 const useStyles = makeStyles()(() => ({
   container: {
-    display: 'flex',
-    justifyContent: 'space-around',
+    display: "flex",
+    justifyContent: "space-around",
   },
   image: {
-    height: '46rem',
+    height: "46rem",
   },
   ratingGroup: {
-    display: 'flex',
-    alignItems:'center',
-    height:'10%',
+    display: "flex",
+    alignItems: "center",
+    height: "10%",
   },
-  star:{
-    color:Colors.yellow,
-    fontSize:'2rem',
+  star: {
+    color: Colors.yellow,
+    fontSize: "2rem",
   },
-  rating:{
-    color:Colors.yellow,
-    fontWeight: '800',
-    fontSize:'2rem',
-    alignContent:'center',
-    marginLeft: '1rem',
+  rating: {
+    color: Colors.yellow,
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
   },
-  ratingGoal:{
-    color:Colors.yellow,
-    fontWeight: '800',
-    fontSize:'2rem',
-    alignContent:'center',
+  ratingGoal: {
+    color: Colors.yellow,
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
   },
-   actorName:{
-    width:'100%',
-    height:'5rem',
-    textAlign:'start',
-    marginTop:'3rem',
-    //border:'0.5rem solid red'
-
-   },
-   actorDetails:{
-    width: '70%',
-    padding:'2rem'
-   },
-   specifications: {
-    display: 'flex',
-    alignItems:'start',
-    height:'10%',
+  actorName: {
+    width: "100%",
+    height: "5rem",
+    textAlign: "start",
+    marginTop: "3rem",
     //border:'0.5rem solid red'
   },
-  type:{
-    color:Colors.yellow,
-    fontSize:'2rem',
+  actorDetails: {
+    width: "70%",
+    padding: "2rem",
   },
-  dateOfBirth:{
-    color:Colors.yellow,
-    fontWeight: '800',
-    fontSize:'2rem',
-    alignContent:'center',
-    marginLeft: '1rem',
+  specifications: {
+    display: "flex",
+    alignItems: "start",
+    height: "10%",
+    //border:'0.5rem solid red'
   },
-  deathDate:{
-    color:Colors.yellow,
-    fontWeight: '800',
-    fontSize:'2rem',
-    alignContent:'center',
-    marginLeft: '1rem',
+  type: {
+    color: Colors.yellow,
+    fontSize: "2rem",
+  },
+  dateOfBirth: {
+    color: Colors.yellow,
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
+  },
+  deathDate: {
+    color: Colors.yellow,
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
   },
 }));
 
