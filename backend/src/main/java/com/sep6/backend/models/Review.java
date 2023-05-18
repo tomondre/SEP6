@@ -2,10 +2,7 @@ package com.sep6.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDateTime;
@@ -26,6 +23,8 @@ public class Review {
     private LocalDateTime createdOn;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
     @Column(name = "movie_id", insertable=false, updatable=false)
@@ -33,6 +32,8 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Account account;
     @Column(name = "account_id", insertable=false, updatable=false)
     private int accountId;

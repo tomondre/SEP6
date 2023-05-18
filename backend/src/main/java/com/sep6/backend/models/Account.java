@@ -2,16 +2,14 @@ package com.sep6.backend.models;
 
 import com.sep6.backend.security.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -41,8 +39,14 @@ public class Account implements UserDetails
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Token> tokens;
 
+    @ManyToMany(mappedBy = "favouredBy")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Movie> favourites;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
