@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -16,5 +17,17 @@ public class GenresRepositoryImpl implements GenresRepository {
     @Override
     public List<Genre> getAllGenres() {
         return jpaRepository.findAll();
+    }
+
+    @Override
+    public Genre save(Genre genre)
+    {
+        return jpaRepository.save(genre);
+    }
+
+    @Override
+    public Optional<Genre> findById(int id)
+    {
+        return jpaRepository.findById(id);
     }
 }

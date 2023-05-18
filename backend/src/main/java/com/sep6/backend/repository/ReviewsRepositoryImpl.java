@@ -5,13 +5,12 @@ import com.sep6.backend.jpa.ReviewsJpaRepository;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -19,8 +18,6 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
     private ReviewsJpaRepository jpaRepository;
     private MoviesRepository moviesRepository;
     private AccountsRepository accountsRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Override
     public List<Review> getMovieReviews(int id) {
@@ -28,11 +25,12 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
     }
 
     @Override
-    public Review createMovieReview(Review review) {
+    public Review createMovieReview(Review review)
+    {
         if (review.getCreatedOn() == null)
             review.setCreatedOn(LocalDateTime.now());
-        Movie movieById = moviesRepository.getMovieById(review.getMovieId());
-        Account account = accountsRepository.getAccountById(review.getAccountId());
+        Movie movieById = moviesRepository.getMovieById(review.getMovieId()).orElseThrow();
+        Account account = accountsRepository.getAccountById(review.getAccountId()).orElseThrow();
 
         review.setMovie(movieById);
         review.setAccount(account);
@@ -41,8 +39,9 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
     }
 
     @Override
-    public Review updateMovieReview(Review review) {
-        Review reviewById = getReviewById(review.getId());
+    public Review updateMovieReview(Review review)
+    {
+        Review reviewById = getReviewById(review.getId()).orElseThrow();
         reviewById.setComment(review.getComment());
         reviewById.setRating(review.getRating());
         reviewById.setCreatedOn(LocalDateTime.now());
@@ -50,11 +49,13 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
     }
 
     @Override
-    public Review deleteReview(int reviewId) {
+    public Review deleteReview(int reviewId)
+    {
         return jpaRepository.deleteById(reviewId);
     }
 
-    public Review getReviewById(int id) {
+    public Optional<Review> getReviewById(int id)
+    {
         return jpaRepository.findById(id);
     }
 }

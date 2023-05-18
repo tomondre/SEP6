@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MoviesJpaRepository extends JpaRepository<Movie, Integer> {
     List<MovieProjection> findByTitleContainingIgnoreCase(String search);
     List<MovieProjection> findByGenresId(int genreId);
     List<MovieProjection> findAllByOrderByReleaseDateDesc(Pageable pageable);
-    Movie findById(int id);
+    Optional<Movie> findById(int id);
     // Workaround because the return projection would otherwise clash with the already implemented findAll method
     Page<MovieProjection> findAllByIdNotNull(Pageable page);
     List<MovieProjection> findAllByIdNotNull();

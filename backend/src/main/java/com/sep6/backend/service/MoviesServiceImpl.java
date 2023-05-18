@@ -15,7 +15,8 @@ public class MoviesServiceImpl implements MoviesService {
     private MoviesRepository repository;
 
     @Override
-    public Movie createMovie(Movie movie) {
+    public Movie createMovie(Movie movie)
+    {
         return repository.createMovie(movie);
     }
 
@@ -36,7 +37,7 @@ public class MoviesServiceImpl implements MoviesService {
 
     @Override
     public Movie getMovieById(int id) {
-        return repository.getMovieById(id);
+        return repository.getMovieById(id).orElseThrow();
     }
 
     @Override

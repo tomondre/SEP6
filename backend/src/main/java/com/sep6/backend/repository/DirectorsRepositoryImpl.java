@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class DirectorsRepositoryImpl implements DirectorsRepository{
     }
 
     @Override
-    public PersonMoviesProjection getDirectorsById(int id) {
+    public Optional<PersonMoviesProjection> getDirectorsById(int id) {
         return jpaRepository.findByTypeAndId(PersonType.DIRECTOR, id);
     }
 }

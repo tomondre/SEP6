@@ -26,6 +26,6 @@ public class DirectorsServiceImpl implements DirectorsService {
 
     @Override
     public PersonMoviesProjection getDirectorsById(int id) {
-        return repository.getDirectorsById(id);
+        return repository.getDirectorsById(id).orElseThrow();
     }
 }
