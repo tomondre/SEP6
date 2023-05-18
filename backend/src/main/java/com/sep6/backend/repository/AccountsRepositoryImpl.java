@@ -83,7 +83,7 @@ public class AccountsRepositoryImpl implements AccountsRepository{
 
     @Override
     public Set<Movie> getAccountFavouritesById(int id) {
-        Account account = getAccountById(id);
+        Account account = getAccountById(id).orElseThrow();
         return account.getFavourites();
     }
 
