@@ -1,15 +1,10 @@
 package com.sep6.backend.repository;
 
-import com.sep6.backend.exceptions.EditException;
-import com.sep6.backend.exceptions.SaveException;
 import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.hibernate.FetchNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -25,31 +20,28 @@ public class AccountsRepositoryImpl implements AccountsRepository{
        return jpaRepository.findByEmail(email);
     }
 
-    public Optional<Account> editAccount(int id, Account account) throws AccountNotFoundException, IllegalArgumentException
+    public Optional<Account> editAccount(int id, Account account)
     {
         try {
-            Optional<Account> toEdit = jpaRepository.findById(id);
+            Account edited = jpaRepository.findById(id).orElseThrow();
 
-            if (toEdit.isPresent()) {
-                Account edited = toEdit.get();
-                edited.setEmail(account.getEmail());
-                edited.setName(account.getName());
-                edited.setCountry(account.getCountry());
-                edited.setProfilePictureUrl(account.getProfilePictureUrl());
-                edited.setPassword(account.getPassword());
-                edited.setEnabled(account.isEnabled());
-                return Optional.of(jpaRepository.save(edited));
-            }
-            return Optional.empty();
+            edited.setEmail(account.getEmail());
+            edited.setName(account.getName());
+            edited.setCountry(account.getCountry());
+            edited.setProfilePictureUrl(account.getProfilePictureUrl());
+            edited.setPassword(account.getPassword());
+            edited.setEnabled(account.isEnabled());
+            return Optional.of(jpaRepository.save(edited));
+
         } catch (NoSuchElementException e) {
-            throw new AccountNotFoundException("Account not found with ID: " + id);
+            throw new NoSuchElementException("Account not found with ID: " + id);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Failed to edit account, because of missing data.", e);
         }
     }
 
     @Override
-    public void deleteAccount(int id) throws IllegalArgumentException
+    public void deleteAccount(int id)
     {
         try
         {
@@ -62,7 +54,7 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     }
 
     @Override
-    public Account save(Account user) throws IllegalArgumentException
+    public Account save(Account user)
     {
         try
         {
