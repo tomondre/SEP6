@@ -7,5 +7,5 @@ import java.util.List;
 public interface DirectorsService {
     List<Person> getDirectorsBySearch(String search);
     List<Person> getDirectors();
-    Person getDirectorsById(int id);
+    Person getDirectorById(int id);
 }
