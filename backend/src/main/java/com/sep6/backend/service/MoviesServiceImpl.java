@@ -1,11 +1,10 @@
 package com.sep6.backend.service;
 
 
+import com.sep6.backend.projections.MovieBasicInfoProjection;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.repository.MoviesRepository;
 import lombok.AllArgsConstructor;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,17 +20,17 @@ public class MoviesServiceImpl implements MoviesService {
     }
 
     @Override
-    public List<Movie> getMovies() {
+    public List<MovieBasicInfoProjection> getMovies() {
         return repository.getMovies();
     }
 
     @Override
-    public List<Movie> getMoviesBySearch(String search) {
+    public List<MovieBasicInfoProjection> getMoviesBySearch(String search) {
         return repository.getMoviesBySearch(search);
     }
 
     @Override
-    public List<Movie> getMoviesByGenreId(int genreId) {
+    public List<MovieBasicInfoProjection> getMoviesByGenreId(int genreId) {
         return repository.getMoviesByGenreId(genreId);
     }
 
@@ -41,12 +40,12 @@ public class MoviesServiceImpl implements MoviesService {
     }
 
     @Override
-    public List<Movie> getLatestMovies(int actualLimit) {
+    public List<MovieBasicInfoProjection> getLatestMovies(int actualLimit) {
         return repository.getLatestMovies(actualLimit);
     }
 
     @Override
-    public List<Movie> getPaginatedMovies(int pageInt) {
+    public List<MovieBasicInfoProjection> getPaginatedMovies(int pageInt) {
         return repository.getPaginatedMovies(pageInt);
     }
 }

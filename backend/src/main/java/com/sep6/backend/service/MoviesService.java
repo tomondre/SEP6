@@ -1,16 +1,16 @@
 package com.sep6.backend.service;
 
+import com.sep6.backend.projections.MovieBasicInfoProjection;
 import com.sep6.backend.models.Movie;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface MoviesService {
     Movie createMovie(Movie movie);
-    List<Movie> getMovies();
-    List<Movie> getMoviesBySearch(String search);
-    List<Movie> getMoviesByGenreId(int genreId);
+    List<MovieBasicInfoProjection> getMovies();
+    List<MovieBasicInfoProjection> getMoviesBySearch(String search);
+    List<MovieBasicInfoProjection> getMoviesByGenreId(int genreId);
     Movie getMovieById(int id);
-    List<Movie> getLatestMovies(int actualLimit);
-    List<Movie> getPaginatedMovies(int pageInt);
+    List<MovieBasicInfoProjection> getLatestMovies(int actualLimit);
+    List<MovieBasicInfoProjection> getPaginatedMovies(int pageInt);
 }

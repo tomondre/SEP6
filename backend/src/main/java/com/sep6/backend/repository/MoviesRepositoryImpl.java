@@ -1,5 +1,6 @@
 package com.sep6.backend.repository;
 
+import com.sep6.backend.projections.MovieBasicInfoProjection;
 import com.sep6.backend.jpa.GenresJpaRepository;
 import com.sep6.backend.jpa.MoviesJpaRepository;
 import com.sep6.backend.jpa.PeopleJpaRepository;
@@ -43,17 +44,17 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
-    public List<Movie> getMovies() {
-        return jpaRepository.findAll();
+    public List<MovieBasicInfoProjection> getMovies() {
+        return jpaRepository.findAllByIdNotNull();
     }
 
     @Override
-    public List<Movie> getMoviesBySearch(String search) {
+    public List<MovieBasicInfoProjection> getMoviesBySearch(String search) {
         return jpaRepository.findByTitleContainingIgnoreCase(search);
     }
 
     @Override
-    public List<Movie> getMoviesByGenreId(int genreId) {
+    public List<MovieBasicInfoProjection> getMoviesByGenreId(int genreId) {
         return jpaRepository.findByGenresId(genreId);
     }
 
@@ -63,15 +64,15 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
-    public List<Movie> getLatestMovies(int actualLimit) {
+    public List<MovieBasicInfoProjection> getLatestMovies(int actualLimit) {
         Pageable pageable = PageRequest.of(0, actualLimit);
         return jpaRepository.findAllByOrderByReleaseDateDesc(pageable);
     }
 
     @Override
-    public List<Movie> getPaginatedMovies(int pageInt) {
+    public List<MovieBasicInfoProjection> getPaginatedMovies(int pageInt) {
         PageRequest page = PageRequest.of(pageInt, 10);
-        return jpaRepository.findAll(page).getContent();
+        return jpaRepository.findAllByIdNotNull(page).getContent();
     }
 
     @Override

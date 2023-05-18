@@ -1,13 +1,11 @@
 package com.sep6.backend.controller;
 
-import com.sep6.backend.models.Genre;
+import com.sep6.backend.projections.MovieBasicInfoProjection;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.service.MoviesService;
 import com.sep6.backend.service.ReviewsService;
 import lombok.AllArgsConstructor;
-import com.sep6.backend.service.ReviewsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class MoviesController {
     }
 
     @GetMapping
-    public List<Movie> getMovies(
+    public List<MovieBasicInfoProjection> getMovies(
             @RequestParam(name = "search", required = false) Optional<String> search,
             @RequestParam(name = "genreId", required = false) Optional<String> genreId,
             @RequestParam(name = "page", required = false) Optional<String> page
@@ -55,7 +53,7 @@ public class MoviesController {
     }
 
     @GetMapping(value = "/latest")
-    public List<Movie> getLatestMovies(@RequestParam(name = "limit", required = false) String limit) {
+    public List<MovieBasicInfoProjection> getLatestMovies(@RequestParam(name = "limit", required = false) String limit) {
         int actualLimit = limit != null && !limit.isEmpty()? Integer.parseInt(limit): 10;
         return service.getLatestMovies(actualLimit);
     }
