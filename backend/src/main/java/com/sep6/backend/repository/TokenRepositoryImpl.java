@@ -28,14 +28,28 @@ public class TokenRepositoryImpl implements TokenRepository
     }
 
     @Override
-    public Token save(Token storedToken)
+    public Token save(Token storedToken) throws IllegalArgumentException
     {
-        return jpaRepository.save(storedToken);
+        try
+        {
+            return jpaRepository.save(storedToken);
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException("A null token cannot be saved");
+        }
     }
 
     @Override
-    public List<Token> saveAll(List<Token> validUserTokens)
+    public List<Token> saveAll(List<Token> validUserTokens) throws IllegalArgumentException
     {
-        return jpaRepository.saveAll(validUserTokens);
+        try
+        {
+            return jpaRepository.saveAll(validUserTokens);
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException("There are null tokens in the list");
+        }
     }
 }
