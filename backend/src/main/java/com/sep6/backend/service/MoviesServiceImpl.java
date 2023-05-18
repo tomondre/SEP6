@@ -1,7 +1,7 @@
 package com.sep6.backend.service;
 
 
-import com.sep6.backend.projections.MovieBasicInfoProjection;
+import com.sep6.backend.projections.MovieProjection;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.repository.MoviesRepository;
 import lombok.AllArgsConstructor;
@@ -20,17 +20,17 @@ public class MoviesServiceImpl implements MoviesService {
     }
 
     @Override
-    public List<MovieBasicInfoProjection> getMovies() {
+    public List<MovieProjection> getMovies() {
         return repository.getMovies();
     }
 
     @Override
-    public List<MovieBasicInfoProjection> getMoviesBySearch(String search) {
+    public List<MovieProjection> getMoviesBySearch(String search) {
         return repository.getMoviesBySearch(search);
     }
 
     @Override
-    public List<MovieBasicInfoProjection> getMoviesByGenreId(int genreId) {
+    public List<MovieProjection> getMoviesByGenreId(int genreId) {
         return repository.getMoviesByGenreId(genreId);
     }
 
@@ -40,12 +40,12 @@ public class MoviesServiceImpl implements MoviesService {
     }
 
     @Override
-    public List<MovieBasicInfoProjection> getLatestMovies(int actualLimit) {
+    public List<MovieProjection> getLatestMovies(int actualLimit) {
         return repository.getLatestMovies(actualLimit);
     }
 
     @Override
-    public List<MovieBasicInfoProjection> getPaginatedMovies(int pageInt) {
+    public List<MovieProjection> getPaginatedMovies(int pageInt) {
         return repository.getPaginatedMovies(pageInt);
     }
 }

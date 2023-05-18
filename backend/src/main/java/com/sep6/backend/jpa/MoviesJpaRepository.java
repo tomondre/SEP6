@@ -1,6 +1,6 @@
 package com.sep6.backend.jpa;
 
-import com.sep6.backend.projections.MovieBasicInfoProjection;
+import com.sep6.backend.projections.MovieProjection;
 import com.sep6.backend.models.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +11,11 @@ import java.util.List;
 
 @Repository
 public interface MoviesJpaRepository extends JpaRepository<Movie, Integer> {
-    List<MovieBasicInfoProjection> findByTitleContainingIgnoreCase(String search);
-    List<MovieBasicInfoProjection> findByGenresId(int genreId);
-    List<MovieBasicInfoProjection> findAllByOrderByReleaseDateDesc(Pageable pageable);
+    List<MovieProjection> findByTitleContainingIgnoreCase(String search);
+    List<MovieProjection> findByGenresId(int genreId);
+    List<MovieProjection> findAllByOrderByReleaseDateDesc(Pageable pageable);
     Movie findById(int id);
     // Workaround because the return projection would otherwise clash with the already implemented findAll method
-    Page<MovieBasicInfoProjection> findAllByIdNotNull(Pageable page);
-    List<MovieBasicInfoProjection> findAllByIdNotNull();
+    Page<MovieProjection> findAllByIdNotNull(Pageable page);
+    List<MovieProjection> findAllByIdNotNull();
 }

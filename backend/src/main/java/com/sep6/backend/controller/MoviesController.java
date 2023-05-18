@@ -1,6 +1,6 @@
 package com.sep6.backend.controller;
 
-import com.sep6.backend.projections.MovieBasicInfoProjection;
+import com.sep6.backend.projections.MovieProjection;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.service.MoviesService;
@@ -25,7 +25,7 @@ public class MoviesController {
     }
 
     @GetMapping
-    public List<MovieBasicInfoProjection> getMovies(
+    public List<MovieProjection> getMovies(
             @RequestParam(name = "search", required = false) Optional<String> search,
             @RequestParam(name = "genreId", required = false) Optional<String> genreId,
             @RequestParam(name = "page", required = false) Optional<String> page
@@ -53,7 +53,7 @@ public class MoviesController {
     }
 
     @GetMapping(value = "/latest")
-    public List<MovieBasicInfoProjection> getLatestMovies(@RequestParam(name = "limit", required = false) String limit) {
+    public List<MovieProjection> getLatestMovies(@RequestParam(name = "limit", required = false) String limit) {
         int actualLimit = limit != null && !limit.isEmpty()? Integer.parseInt(limit): 10;
         return service.getLatestMovies(actualLimit);
     }

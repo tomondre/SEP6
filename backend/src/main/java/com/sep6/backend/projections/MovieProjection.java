@@ -5,7 +5,7 @@ import com.sep6.backend.models.Genre;
 import java.sql.Date;
 import java.util.List;
 
-public interface MovieBasicInfoProjection {
+public interface MovieProjection {
     int getId();
     String getTitle();
     String getDescription();

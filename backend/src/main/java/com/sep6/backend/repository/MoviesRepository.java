@@ -1,18 +1,18 @@
 package com.sep6.backend.repository;
 
-import com.sep6.backend.projections.MovieBasicInfoProjection;
+import com.sep6.backend.projections.MovieProjection;
 import com.sep6.backend.models.Movie;
 
 import java.util.List;
 
 public interface MoviesRepository {
     Movie createMovie(Movie movie);
-    List<MovieBasicInfoProjection> getMovies();
-    List<MovieBasicInfoProjection> getMoviesBySearch(String search);
-    List<MovieBasicInfoProjection> getMoviesByGenreId(int genreId);
+    List<MovieProjection> getMovies();
+    List<MovieProjection> getMoviesBySearch(String search);
+    List<MovieProjection> getMoviesByGenreId(int genreId);
     Movie getMovieById(int id);
-    List<MovieBasicInfoProjection> getLatestMovies(int actualLimit);
-    List<MovieBasicInfoProjection> getPaginatedMovies(int pageInt);
+    List<MovieProjection> getLatestMovies(int actualLimit);
+    List<MovieProjection> getPaginatedMovies(int pageInt);
     Movie updateMovieRatingById(int movieId, double rating);
     Movie getMovieReferenceById(int id);
 }
