@@ -43,7 +43,7 @@ const Navbar: FunctionComponent = () =>{
 
             <Grid item container lg={2} className={classes.menu}>
                 {links.map(({destination, link}, index) => (
-                    <Grid item>
+                    <Grid item key={index}>
                         <Link href={link} key={index}>
                             <Typography className={classes.navbarText} variant="h6">{destination}</Typography>
                         </Link>
