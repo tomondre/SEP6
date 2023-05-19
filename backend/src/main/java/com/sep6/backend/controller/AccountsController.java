@@ -4,6 +4,7 @@ import com.sep6.backend.models.Account;
 import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.projections.AccountProjection;
+import com.sep6.backend.models.Review;
 import com.sep6.backend.service.AccountsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import java.util.Set;
@@ -121,6 +123,23 @@ public class AccountsController {
         catch (IllegalArgumentException e)
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + accountId + " does not exist.", e);
+        }
+        catch (Exception e)
+        {
+            //TODO log the error
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
+        }
+    }
+
+    @GetMapping(value = "/{id}/reviews")
+    public ResponseEntity<List<Review>> getAccountReviews(@PathVariable int id) {
+        try
+        {
+            return ResponseEntity.ok(service.getAccountReviews(id));
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {

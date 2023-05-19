@@ -3,10 +3,12 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
+import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
@@ -107,6 +109,11 @@ public class AccountsRepositoryImpl implements AccountsRepository{
         accountReferenceById.getFavourites().remove(movieReferenceById);
 
         jpaRepository.save(accountReferenceById);
+    }
+
+    @Override
+    public List<Review> getAccountReviews(int id) {
+        return getAccountById(id).orElseThrow().getReviews();
     }
 
     @Override
