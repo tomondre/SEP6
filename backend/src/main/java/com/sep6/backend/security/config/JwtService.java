@@ -1,5 +1,6 @@
 package com.sep6.backend.security.config;
 
+import com.sep6.backend.models.Account;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jmx.export.naming.IdentityNamingStrategy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,10 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        HashMap<String, Object> accountDetails = new HashMap<>();
+        accountDetails.put("user_id", ((Account)userDetails).getId());
+
+        return generateToken(accountDetails, userDetails);
     }
 
     public String generateToken(
