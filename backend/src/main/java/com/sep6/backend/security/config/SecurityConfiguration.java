@@ -23,7 +23,6 @@ import static com.sep6.backend.models.Role.*;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -43,25 +42,11 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/auth/**",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/actuator/**",
-                        "/actuator"
-                )
-                .permitAll()
-
-
-//                .requestMatchers("/example").hasAnyRole(USER.name())
-
-//                .requestMatchers(GET, "/example/**").hasAnyAuthority(ADMIN_READ.name())
-//                .requestMatchers(POST, "/example/**").hasAnyAuthority(ADMIN_CREATE.name())
-//                .requestMatchers(PUT, "/example/**").hasAnyAuthority(ADMIN_UPDATE.name())
-//                .requestMatchers(DELETE, "/example/**").hasAnyAuthority(ADMIN_DELETE.name())
-
-                .anyRequest()
+                        "/accounts/**",
+                        "/movies/*/reviews/")
                 .authenticated()
+                .anyRequest()
+                .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
