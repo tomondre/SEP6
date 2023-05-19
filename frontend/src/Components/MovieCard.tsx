@@ -23,6 +23,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ poster, title }) => {
 const useStyles = makeStyles()(() => ({
     image:{
         marginTop: '3rem',
+        width :'16rem',
+        height: '24rem'
     },
     movieTitle:{
         padding: '1rem 0',

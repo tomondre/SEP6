@@ -2,11 +2,18 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import MovieCard from "../Components/MovieCard";
-import { Grid, IconButton, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { Grid, Typography, Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import actorService from "../Services/actor-service";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../Constants/Colors";
+
+
+interface Movie {
+  id:number;
+  title:string;
+  posterUrl:string;
+}
 
 interface Actor {
   id: number;
@@ -18,6 +25,7 @@ interface Actor {
   biography: string;
   deathDate: string;
   profileImg: string;
+  movies:Movie[]
 }
 
 const ActorPage = () => {
@@ -25,12 +33,14 @@ const ActorPage = () => {
   const navigate = useNavigate();
   const [actor, setActor] = useState<Actor>();
 
-  const logo = require("../images/shrek.png");
+
+  const baseUrl = 'https://image.tmdb.org/t/p/original'
+
 
   useEffect(() => {
     const fetchActor = async () => {
       try {
-        const actor= await actorService.getSpecificActor(3136)
+        const actor= await actorService.getSpecificActor(976)
         setActor(actor);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -41,14 +51,6 @@ const ActorPage = () => {
   }, []);
 
 
-  const mockedMovies = [
-    { id: 1, poster: logo, title: "Shrek" },
-    { id: 2, poster: logo, title: "Shrek" },
-    { id: 3, poster: logo, title: "Shrek" },
-    { id: 4, poster: logo, title: "Shrek" },
-    { id: 5, poster: logo, title: "Shrek" },
-    { id: 6, poster: logo, title: "Shrek" },
-  ];
 
   if(!actor)
   {
@@ -59,7 +61,7 @@ const ActorPage = () => {
     <Grid container>
       <Grid className={classes.container}>
         <Grid>
-          <img src={logo} className={classes.image} alt="actor" />
+          <img src={`${baseUrl}${actor.profileImg}`} className={classes.image} alt="actor" />
         </Grid>
 
         <Grid className={classes.actorDetails}>
@@ -78,23 +80,34 @@ const ActorPage = () => {
               <Typography variant="h6">{actor.type}</Typography>
             </Grid>
             <Grid className={classes.dateOfBirth}>
-              <Typography variant="h6">{actor.dateOfBirth}</Typography>
+              <Typography variant="h6">Born: {actor.dateOfBirth.substring(0,10)}</Typography>
             </Grid>
-            <Grid className={classes.deathDate}>
-              <Typography variant="h6">{actor.deathDate}</Typography>
+            { actor.deathDate &&
+              <Grid className={classes.deathDate}>
+              <Typography variant="h6">Died: {actor.deathDate.substring(0,10)}</Typography>
+            </Grid>}
+            <Grid className={classes.birthPlace}>
+              <Typography variant="h6">Place of birth: {actor.placeOfBirth}</Typography>
+            </Grid>
+            <Grid className={classes.gender}>
+              <Typography variant="h6">Gender: {actor.gender}</Typography>
             </Grid>
           </Grid>
 
-          <Grid>
+          <Grid className={classes.biography}>
             <Typography variant="p">{actor.biography}</Typography>
           </Grid>
         </Grid>
       </Grid>
-
-      <Grid item container>
-        {mockedMovies.map((movie, index) => (
-          <Grid item lg={3} key={index}>
-            <MovieCard poster={movie.poster} title={movie.title} />
+      <Grid className={classes.knownForLabel}>
+      <Typography variant="h4">Known for:</Typography>
+      </Grid>
+      <Grid item container className={classes.moviesContainer}>
+        {actor.movies.map((movie, index) => (
+          <Grid item lg={2} key={index}>
+            <Link href="/">
+            <MovieCard poster={`${baseUrl}${movie.posterUrl}`} title={movie.title} />
+            </Link>
           </Grid>
         ))}
       </Grid>
@@ -137,7 +150,6 @@ const useStyles = makeStyles()(() => ({
     height: "5rem",
     textAlign: "start",
     marginTop: "3rem",
-    //border:'0.5rem solid red'
   },
   actorDetails: {
     width: "70%",
@@ -147,7 +159,6 @@ const useStyles = makeStyles()(() => ({
     display: "flex",
     alignItems: "start",
     height: "10%",
-    //border:'0.5rem solid red'
   },
   type: {
     color: Colors.yellow,
@@ -167,6 +178,31 @@ const useStyles = makeStyles()(() => ({
     alignContent: "center",
     marginLeft: "1rem",
   },
+  birthPlace: {
+    color: Colors.yellow,
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
+  },
+  gender: {
+    color: Colors.yellow,
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
+  },
+  biography:{
+    textAlign:'justify',
+    fontWeight:'300',
+  },
+  knownForLabel:{
+    margin:'4rem 4rem 4rem 0rem'
+  },
+  moviesContainer:{
+    border:'0.05rem solid white'
+  }
+
 }));
 
 export default ActorPage;

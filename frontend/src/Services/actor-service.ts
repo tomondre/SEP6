@@ -4,6 +4,11 @@ import axios from '../api/axios';
 
 const API_URL = "/actors";
 
+interface Movie {
+  id:number;
+  title:string;
+  posterUrl:string;
+}
 
 interface Actor {
   id: number;
@@ -15,6 +20,7 @@ interface Actor {
   biography: string;
   deathDate: string;
   profileImg: string;
+  movies:Movie[]
 }
 
 
