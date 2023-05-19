@@ -1,11 +1,13 @@
 package com.sep6.backend.service;
 
-import com.sep6.backend.models.Person;
+
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 
 import java.util.List;
 
 public interface DirectorsService {
-    List<Person> getDirectorsBySearch(String search);
-    List<Person> getDirectors();
-    Person getDirectorsById(int id);
+    List<PersonProjection> getDirectorsBySearch(String search);
+    List<PersonProjection> getDirectors();
+    PersonMoviesProjection getDirectorById(int id);
 }

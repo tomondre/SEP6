@@ -1,7 +1,8 @@
 package com.sep6.backend.service;
 
 
-import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.repository.DirectorsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,17 +15,17 @@ public class DirectorsServiceImpl implements DirectorsService {
     private DirectorsRepository repository;
 
     @Override
-    public List<Person> getDirectorsBySearch(String search) {
+    public List<PersonProjection> getDirectorsBySearch(String search) {
         return repository.getDirectorsBySearch(search);
     }
 
     @Override
-    public List<Person> getDirectors() {
+    public List<PersonProjection> getDirectors() {
         return repository.getDirectors();
     }
 
     @Override
-    public Person getDirectorsById(int id) {
-        return repository.getDirectorsById(id);
+    public PersonMoviesProjection getDirectorById(int id) {
+        return repository.getDirectorsById(id).orElseThrow();
     }
 }

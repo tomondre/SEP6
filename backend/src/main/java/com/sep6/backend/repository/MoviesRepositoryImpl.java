@@ -1,11 +1,12 @@
 package com.sep6.backend.repository;
 
+import com.sep6.backend.projections.MovieProjection;
 import com.sep6.backend.jpa.GenresJpaRepository;
 import com.sep6.backend.jpa.MoviesJpaRepository;
-import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.MovieProjection;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,24 +19,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class MoviesRepositoryImpl implements MoviesRepository{
     private MoviesJpaRepository jpaRepository;
-    private PeopleJpaRepository peopleJpaRepository;
-    private GenresJpaRepository genresJpaRepository;
+    private ActorsRepository actorsRepository;
+    private GenresRepository genresRepository;
 
     @Override
-    public Movie createMovie(Movie movie) {
+    public Movie createMovie(Movie movie)
+    {
         List<Person> people = movie.getPeople();
         for (Person person : people) {
-            Optional<Person> byId = peopleJpaRepository.findById(person.getId());
+            Optional<Person> byId = actorsRepository.findById(person.getId());
             if (byId.isEmpty()) {
-                peopleJpaRepository.save(person);
+                actorsRepository.save(person);
             }
         }
 
         List<Genre> genres = movie.getGenres();
         for (Genre genre : genres) {
-            Optional<Genre> byId = genresJpaRepository.findById(genre.getId());
+            Optional<Genre> byId = genresRepository.findById(genre.getId());
             if (byId.isEmpty()) {
-                genresJpaRepository.save(genre);
+                genresRepository.save(genre);
             }
         }
 
@@ -43,40 +45,40 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
-    public List<Movie> getMovies() {
-        return jpaRepository.findAll();
+    public List<MovieProjection> getMovies() {
+        return jpaRepository.findAllByIdNotNull();
     }
 
     @Override
-    public List<Movie> getMoviesBySearch(String search) {
+    public List<MovieProjection> getMoviesBySearch(String search) {
         return jpaRepository.findByTitleContainingIgnoreCase(search);
     }
 
     @Override
-    public List<Movie> getMoviesByGenreId(int genreId) {
+    public List<MovieProjection> getMoviesByGenreId(int genreId) {
         return jpaRepository.findByGenresId(genreId);
     }
 
     @Override
-    public Movie getMovieById(int id) {
+    public Optional<Movie> getMovieById(int id) {
         return jpaRepository.findById(id);
     }
 
     @Override
-    public List<Movie> getLatestMovies(int actualLimit) {
+    public List<MovieProjection> getLatestMovies(int actualLimit) {
         Pageable pageable = PageRequest.of(0, actualLimit);
         return jpaRepository.findAllByOrderByReleaseDateDesc(pageable);
     }
 
     @Override
-    public List<Movie> getPaginatedMovies(int pageInt) {
-        PageRequest page = PageRequest.of(pageInt, 12);
-        return jpaRepository.findAll(page).getContent();
+    public List<MovieProjection> getPaginatedMovies(int pageInt) {
+        PageRequest page = PageRequest.of(pageInt, 10);
+        return jpaRepository.findAllByIdNotNull(page).getContent();
     }
 
     @Override
     public Movie updateMovieRatingById(int movieId, double rating) {
-        Movie movieById = getMovieById(movieId);
+        Movie movieById = getMovieById(movieId).get();
         movieById.setRating(rating);
         return jpaRepository.save(movieById);
     }

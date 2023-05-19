@@ -3,9 +3,12 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
+import com.sep6.backend.models.Review;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,15 +22,14 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     @Override
     public Optional<Account> findByEmail(String email)
     {
-        return jpaRepository.findByEmail(email);
+       return jpaRepository.findByEmail(email);
     }
 
     public Optional<Account> editAccount(int id, Account account)
     {
-        Optional<Account> toEdit = jpaRepository.findById(id);
+        try {
+            Account edited = jpaRepository.findById(id).orElseThrow();
 
-        if (toEdit.isPresent()){
-            Account edited = toEdit.get();
             edited.setEmail(account.getEmail());
             edited.setName(account.getName());
             edited.setCountry(account.getCountry());
@@ -36,25 +38,44 @@ public class AccountsRepositoryImpl implements AccountsRepository{
             edited.setEnabled(account.isEnabled());
             edited.setFavourites(account.getFavourites());
             return Optional.of(jpaRepository.save(edited));
+
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Account not found with ID: " + id);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Failed to edit account, because of missing data.", e);
         }
-        return Optional.empty();
     }
 
     @Override
     public void deleteAccount(int id)
     {
-        jpaRepository.disableAccount(id);
+        try
+        {
+            jpaRepository.disableAccount(id);
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException("Failed to delete account.", e);
+        }
     }
 
     @Override
     public Account save(Account user)
     {
-        return jpaRepository.save(user);
+        try
+        {
+            return jpaRepository.save(user);
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException("Failed to save account.", e);
+        }
     }
 
     @Override
-    public Account getAccountById(int accountId) {
-        return jpaRepository.findById(accountId).get();
+    public Optional<Account> getAccountById(int accountId)
+    {
+        return jpaRepository.findById(accountId);
     }
 
     @Override
@@ -64,7 +85,7 @@ public class AccountsRepositoryImpl implements AccountsRepository{
 
     @Override
     public Set<Movie> getAccountFavouritesById(int id) {
-        Account account = getAccountById(id);
+        Account account = getAccountById(id).orElseThrow();
         return account.getFavourites();
     }
 
@@ -87,5 +108,10 @@ public class AccountsRepositoryImpl implements AccountsRepository{
         accountReferenceById.getFavourites().remove(movieReferenceById);
 
         jpaRepository.save(accountReferenceById);
+    }
+
+    @Override
+    public List<Review> getAccountReviews(int id) {
+        return getAccountById(id).orElseThrow().getReviews();
     }
 }

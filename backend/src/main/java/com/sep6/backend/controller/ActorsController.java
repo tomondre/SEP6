@@ -1,11 +1,16 @@
 package com.sep6.backend.controller;
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.service.ActorsService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/actors")
@@ -14,15 +19,35 @@ public class ActorsController {
     private ActorsService service;
 
     @GetMapping
-    public List<Person> getActors(@RequestParam(name = "search", required = false) String search) {
-        if (search != null) {
-            return service.getActorsBySearch(search);
-        }
-        return service.getActors();
+    public ResponseEntity<List<PersonProjection>> getActors(@RequestParam(name = "search", required = false) String search) {
+       try
+       {
+           if (search != null) {
+               return ResponseEntity.ok(service.getActorsBySearch(search));
+           }
+           return ResponseEntity.ok(service.getActors());
+       }
+       catch (Exception e)
+       {
+           //TODO logg the error
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong, please try again later");
+       }
     }
 
     @GetMapping(value = "/{id}")
-    public Person getActorById(@PathVariable int id) {
-        return service.getActorById(id);
+    public ResponseEntity<PersonMoviesProjection> getActorById(@PathVariable int id) {
+        try
+        {
+            return ResponseEntity.ok(service.getActorById(id));
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Actor with id " + id + " does not exist.", e);
+        }
+        catch (Exception e)
+        {
+            //TODO logg the error
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong, please try again later");
+        }
     }
 }
