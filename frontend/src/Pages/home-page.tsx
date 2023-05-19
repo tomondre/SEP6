@@ -1,9 +1,10 @@
-import { Button, Grid, Pagination, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import CarouselComponent from '../Components/Carousel';
 import MovieCard from '../Components/MovieCard';
 import { Colors } from '../Constants/Colors';
+import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../Services/movies";
 
 interface Movie {
@@ -15,14 +16,15 @@ interface Movie {
 
 const HomePage = () => {
   const { classes } = useStyles();
-  const logo = require("../images/shrek.png");
   const [currentPage, setCurrentPage] = useState(1);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState<number | "">("");
+
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const movies = await MovieService.filterMovies(currentPage);
+        const movies = await MovieService.filterMovies(currentPage, selectedGenre);
         setMovies(movies);
       } catch (error) {
         console.error('Error fetching movies:', error);
@@ -30,21 +32,19 @@ const HomePage = () => {
     };
 
     fetchMovies();
-  }, [currentPage]);
-
-
-  const mockedMovies = [
-    { id: 1, poster: logo, title: 'Shrek' },
-    { id: 2, poster: logo, title: 'Shrek' },
-    { id: 3, poster: logo, title: 'Shrek' },
-    { id: 4, poster: logo, title: 'Shrek' },
-    { id: 5, poster: logo, title: 'Shrek' },
-    { id: 6, poster: logo, title: 'Shrek' },
-  ]
+  }, [currentPage, selectedGenre]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const handleGenreChange = (event: SelectChangeEvent<number>) => {
+    const selectedGenreValue = event.target.value;
+    setSelectedGenre(selectedGenreValue as number);
+  };
+  
+  
+  
 
   return (
     <Grid container>
@@ -60,6 +60,28 @@ const HomePage = () => {
       </Grid>
 
       <Grid item container>
+        <Grid item lg={12} className={classes.genreContainer}>
+            <FormControl className={classes.genres}>
+              <InputLabel
+                className={classes.lightCyan}
+              >
+                Genre
+              </InputLabel>
+              <Select
+                className={classes.lightCyan + " " + classes.lightCyanBorder}
+                labelId="genre-select-label"
+                id="genre-select"
+                value={selectedGenre}
+                label="Genre"
+                onChange={handleGenreChange}
+              >
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value={28}>Action</MenuItem>
+                <MenuItem value={53}>Thriller</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
         {
            movies.map((movie: Movie, index: number) => (
             <Grid key={index} item lg={3}>
@@ -67,6 +89,7 @@ const HomePage = () => {
             </Grid>
           ))
         }
+
       <Grid item className={classes.paginationContainer} lg={12}>
         <Pagination
           className={classes.pagination}
@@ -97,7 +120,24 @@ const useStyles = makeStyles()(() => ({
     "& .MuiPaginationItem-root": {
       color: Colors.lightCyan
     },
-  }
+  },
+  genres:{
+    width: '10rem',
+    margin: '1rem',
+    color: Colors.lightCyan,
+
+  },
+  genreContainer:{
+    display:'grid',
+    justifyContent: 'end',
+    padding: '1rem',
+  },
+  lightCyan:{
+    color: Colors.lightCyan,
+  },
+  lightCyanBorder:{
+    border: '1px solid ' + Colors.lightCyan,
+  },
 }));
 
 

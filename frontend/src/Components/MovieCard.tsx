@@ -12,7 +12,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ poster, title }) => {
 
   return (
     <div>
-      <img src={poster} className={classes.image} alt={title} />
+      <img src={`https://image.tmdb.org/t/p/w200${poster}`} className={classes.image} alt={title} />
       <Typography variant="h6" className={classes.movieTitle}>
         {title}
       </Typography>
