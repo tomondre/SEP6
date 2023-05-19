@@ -63,7 +63,7 @@ public class AccountsController {
         {
             return ResponseEntity.ok(service.getAccountById(id));
         }
-        catch (IllegalArgumentException e)
+        catch (NoSuchElementException e)
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
