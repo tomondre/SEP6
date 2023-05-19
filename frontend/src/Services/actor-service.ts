@@ -1,7 +1,6 @@
 //import axios from 'axios';
 //const API_URL = "http://localhost:8081/actors"; 
 import axios from '../api/axios';
-
 const API_URL = "/actors";
 
 interface Movie {
@@ -10,7 +9,7 @@ interface Movie {
   posterUrl:string;
 }
 
-interface Actor {
+interface People {
   id: number;
   name: string;
   type: string;
@@ -24,11 +23,11 @@ interface Actor {
 }
 
 
-  const getSpecificActor = async (id: number): Promise<Actor> => {
+  const getSpecificActor = async (id: number): Promise<People> => {
     try {
         const response = await axios.get(`${API_URL}/${id}`);
         const actor = response.data;
-        return actor as Actor;
+        return actor as People;
     } catch (error) {
         console.error('Error fetching movies:', error);
         throw error;

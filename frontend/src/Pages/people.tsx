@@ -15,7 +15,7 @@ interface Movie {
   posterUrl:string;
 }
 
-interface Actor {
+interface People {
   id: number;
   name: string;
   type: string;
@@ -28,10 +28,10 @@ interface Actor {
   movies:Movie[]
 }
 
-const ActorPage = () => {
+const PeoplePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const [actor, setActor] = useState<Actor>();
+  const [people, setPeople] = useState<People>();
 
 
   const baseUrl = 'https://image.tmdb.org/t/p/original'
@@ -40,8 +40,8 @@ const ActorPage = () => {
   useEffect(() => {
     const fetchActor = async () => {
       try {
-        const actor= await actorService.getSpecificActor(976)
-        setActor(actor);
+        const people= await actorService.getSpecificActor(3136)
+        setPeople(people);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -52,7 +52,7 @@ const ActorPage = () => {
 
 
 
-  if(!actor)
+  if(!people)
   {
     return <div>Loading...</div>
   }
@@ -61,41 +61,41 @@ const ActorPage = () => {
     <Grid container>
       <Grid className={classes.container}>
         <Grid>
-          <img src={`${baseUrl}${actor.profileImg}`} className={classes.image} alt="actor" />
+          <img src={`${baseUrl}${people.profileImg}`} className={classes.image} alt="people" />
         </Grid>
 
-        <Grid className={classes.actorDetails}>
+        <Grid className={classes.peopleDetails}>
           <Grid className={classes.ratingGroup}>
             <StarIcon className={classes.star} />
             <Grid className={classes.rating}>Rating</Grid>
             <Grid className={classes.ratingGoal}>/ 10</Grid>
           </Grid>
 
-          <Grid className={classes.actorName}>
-            <Typography variant="h2">{actor.name}</Typography>
+          <Grid className={classes.peopleName}>
+            <Typography variant="h2">{people.name}</Typography>
           </Grid>
 
           <Grid className={classes.specifications}>
             <Grid className={classes.type}>
-              <Typography variant="h6">{actor.type}</Typography>
+              <Typography variant="h6">{people.type}</Typography>
             </Grid>
             <Grid className={classes.dateOfBirth}>
-              <Typography variant="h6">Born: {actor.dateOfBirth.substring(0,10)}</Typography>
+              <Typography variant="h6">Born: {people.dateOfBirth.substring(0,10)}</Typography>
             </Grid>
-            { actor.deathDate &&
+            { people.deathDate &&
               <Grid className={classes.deathDate}>
-              <Typography variant="h6">Died: {actor.deathDate.substring(0,10)}</Typography>
+              <Typography variant="h6">Died: {people.deathDate.substring(0,10)}</Typography>
             </Grid>}
             <Grid className={classes.birthPlace}>
-              <Typography variant="h6">Place of birth: {actor.placeOfBirth}</Typography>
+              <Typography variant="h6">Place of birth: {people.placeOfBirth}</Typography>
             </Grid>
             <Grid className={classes.gender}>
-              <Typography variant="h6">Gender: {actor.gender}</Typography>
+              <Typography variant="h6">Gender: {people.gender}</Typography>
             </Grid>
           </Grid>
 
           <Grid className={classes.biography}>
-            <Typography variant="p">{actor.biography}</Typography>
+            <Typography variant="p">{people.biography}</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -103,7 +103,7 @@ const ActorPage = () => {
       <Typography variant="h4">Known for:</Typography>
       </Grid>
       <Grid item container className={classes.moviesContainer}>
-        {actor.movies.map((movie, index) => (
+        {people.movies.map((movie, index) => (
           <Grid item lg={2} key={index}>
             <Link href="/">
             <MovieCard poster={`${baseUrl}${movie.posterUrl}`} title={movie.title} />
@@ -145,13 +145,13 @@ const useStyles = makeStyles()(() => ({
     fontSize: "2rem",
     alignContent: "center",
   },
-  actorName: {
+  peopleName: {
     width: "100%",
     height: "5rem",
     textAlign: "start",
     marginTop: "3rem",
   },
-  actorDetails: {
+  peopleDetails: {
     width: "70%",
     padding: "2rem",
   },
@@ -205,4 +205,4 @@ const useStyles = makeStyles()(() => ({
 
 }));
 
-export default ActorPage;
+export default PeoplePage;
