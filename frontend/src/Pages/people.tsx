@@ -46,7 +46,6 @@ const PeoplePage = () => {
         if (id !== -1) {
           const people = await actorService.getSpecificActor(id);
           setPeople(people);
-          console.log(id);
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -111,9 +110,7 @@ const PeoplePage = () => {
       <Grid item container className={classes.moviesContainer}>
         {people.movies.map((movie, index) => (
           <Grid item lg={2} key={index}>
-            <Link href="/">
             <MovieCard id={movie.id} poster={`${baseUrl}${movie.posterUrl}`} title={movie.title} />
-            </Link>
           </Grid>
         ))}
       </Grid>
