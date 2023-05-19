@@ -1,12 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
-import MovieCard from "../Components/MovieCard";
+import MovieCard from "../components/MovieCard";
 import { Grid, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import actorService from "../Services/actor-service";
+import actorService from "../services/actor-service";
 import StarIcon from "@mui/icons-material/Star";
-import { Colors } from "../Constants/Colors";
+import { Colors } from "../constants/Colors";
+import { useLocation } from "react-router-dom";
+import { useIdFromUrl } from "../hooks/useIdFromUrl";
 
 
 interface Movie {
@@ -32,6 +34,7 @@ const PeoplePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const [people, setPeople] = useState<People>();
+  const id = useIdFromUrl();
 
 
   const baseUrl = 'https://image.tmdb.org/t/p/original'
@@ -40,8 +43,10 @@ const PeoplePage = () => {
   useEffect(() => {
     const fetchActor = async () => {
       try {
-        const people= await actorService.getSpecificActor(3136)
-        setPeople(people);
+        if (id !== -1) {
+          const people = await actorService.getSpecificActor(id);
+          setPeople(people);
+        }
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -105,9 +110,7 @@ const PeoplePage = () => {
       <Grid item container className={classes.moviesContainer}>
         {people.movies.map((movie, index) => (
           <Grid item lg={2} key={index}>
-            <Link href="/">
             <MovieCard id={movie.id} poster={`${baseUrl}${movie.posterUrl}`} title={movie.title} />
-            </Link>
           </Grid>
         ))}
       </Grid>
