@@ -15,10 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.sep6.backend.models.Permission.*;
-import static com.sep6.backend.models.Role.*;
-import static org.springframework.http.HttpMethod.*;
-
 
 @Configuration
 @EnableWebSecurity
@@ -37,25 +33,11 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/auth/**",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/actuator/**",
-                        "/actuator"
-                )
-                .permitAll()
-
-
-//                .requestMatchers("/example").hasAnyRole(USER.name())
-
-//                .requestMatchers(GET, "/example/**").hasAnyAuthority(ADMIN_READ.name())
-//                .requestMatchers(POST, "/example/**").hasAnyAuthority(ADMIN_CREATE.name())
-//                .requestMatchers(PUT, "/example/**").hasAnyAuthority(ADMIN_UPDATE.name())
-//                .requestMatchers(DELETE, "/example/**").hasAnyAuthority(ADMIN_DELETE.name())
-
-                .anyRequest()
+                        "/accounts/**",
+                        "/movies/*/reviews/")
                 .authenticated()
+                .requestMatchers("/**")
+                .permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
