@@ -4,6 +4,7 @@ import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
+import com.sep6.backend.projections.AccountProjection;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -113,5 +114,10 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     @Override
     public List<Review> getAccountReviews(int id) {
         return getAccountById(id).orElseThrow().getReviews();
+    }
+
+    @Override
+    public Optional<AccountProjection> getAccountProjectionById(int id) {
+        return jpaRepository.findByIdAndIdNotNull(id);
     }
 }

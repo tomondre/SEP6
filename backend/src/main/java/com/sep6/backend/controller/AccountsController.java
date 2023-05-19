@@ -3,6 +3,7 @@ package com.sep6.backend.controller;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
+import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.service.AccountsService;
 import lombok.AllArgsConstructor;
@@ -59,7 +60,22 @@ public class AccountsController {
         }
     }
 
-
+    @GetMapping(value = "{id}")
+    public ResponseEntity<AccountProjection> getAccountById(@PathVariable int id){
+        try
+        {
+            return ResponseEntity.ok(service.getAccountById(id));
+        }
+        catch (NoSuchElementException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
+        }
+        catch (Exception e)
+        {
+            //TODO log the error
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
+        }
+    }
 
     @PostMapping(value = "/{id}/favourites")
     public ResponseEntity<FavouriteRequest> addMovieToAccountFavourites(@PathVariable int id, @RequestBody FavouriteRequest request) {

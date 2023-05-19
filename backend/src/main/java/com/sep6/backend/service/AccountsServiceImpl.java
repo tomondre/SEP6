@@ -4,8 +4,8 @@ import com.sep6.backend.models.Account;
 import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
+import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.repository.AccountsRepository;
-import com.sep6.backend.repository.MoviesRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,6 @@ public class AccountsServiceImpl implements AccountsService {
 
     private PasswordEncoder passwordEncoder;
     private AccountsRepository repository;
-    private MoviesRepository moviesRepository;
 
     @Override
     public FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request) {
@@ -40,6 +39,11 @@ public class AccountsServiceImpl implements AccountsService {
     @Override
     public List<Review> getAccountReviews(int id) {
         return repository.getAccountReviews(id);
+    }
+
+    @Override
+    public AccountProjection getAccountById(int id) {
+        return repository.getAccountProjectionById(id).orElseThrow();
     }
 
     @Override
