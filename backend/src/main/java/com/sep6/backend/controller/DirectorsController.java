@@ -2,6 +2,8 @@ package com.sep6.backend.controller;
 
 
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.service.DirectorsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/directors")
@@ -19,7 +22,7 @@ public class DirectorsController {
     private DirectorsService service;
 
     @GetMapping
-    public ResponseEntity<List<Person>> getDirectors(@RequestParam(name = "search", required = false) String search) {
+    public ResponseEntity<List<PersonProjection>> getDirectors(@RequestParam(name = "search", required = false) String search) {
       try
       {
           if (search != null)
@@ -36,7 +39,7 @@ public class DirectorsController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Person> getDirectorById(@PathVariable int id) {
+    public ResponseEntity<PersonMoviesProjection> getDirectorById(@PathVariable int id) {
         try
         {
             return ResponseEntity.ok(service.getDirectorById(id));

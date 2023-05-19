@@ -29,8 +29,8 @@ public class Person {
     private Date deathDate;
     private String profileImg;
     @ManyToMany(mappedBy = "people")
-    @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private List<Movie> movies;
 }

@@ -1,5 +1,7 @@
 package com.sep6.backend.controller;
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.PersonMoviesProjection;
+import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.service.ActorsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ public class ActorsController {
     private ActorsService service;
 
     @GetMapping
-    public ResponseEntity<List<Person>> getActors(@RequestParam(name = "search", required = false) String search) {
+    public ResponseEntity<List<PersonProjection>> getActors(@RequestParam(name = "search", required = false) String search) {
        try
        {
            if (search != null) {
@@ -33,7 +35,7 @@ public class ActorsController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Person> getActorById(@PathVariable int id) {
+    public ResponseEntity<PersonMoviesProjection> getActorById(@PathVariable int id) {
         try
         {
             return ResponseEntity.ok(service.getActorById(id));
