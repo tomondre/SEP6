@@ -2,6 +2,7 @@ package com.sep6.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sep6.backend.models.Account;
+import com.sep6.backend.models.Role;
 import com.sep6.backend.models.auth.AuthenticationRequest;
 import com.sep6.backend.models.auth.AuthenticationResponse;
 import com.sep6.backend.models.auth.RegisterRequest;
@@ -14,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -45,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
                           .profilePictureUrl(request.getProfilePictureUrl())
                           .dateOfBirth(Date.valueOf(request.getDateOfBirth()))
                           .gender(request.getGender())
-                          .role(request.getRole())
+                          .role(Role.USER)
                           .build();
         var savedUser = accountsRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
