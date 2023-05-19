@@ -1,21 +1,26 @@
 import { Typography } from "@mui/material";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
+import {Link as RouterLink } from "react-router-dom";
 
 type MovieCardProps = {
   poster: string;
   title: string;
+  id: number;
 };
 
-const MovieCard: React.FC<MovieCardProps> = ({ poster, title }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ poster, title, id }) => {
   const { classes } = useStyles();
 
   return (
     <div>
-      <img src={poster} className={classes.image} alt={title} />
-      <Typography variant="h6" className={classes.movieTitle}>
-        {title}
-      </Typography>
+      <RouterLink to={`/movies?id=${id}`}>
+        <img src={`https://image.tmdb.org/t/p/w200${poster}`} className={classes.image} alt={title} />
+        <Typography variant="h6" className={classes.movieTitle}>
+          {title}
+        </Typography>
+      </RouterLink>
+
     </div>
   );
 };

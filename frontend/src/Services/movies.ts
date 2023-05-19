@@ -1,19 +1,14 @@
 import axios from 'axios';
+import { Movie } from "../types";
 
 const API_URL = 'http://localhost:8081/';
 
-interface Movie {
-    id: number;
-    genres: { id: number; name: string }[];
-    posterUrl: string;
-    title: string;
-}
-
-const getMovies = async (pageNumber: number): Promise<Movie[]> => {
+const getMovies = async (pageNumber?: number, genreId?: number | ""): Promise<Movie[]> => {
     try {
         const response = await axios.get(`${API_URL}movies`, {
             params: {
                 page: pageNumber,
+                genreId: genreId,
             },
             headers: {
                 'Accept': 'application/json',
@@ -28,9 +23,10 @@ const getMovies = async (pageNumber: number): Promise<Movie[]> => {
     }
 };
 
-const filterMovies = async (pageNumber: number): Promise<Movie[]> => {
+const filterMovies = async (pageNumber: number, genreId?: number | ""): Promise<Movie[]> => {
     try {
-        const movies = await getMovies(pageNumber);
+        let movies = await getMovies(pageNumber, genreId);
+
         const filteredMovies = movies.map((movie: Movie) => {
             const { id, genres, posterUrl, title } = movie;
             const filteredGenres = genres.map((genre) => ({ id: genre.id, name: genre.name }));

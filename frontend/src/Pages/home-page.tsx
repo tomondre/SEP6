@@ -1,28 +1,25 @@
-import { Button, Grid, Pagination, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import CarouselComponent from '../Components/Carousel';
 import MovieCard from '../Components/MovieCard';
 import { Colors } from '../Constants/Colors';
+import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../Services/movies";
-
-interface Movie {
-  id: number;
-  genres: { id: number; name: string }[];
-  posterUrl: string;
-  title: string;
-}
+import GenreFilter from '../Components/GenreFilter';
+import { Movie } from "../types";
 
 const HomePage = () => {
   const { classes } = useStyles();
-  const logo = require("../images/shrek.png");
   const [currentPage, setCurrentPage] = useState(1);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState<number | "">("");
+
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const movies = await MovieService.filterMovies(currentPage);
+        const movies = await MovieService.filterMovies(currentPage, selectedGenre);
         setMovies(movies);
       } catch (error) {
         console.error('Error fetching movies:', error);
@@ -30,21 +27,19 @@ const HomePage = () => {
     };
 
     fetchMovies();
-  }, [currentPage]);
-
-
-  const mockedMovies = [
-    { id: 1, poster: logo, title: 'Shrek' },
-    { id: 2, poster: logo, title: 'Shrek' },
-    { id: 3, poster: logo, title: 'Shrek' },
-    { id: 4, poster: logo, title: 'Shrek' },
-    { id: 5, poster: logo, title: 'Shrek' },
-    { id: 6, poster: logo, title: 'Shrek' },
-  ]
+  }, [currentPage, selectedGenre]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const handleGenreChange = (event: SelectChangeEvent<number>) => {
+    const selectedGenreValue = event.target.value;
+    setSelectedGenre(selectedGenreValue as number);
+  };
+  
+  
+  
 
   return (
     <Grid container>
@@ -56,17 +51,23 @@ const HomePage = () => {
         </Button>
       </Grid>
       <Grid item lg={6}>
-        <CarouselComponent />
+        <CarouselComponent movies={movies} />
       </Grid>
 
       <Grid item container>
+        <Grid item lg={12} className={classes.genreContainer}>
+          <GenreFilter selectedGenre={selectedGenre} onChange={handleGenreChange} />
+          </Grid>
+
         {
            movies.map((movie: Movie, index: number) => (
             <Grid key={index} item lg={3}>
-              <MovieCard poster={movie.posterUrl} title={movie.title} />
+              <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id}/>
             </Grid>
           ))
         }
+
+      {selectedGenre === "" &&
       <Grid item className={classes.paginationContainer} lg={12}>
         <Pagination
           className={classes.pagination}
@@ -74,7 +75,7 @@ const HomePage = () => {
           page={currentPage}
           onChange={(event, page) => handlePageChange(page)}
         />
-        </Grid>
+        </Grid>}
       </Grid>
     </Grid>
   );
@@ -97,7 +98,12 @@ const useStyles = makeStyles()(() => ({
     "& .MuiPaginationItem-root": {
       color: Colors.lightCyan
     },
-  }
+  },
+  genreContainer:{
+    display:'grid',
+    justifyContent: 'end',
+    padding: '1rem',
+  },
 }));
 
 
