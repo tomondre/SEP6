@@ -38,8 +38,11 @@ const ActorPage = () => {
     };
 
     fetchActor();
-  });
-  console.log(actor)
+  }, []);
+
+
+  
+  
 
   const mockedMovies = [
     { id: 1, poster: logo, title: "Shrek" },
@@ -50,8 +53,13 @@ const ActorPage = () => {
     { id: 6, poster: logo, title: "Shrek" },
   ];
 
+  if(!actor)
+  {
+    return <div>Loading...</div>
+  }
+
   return (
-    <>
+    <Grid container>
       <Grid className={classes.container}>
         <Grid>
           <img src={logo} className={classes.image} alt="actor" />
@@ -65,35 +73,35 @@ const ActorPage = () => {
           </Grid>
 
           <Grid className={classes.actorName}>
-            <Typography variant="h1">{actor?.name}</Typography>
+            <Typography variant="h2">{actor.name}</Typography>
           </Grid>
 
           <Grid className={classes.specifications}>
             <Grid className={classes.type}>
-              <Typography variant="h6">Type</Typography>
+              <Typography variant="h6">{actor.type}</Typography>
             </Grid>
             <Grid className={classes.dateOfBirth}>
-              <Typography variant="h6">DateOfBirth</Typography>
+              <Typography variant="h6">{actor.dateOfBirth}</Typography>
             </Grid>
             <Grid className={classes.deathDate}>
-              <Typography variant="h6">DeathDate(if any)</Typography>
+              <Typography variant="h6">{actor.deathDate}</Typography>
             </Grid>
           </Grid>
 
           <Grid>
-            <Typography variant="h6">Biography</Typography>
+            <Typography variant="p">{actor.biography}</Typography>
           </Grid>
         </Grid>
       </Grid>
 
       <Grid item container>
-        {mockedMovies.map((movie) => (
-          <Grid item lg={3}>
+        {mockedMovies.map((movie, index) => (
+          <Grid item lg={3} key={index}>
             <MovieCard poster={movie.poster} title={movie.title} />
           </Grid>
         ))}
       </Grid>
-    </>
+    </Grid>
   );
 };
 

@@ -123,6 +123,7 @@ export const theme = createTheme({
         },
         p: {
             fontSize: '0.75rem',
+            color: Colors.lightCyan,
         },
     },
 
