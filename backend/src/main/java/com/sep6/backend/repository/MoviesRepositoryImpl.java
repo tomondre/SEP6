@@ -1,9 +1,12 @@
 package com.sep6.backend.repository;
 
+import com.sep6.backend.projections.MovieProjection;
+import com.sep6.backend.jpa.GenresJpaRepository;
 import com.sep6.backend.jpa.MoviesJpaRepository;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Person;
+import com.sep6.backend.projections.MovieProjection;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,17 +45,17 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
-    public List<Movie> getMovies() {
-        return jpaRepository.findAll();
+    public List<MovieProjection> getMovies() {
+        return jpaRepository.findAllByIdNotNull();
     }
 
     @Override
-    public List<Movie> getMoviesBySearch(String search) {
+    public List<MovieProjection> getMoviesBySearch(String search) {
         return jpaRepository.findByTitleContainingIgnoreCase(search);
     }
 
     @Override
-    public List<Movie> getMoviesByGenreId(int genreId) {
+    public List<MovieProjection> getMoviesByGenreId(int genreId) {
         return jpaRepository.findByGenresId(genreId);
     }
 
@@ -62,21 +65,20 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     }
 
     @Override
-    public List<Movie> getLatestMovies(int actualLimit) {
+    public List<MovieProjection> getLatestMovies(int actualLimit) {
         Pageable pageable = PageRequest.of(0, actualLimit);
         return jpaRepository.findAllByOrderByReleaseDateDesc(pageable);
     }
 
     @Override
-    public List<Movie> getPaginatedMovies(int pageInt) {
-        PageRequest page = PageRequest.of(pageInt, 12);
-        return jpaRepository.findAll(page).getContent();
+    public List<MovieProjection> getPaginatedMovies(int pageInt) {
+        PageRequest page = PageRequest.of(pageInt, 10);
+        return jpaRepository.findAllByIdNotNull(page).getContent();
     }
 
     @Override
-    public Movie updateMovieRatingById(int movieId, double rating)
-    {
-        Movie movieById = getMovieById(movieId).orElseThrow();
+    public Movie updateMovieRatingById(int movieId, double rating) {
+        Movie movieById = getMovieById(movieId).get();
         movieById.setRating(rating);
         return jpaRepository.save(movieById);
     }

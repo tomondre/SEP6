@@ -2,7 +2,10 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
+import com.sep6.backend.models.Review;
+import com.sep6.backend.projections.AccountProjection;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,4 +20,6 @@ public interface AccountsRepository {
     Set<Movie> getAccountFavouritesById(int id);
     void addMovieToAccountFavourites(int accountId, int movieId);
     void deleteAccountFavourite(int accountId, int movieId);
+    Optional<AccountProjection> getAccountProjectionById(int id);
+    List<Review> getAccountReviews(int id);
 }

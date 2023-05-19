@@ -41,15 +41,15 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
-    @ManyToMany
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JoinTable(
             name = "person_movie",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Person> people;
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Column(name = "reviews_id")
