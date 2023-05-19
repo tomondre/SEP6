@@ -15,24 +15,23 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/actors")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class ActorsController {
     private ActorsService service;
 
     @GetMapping
     public ResponseEntity<List<PersonProjection>> getActors(@RequestParam(name = "search", required = false) String search) {
-       try
-       {
-           if (search != null) {
-               return ResponseEntity.ok(service.getActorsBySearch(search));
-           }
-           return ResponseEntity.ok(service.getActors());
-       }
-       catch (Exception e)
-       {
-           //TODO logg the error
-           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong, please try again later");
-       }
+        try
+        {
+            if (search != null) {
+                return ResponseEntity.ok(service.getActorsBySearch(search));
+            }
+            return ResponseEntity.ok(service.getActors());
+        }
+        catch (Exception e)
+        {
+            //TODO logg the error
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong, please try again later");
+        }
     }
 
     @GetMapping(value = "/{id}")
