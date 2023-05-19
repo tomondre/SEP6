@@ -1,13 +1,7 @@
 import axios from 'axios';
+import { Movie } from "../types";
 
 const API_URL = 'http://localhost:8081/';
-
-interface Movie {
-    id: number;
-    genres: { id: number; name: string }[];
-    posterUrl: string;
-    title: string;
-}
 
 const getMovies = async (pageNumber?: number, genreId?: number | ""): Promise<Movie[]> => {
     try {

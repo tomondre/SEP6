@@ -7,13 +7,7 @@ import { Colors } from '../Constants/Colors';
 import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../Services/movies";
 import GenreFilter from '../Components/GenreFilter';
-
-interface Movie {
-  id: number;
-  genres: { id: number; name: string }[];
-  posterUrl: string;
-  title: string;
-}
+import { Movie } from "../types";
 
 const HomePage = () => {
   const { classes } = useStyles();
@@ -57,7 +51,7 @@ const HomePage = () => {
         </Button>
       </Grid>
       <Grid item lg={6}>
-        <CarouselComponent />
+        <CarouselComponent movies={movies} />
       </Grid>
 
       <Grid item container>
@@ -68,7 +62,7 @@ const HomePage = () => {
         {
            movies.map((movie: Movie, index: number) => (
             <Grid key={index} item lg={3}>
-              <MovieCard poster={movie.posterUrl} title={movie.title} />
+              <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id}/>
             </Grid>
           ))
         }
