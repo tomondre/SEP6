@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                         "/accounts/**",
                         "/movies/*/reviews/")
                 .authenticated()
-                .requestMatchers("/**")
+                .anyRequest()
                 .permitAll()
                 .and()
                 .sessionManagement()
