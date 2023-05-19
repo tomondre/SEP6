@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { Colors } from '../Constants/Colors';
+import { Colors } from '../constants/Colors';
 
 const SearchBar = () => {
   const { classes } = useStyles();

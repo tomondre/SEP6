@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Layout from './Components/Layout';
-import HomePage from './Pages/home-page';
-import SignUp from './Pages/sign-up';
-import Login from './Pages/login';
+import Layout from './components/Layout';
+import HomePage from './pages/home-page';
+import SignUp from './pages/sign-up';
+import Login from './pages/login';
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./Theme/theme";
-import PeoplePage from './Pages/people';
+import theme from "./theme/theme";
+import PeoplePage from './pages/people';
 
 
 

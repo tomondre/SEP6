@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { Colors } from '../Constants/Colors';
+import { Colors } from '../constants/Colors';
 
 declare module '@mui/material/styles/createTypography' {
     interface Typography {
@@ -124,7 +124,7 @@ export const theme = createTheme({
         p: {
             fontSize: '1.1rem',
             color: Colors.lightCyan,
-            lineHeight:'2rem'
+            lineHeight: '2rem'
         },
     },
 

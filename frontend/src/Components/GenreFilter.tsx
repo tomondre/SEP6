@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { Colors } from '../Constants/Colors';
+import { Colors } from '../constants/Colors';
 import { makeStyles } from 'tss-react/mui';
 
 interface GenreFilterProps {

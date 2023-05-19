@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FunctionComponent } from "react";
 import { Drawer, Grid, Typography, useMediaQuery, Link, TextField, IconButton } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
-import { Colors } from "../Constants/Colors";
+import { Colors } from "../constants/Colors";
 import SearchBar from "./SearchBar";
 
 interface Links {

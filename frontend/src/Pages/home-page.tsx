@@ -1,12 +1,12 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import CarouselComponent from '../Components/Carousel';
-import MovieCard from '../Components/MovieCard';
-import { Colors } from '../Constants/Colors';
+import CarouselComponent from '../components/Carousel';
+import MovieCard from '../components/MovieCard';
+import { Colors } from '../constants/Colors';
 import { SelectChangeEvent } from '@mui/material';
-import MovieService from "../Services/movies";
-import GenreFilter from '../Components/GenreFilter';
+import MovieService from "../services/movies";
+import GenreFilter from '../components/GenreFilter';
 import { Movie } from "../types";
 
 const HomePage = () => {
