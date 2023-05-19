@@ -6,6 +6,7 @@ import MovieCard from '../Components/MovieCard';
 import { Colors } from '../Constants/Colors';
 import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../Services/movies";
+import GenreFilter from '../Components/GenreFilter';
 
 interface Movie {
   id: number;
@@ -61,25 +62,7 @@ const HomePage = () => {
 
       <Grid item container>
         <Grid item lg={12} className={classes.genreContainer}>
-            <FormControl className={classes.genres}>
-              <InputLabel
-                className={classes.lightCyan}
-              >
-                Genre
-              </InputLabel>
-              <Select
-                className={classes.lightCyan + " " + classes.lightCyanBorder}
-                labelId="genre-select-label"
-                id="genre-select"
-                value={selectedGenre}
-                label="Genre"
-                onChange={handleGenreChange}
-              >
-                <MenuItem value="">All</MenuItem>
-                <MenuItem value={28}>Action</MenuItem>
-                <MenuItem value={53}>Thriller</MenuItem>
-              </Select>
-            </FormControl>
+          <GenreFilter selectedGenre={selectedGenre} onChange={handleGenreChange} />
           </Grid>
 
         {
@@ -90,6 +73,7 @@ const HomePage = () => {
           ))
         }
 
+      {selectedGenre === "" &&
       <Grid item className={classes.paginationContainer} lg={12}>
         <Pagination
           className={classes.pagination}
@@ -97,7 +81,7 @@ const HomePage = () => {
           page={currentPage}
           onChange={(event, page) => handlePageChange(page)}
         />
-        </Grid>
+        </Grid>}
       </Grid>
     </Grid>
   );
@@ -121,22 +105,10 @@ const useStyles = makeStyles()(() => ({
       color: Colors.lightCyan
     },
   },
-  genres:{
-    width: '10rem',
-    margin: '1rem',
-    color: Colors.lightCyan,
-
-  },
   genreContainer:{
     display:'grid',
     justifyContent: 'end',
     padding: '1rem',
-  },
-  lightCyan:{
-    color: Colors.lightCyan,
-  },
-  lightCyanBorder:{
-    border: '1px solid ' + Colors.lightCyan,
   },
 }));
 
