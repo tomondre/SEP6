@@ -2,10 +2,12 @@ package com.sep6.backend.service;
 
 import com.sep6.backend.models.Account;
 
+import java.util.List;
 import java.util.Set;
 
 import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
+import com.sep6.backend.models.Review;
 
 public interface AccountsService {
 
@@ -14,4 +16,5 @@ public interface AccountsService {
     FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request);
     Set<Movie> getAccountFavourites(int id);
     void deleteAccountFavourite(int accountId, int movieId);
+    List<Review> getAccountReviews(int id);
 }
