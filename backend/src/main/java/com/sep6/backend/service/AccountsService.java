@@ -14,4 +14,5 @@ public interface AccountsService {
     FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request);
     Set<Movie> getAccountFavourites(int id);
     void deleteAccountFavourite(int accountId, int movieId);
+    Account getAccountById(int id);
 }

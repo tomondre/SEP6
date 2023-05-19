@@ -57,7 +57,22 @@ public class AccountsController {
         }
     }
 
-
+    @GetMapping(value = "{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable int id){
+        try
+        {
+            return ResponseEntity.ok(service.getAccountById(id));
+        }
+        catch (IllegalArgumentException e)
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
+        }
+        catch (Exception e)
+        {
+            //TODO log the error
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
+        }
+    }
 
     @PostMapping(value = "/{id}/favourites")
     public ResponseEntity<FavouriteRequest> addMovieToAccountFavourites(@PathVariable int id, @RequestBody FavouriteRequest request) {

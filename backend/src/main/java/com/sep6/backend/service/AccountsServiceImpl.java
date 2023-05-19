@@ -17,7 +17,6 @@ public class AccountsServiceImpl implements AccountsService {
 
     private PasswordEncoder passwordEncoder;
     private AccountsRepository repository;
-    private MoviesRepository moviesRepository;
 
     @Override
     public FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request) {
@@ -33,6 +32,11 @@ public class AccountsServiceImpl implements AccountsService {
     @Override
     public void deleteAccountFavourite(int accountId, int movieId) {
         repository.deleteAccountFavourite(accountId, movieId);
+    }
+
+    @Override
+    public Account getAccountById(int id) {
+        return repository.getAccountById(id).orElseThrow();
     }
 
     @Override
