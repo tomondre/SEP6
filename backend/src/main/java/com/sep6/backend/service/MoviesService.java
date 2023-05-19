@@ -2,7 +2,6 @@ package com.sep6.backend.service;
 
 import com.sep6.backend.models.Movie;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface MoviesService {

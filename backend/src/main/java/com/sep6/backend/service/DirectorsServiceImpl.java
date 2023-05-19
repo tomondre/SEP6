@@ -24,7 +24,7 @@ public class DirectorsServiceImpl implements DirectorsService {
     }
 
     @Override
-    public Person getDirectorsById(int id) {
-        return repository.getDirectorsById(id);
+    public Person getDirectorById(int id) {
+        return repository.getDirectorsById(id).orElseThrow();
     }
 }

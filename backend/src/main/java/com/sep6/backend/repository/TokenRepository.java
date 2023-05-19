@@ -16,7 +16,7 @@ public interface TokenRepository
 
     Optional<Token> findByToken(String token);
 
-    Token save(Token storedToken);
+    Token save(Token storedToken) throws IllegalArgumentException;
 
-    List<Token> saveAll(List<Token> validUserTokens);
+    List<Token> saveAll(List<Token> validUserTokens) throws IllegalArgumentException;
 }

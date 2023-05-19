@@ -24,6 +24,6 @@ public class ActorsServiceImpl implements ActorsService {
 
     @Override
     public Person getActorById(int id) {
-        return repository.getActorById(id);
+        return repository.getActorById(id).orElseThrow();
     }
 }

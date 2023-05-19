@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MoviesJpaRepository extends JpaRepository<Movie, Integer> {
@@ -14,5 +15,5 @@ public interface MoviesJpaRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findByGenresId(int genreId);
     List<Movie> findAllByOrderByReleaseDateDesc(Pageable pageable);
     Page<Movie> findAll(Pageable page);
-    Movie findById(int id);
+    Optional<Movie> findById(int id);
 }
