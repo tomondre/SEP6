@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
+import com.sep6.backend.projections.AccountProjection;
 
 public interface AccountsService {
 
@@ -14,5 +15,5 @@ public interface AccountsService {
     FavouriteRequest addMovieToAccountFavourites(FavouriteRequest request);
     Set<Movie> getAccountFavourites(int id);
     void deleteAccountFavourite(int accountId, int movieId);
-    Account getAccountById(int id);
+    AccountProjection getAccountById(int id);
 }
