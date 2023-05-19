@@ -1,7 +1,9 @@
-
+//import axios from 'axios';
+//const API_URL = "http://localhost:8081/actors"; 
 import axios from '../api/axios';
 
 const API_URL = "/actors";
+
 
 interface Actor {
   id: number;
@@ -19,7 +21,6 @@ interface Actor {
   const getSpecificActor = async (id: number): Promise<Actor> => {
     try {
         const response = await axios.get(`${API_URL}/${id}`);
-
         const actor = response.data;
         return actor as Actor;
     } catch (error) {
@@ -28,9 +29,9 @@ interface Actor {
     }
 };
 
-
   const actorService = {
     getSpecificActor
   };
   
   export default actorService;
+

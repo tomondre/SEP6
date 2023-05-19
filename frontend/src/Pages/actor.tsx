@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import MovieCard from "../Components/MovieCard";
 import { Grid, IconButton, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import actorService from "../Services/actor-service";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../Constants/Colors";
@@ -30,7 +30,7 @@ const ActorPage = () => {
   useEffect(() => {
     const fetchActor = async () => {
       try {
-        const actor = await actorService.getSpecificActor(116);
+        const actor= await actorService.getSpecificActor(3136)
         setActor(actor);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -38,8 +38,11 @@ const ActorPage = () => {
     };
 
     fetchActor();
-  });
+  },[]);
+
+
   console.log(actor)
+
 
   const mockedMovies = [
     { id: 1, poster: logo, title: "Shrek" },
@@ -65,7 +68,7 @@ const ActorPage = () => {
           </Grid>
 
           <Grid className={classes.actorName}>
-            <Typography variant="h1">{actor?.name}</Typography>
+            <Typography variant="h1">Name</Typography>
           </Grid>
 
           <Grid className={classes.specifications}>
@@ -94,7 +97,7 @@ const ActorPage = () => {
         ))}
       </Grid>
     </>
-  );
+  )
 };
 
 const useStyles = makeStyles()(() => ({
