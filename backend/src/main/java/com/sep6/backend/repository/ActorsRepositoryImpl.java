@@ -29,8 +29,8 @@ public class ActorsRepositoryImpl implements ActorsRepository
     }
 
     @Override
-    public PersonMoviesProjection getActorById(int id) {
-        return jpaRepository.findByTypeAndId(PersonType.ACTOR, id).orElseThrow();
+    public Optional<PersonMoviesProjection> getActorById(int id) {
+        return jpaRepository.findByTypeAndId(PersonType.ACTOR, id);
     }
 
     @Override
