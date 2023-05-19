@@ -20,5 +20,4 @@ public class RegisterRequest {
     private String profilePictureUrl;
     private String dateOfBirth;
     private String gender;
-    private Role role;
 }

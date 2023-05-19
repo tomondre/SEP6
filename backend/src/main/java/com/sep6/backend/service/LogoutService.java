@@ -1,4 +1,4 @@
-package com.sep6.backend.security.config;
+package com.sep6.backend.service;
 
 import com.sep6.backend.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
