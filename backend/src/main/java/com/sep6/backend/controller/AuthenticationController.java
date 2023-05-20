@@ -46,7 +46,6 @@ public class AuthenticationController
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         try {
-            //TODO test if email exists
             log.info("Authenticating user: {}", request.getEmail());
             return ResponseEntity.ok(service.authenticate(request));
         } catch (IllegalArgumentException e) {
