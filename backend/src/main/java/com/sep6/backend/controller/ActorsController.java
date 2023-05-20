@@ -1,5 +1,4 @@
 package com.sep6.backend.controller;
-import com.sep6.backend.models.Person;
 import com.sep6.backend.projections.PersonMoviesProjection;
 import com.sep6.backend.projections.PersonProjection;
 import com.sep6.backend.service.ActorsService;

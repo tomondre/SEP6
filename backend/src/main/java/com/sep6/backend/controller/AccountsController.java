@@ -41,7 +41,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while editing the account with ID: {}", id, e);;
+            log.error("An error occurred while editing the account with ID: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -61,7 +61,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while deleting the account with ID: {}", id, e);;
+            log.error("An error occurred while deleting the account with ID: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -80,7 +80,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while getting the account with ID: {}", id, e);;
+            log.error("An error occurred while getting the account with ID: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -100,7 +100,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while adding movie with id " + request.getMovieId() + " to account with id " + id, e);;
+            log.error("An error occurred while adding movie with id " + request.getMovieId() + " to account with id " + id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
 
@@ -120,7 +120,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while getting favourites for account with id " + id, e);;
+            log.error("An error occurred while getting favourites for account with id " + id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -140,7 +140,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while deleting favourite with id " + movieId + " for account with id " + accountId, e);;
+            log.error("An error occurred while deleting favourite with id " + movieId + " for account with id " + accountId, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -159,7 +159,7 @@ public class AccountsController {
         }
         catch (Exception e)
         {
-            log.error("An error occurred while getting reviews for account with id " + id, e);;
+            log.error("An error occurred while getting reviews for account with id " + id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
