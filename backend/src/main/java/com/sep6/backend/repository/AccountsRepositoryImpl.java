@@ -36,8 +36,6 @@ public class AccountsRepositoryImpl implements AccountsRepository{
             edited.setName(account.getName());
             edited.setCountry(account.getCountry());
             edited.setProfilePictureUrl(account.getProfilePictureUrl());
-            edited.setDateOfBirth(account.getDateOfBirth());
-            edited.setGender(account.getGender());
             return Optional.of(jpaRepository.save(edited));
 
         } catch (NoSuchElementException e) {
