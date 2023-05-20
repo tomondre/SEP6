@@ -27,7 +27,7 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     {
         List<Person> people = movie.getPeople();
         for (Person person : people) {
-            Optional<Person> byId = actorsRepository.findById(person.getId());
+            var byId = actorsRepository.findById(person.getId());
             if (byId.isEmpty()) {
                 actorsRepository.save(person);
             }
