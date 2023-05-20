@@ -1,6 +1,5 @@
 package com.sep6.backend.repository;
 
-import com.sep6.backend.jpa.MoviesJpaRepository;
 import com.sep6.backend.jpa.ReviewsJpaRepository;
 import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;

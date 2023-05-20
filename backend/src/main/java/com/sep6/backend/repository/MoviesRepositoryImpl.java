@@ -1,12 +1,10 @@
 package com.sep6.backend.repository;
 
 import com.sep6.backend.projections.MovieProjection;
-import com.sep6.backend.jpa.GenresJpaRepository;
 import com.sep6.backend.jpa.MoviesJpaRepository;
 import com.sep6.backend.models.Genre;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Person;
-import com.sep6.backend.projections.MovieProjection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -88,7 +86,7 @@ public class MoviesRepositoryImpl implements MoviesRepository{
     @Override
     public Movie updateMovieRatingById(int movieId, double rating) {
         log.info("Updating movie rating, movie ID: {}, rating: {}", movieId, rating);
-        Movie movieById = getMovieById(movieId).get();
+        Movie movieById = getMovieById(movieId).orElseThrow();
         movieById.setRating(rating);
         return jpaRepository.save(movieById);
     }

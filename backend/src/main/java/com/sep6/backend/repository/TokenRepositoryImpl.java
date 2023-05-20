@@ -3,7 +3,6 @@ package com.sep6.backend.repository;
 import com.sep6.backend.jpa.TokenJpaRepository;
 import com.sep6.backend.security.token.Token;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
