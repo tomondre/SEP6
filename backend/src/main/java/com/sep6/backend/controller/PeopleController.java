@@ -47,7 +47,7 @@ public class PeopleController {
         {
             return ResponseEntity.ok(service.getPersonById(id));
         }
-        catch (NoSuchElementException e)
+        catch (NullPointerException e)
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Person with id " + id + " does not exist.", e);
         }
