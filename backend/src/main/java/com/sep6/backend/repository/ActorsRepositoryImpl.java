@@ -34,8 +34,8 @@ public class ActorsRepositoryImpl implements ActorsRepository
     }
 
     @Override
-    public Optional<Person> findById(int id) {
-        return jpaRepository.findById(id);
+    public Optional<PersonMoviesProjection> findById(int id) {
+        return Optional.of(jpaRepository.findFirstById(id));
     }
 
     @Override
