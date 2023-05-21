@@ -12,12 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jmx.export.naming.IdentityNamingStrategy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class JwtService {
 
     @Value("${application.security.jwt.secret-key}")
@@ -37,6 +38,7 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
+        log.info("Generating token for user: {}", userDetails);
         HashMap<String, Object> accountDetails = new HashMap<>();
         accountDetails.put("user_id", ((Account)userDetails).getId());
 
@@ -47,12 +49,14 @@ public class JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
+        log.info("Generating token for user: {} {}", userDetails, extraClaims);
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
     public String generateRefreshToken(
             UserDetails userDetails
     ) {
+        log.info("Generating refresh token for user: {}", userDetails);
         return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
 
@@ -61,6 +65,7 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        log.info("Building token for user: {} {}", userDetails, extraClaims);
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -72,19 +77,23 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
+        log.info("Checking if token is valid for user: {}", userDetails);
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
+        log.info("Checking if token is expired");
         return extractExpiration(token).before(new Date());
     }
 
     private Date extractExpiration(String token) {
+        log.info("Extracting expiration date from token");
         return extractClaim(token, Claims::getExpiration);
     }
 
     private Claims extractAllClaims(String token) {
+        log.info("Extracting all claims from token");
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
@@ -94,6 +103,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
+        log.info("Getting sign in key");
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
