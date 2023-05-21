@@ -1,11 +1,11 @@
-import axios from 'axios';
 import { Movie } from "../types";
 
-const API_URL = 'https://sep6-api.tomondre.com';
+import axios from '../api/axios';
+const API_URL = "/movies";
 
 const getMovies = async (pageNumber?: number, genreId?: number | ""): Promise<Movie[]> => {
     try {
-        const response = await axios.get(`${API_URL}/movies`, {
+        const response = await axios.get(`${API_URL}`, {
             params: {
                 page: pageNumber,
                 genreId: genreId,
