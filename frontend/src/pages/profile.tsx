@@ -8,9 +8,11 @@ import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
 import { Movie } from "../types";
+import EditIcon from '@mui/icons-material/Edit';
 
 const ProfilePage = () => {
   const { classes } = useStyles();
+  const [editMode, setEditMode] = useState(false);
 
 
   useEffect(() => {
@@ -28,15 +30,33 @@ const ProfilePage = () => {
         <Grid item lg={8}>
             <div className={classes.profileContainer}>
                 <div className={classes.personalInformation}>
-                    <Typography variant="h3">Personal Information</Typography>
-
-                    <div className={classes.textContainer}>
-                        <Typography variant="h6">Email: </Typography>
-                        <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                    <div className={classes.title}>
+                        <Typography variant="h3">Personal Information</Typography>
+                        <EditIcon
+                        onClick={() => setEditMode(!editMode)}
+                        className={classes.icon} />
                     </div>
-                    <div className={classes.textContainer}>
-                        <Typography variant="h6">Email: </Typography>
-                        <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                    <div className={classes.infoContainer}>
+                        <div className={classes.textContainer}>
+                            <Typography variant="h6">Email: </Typography>
+                            <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                        </div>
+                        <div className={classes.textContainer}>
+                            <Typography variant="h6">Username: </Typography>
+                            <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                        </div>
+                        <div className={classes.textContainer}>
+                            <Typography variant="h6">Country: </Typography>
+                            <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                        </div>
+                        <div className={classes.textContainer}>
+                            <Typography variant="h6">Birthday: </Typography>
+                            <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                        </div>
+                        <div className={classes.textContainer}>
+                            <Typography variant="h6">Gender: </Typography>
+                            <Typography variant="p" className={classes.marginLeft}>myemail.com</Typography>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,7 +72,7 @@ const ProfilePage = () => {
 const useStyles = makeStyles()(() => ({
     profileContainer:{
         backgroundColor:Colors.black50,
-        height: '25rem',
+        // height: '100%',
         border: '1rem',
         padding: '2.5rem',
     },
@@ -62,6 +82,9 @@ const useStyles = makeStyles()(() => ({
     icon:{
         width: '3rem',
         height: '3rem',
+        color: Colors.lightCyan,
+        marginLeft: '1rem',
+        cursor: 'pointer'
 
     },
     personalInformation:{
@@ -71,10 +94,17 @@ const useStyles = makeStyles()(() => ({
     textContainer:{
         display: 'flex',
         alignItems: 'center',
-        margin: '2rem 0'
+        marginTop: '1rem'
     },
     marginLeft:{
         marginLeft: '0.5rem'
+    },
+    infoContainer:{
+        marginTop: '1rem'
+    },
+    title:{
+        display: 'flex',
+        alignItems: 'center',
     }
 }));
 
