@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { Colors } from '../Constants/Colors';
+import { Colors } from '../constants/Colors';
 
 declare module '@mui/material/styles/createTypography' {
     interface Typography {

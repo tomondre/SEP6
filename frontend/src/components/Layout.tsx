@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from './Navbar';
 import { makeStyles } from "tss-react/mui";
 import background from '../images/Background-Photo.webp'
-import { Colors } from '../Constants/Colors';
+import { Colors } from '../constants/Colors';
 
 
 type LayoutProps = {

@@ -1,9 +1,9 @@
 import React, { useState }  from "react";
 import { makeStyles } from "tss-react/mui";
 import { Typography, Button, Link, OutlinedInput } from "@mui/material"
-import { Colors }  from '../Constants/Colors';
+import { Colors }  from '../constants/Colors';
 import { useNavigate } from "react-router-dom";
-import AuthService from "../Services/authentication";
+import AuthService from "../services/authentication";
 import { useForm } from "react-hook-form";
 
 type Account = {
