@@ -20,31 +20,36 @@ public class ActorsRepositoryImpl implements ActorsRepository
     private PeopleJpaRepository jpaRepository;
 
     @Override
-    public List<PersonProjection> getActors() {
+    public List<PersonProjection> getActors()
+    {
         log.info("Getting all actors");
         return jpaRepository.getAllByType(PersonType.ACTOR);
     }
 
     @Override
-    public List<PersonProjection> getActorsBySearch(String search) {
+    public List<PersonProjection> getActorsBySearch(String search)
+    {
         log.info("Getting actors by search: {}", search);
         return jpaRepository.findAllByTypeAndNameContainingIgnoreCase(PersonType.ACTOR, search);
     }
 
     @Override
-    public Optional<PersonMoviesProjection> getActorById(int id) {
+    public Optional<PersonMoviesProjection> getActorById(int id)
+    {
         log.info("Getting actor by ID: {}", id);
         return jpaRepository.findByTypeAndId(PersonType.ACTOR, id);
     }
 
     @Override
-    public Optional<Person> findById(int id) {
+    public Optional<PersonMoviesProjection> findById(int id)
+    {
         log.info("Finding person by ID: {}", id);
-        return jpaRepository.findById(id);
+        return Optional.of(jpaRepository.findFirstById(id));
     }
 
     @Override
-    public Person save(Person person) {
+    public Person save(Person person)
+    {
         log.info("Saving person: {}", person);
         return jpaRepository.save(person);
     }
