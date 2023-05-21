@@ -15,12 +15,12 @@ code {
 
 @font-face {
   font-family: "Rubik-Light";
-  src: local("Rubik-Light"), url("./Fonts/Rubik-Light.ttf") format("truetype");
+  src: local("Rubik-Light"), url("./fonts/Rubik-Light.ttf") format("truetype");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "Rubik-ExtraBold";
-  src: local("Rubik-ExtraBold"), url("./Fonts/Rubik-ExtraBold.ttf") format("truetype");
+  src: local("Rubik-ExtraBold"), url("./fonts/Rubik-ExtraBold.ttf") format("truetype");
   font-weight: normal;
 }
