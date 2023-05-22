@@ -122,7 +122,9 @@ export const theme = createTheme({
             color: Colors.lightCyan,
         },
         p: {
-            fontSize: '0.75rem',
+            fontSize: '1.1rem',
+            color: Colors.lightCyan,
+            lineHeight: '2rem'
         },
     },
 
