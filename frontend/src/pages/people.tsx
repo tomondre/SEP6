@@ -203,7 +203,7 @@ const useStyles = makeStyles()(() => ({
     margin:'4rem 4rem 4rem 0rem'
   },
   moviesContainer:{
-    border:'0.05rem solid white'
+    justifyContent: 'space-around'
   }
 
 }));
