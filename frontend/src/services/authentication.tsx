@@ -21,9 +21,9 @@ const signup = (name:string, email:string, username:string, password:string, cou
       gender,
       role
     })
-    .then((response: { data: { access_token: string; }; }) => {
-      if (response.data.access_token) {
-        localStorage.setItem("accessToken", JSON.stringify(response.data));
+    .then((response: { data: {} }) => {
+      if (response.data) {
+        localStorage.setItem("tokens", JSON.stringify(response.data));
       }
 
       return response.data;

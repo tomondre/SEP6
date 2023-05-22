@@ -9,17 +9,36 @@ import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
 import { Movie } from "../types";
 import EditIcon from '@mui/icons-material/Edit';
+import jwt_decode from "jwt-decode";
+
+interface IUserTokens {
+  access_token: string;
+  refresh_token: string;
+}
+
+interface IDecodedToken {
+  user_id: number;
+  sub: string;
+  iat: number;
+  exp: number;
+}
+
 
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
-  const storedUser = localStorage.getItem("user");
-  const user = storedUser ? JSON.parse(storedUser) : null;
+  const storedUserTokens = localStorage.getItem("tokens");
+  const userTokens: IUserTokens | null = storedUserTokens ? JSON.parse(storedUserTokens) : null;
 
   useEffect(() => {
-    console.log(user)
+    if(userTokens !== null)
+    {
+      console.log(userTokens.access_token)
+      const decoded: IDecodedToken = jwt_decode(userTokens.access_token);
+      console.log(decoded.user_id)
+    }
 
-  }, [user]);
+  }, [userTokens]);
 
 
   return (
