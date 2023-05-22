@@ -49,6 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
                           .dateOfBirth(Date.valueOf(request.getDateOfBirth()))
                           .gender(request.getGender())
                           .role(Role.USER)
+                          .isEnabled(true)
                           .build();
         var savedUser = accountsRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
