@@ -32,8 +32,9 @@ const SignUp = () => {
     try {
       await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender, data.dateOfBirth).then(
         (response) => {
-          navigate("/");
-          window.location.reload();
+          console.log(response)
+          // navigate("/");
+          // window.location.reload();
         },
         (error) => {
           console.log(error);

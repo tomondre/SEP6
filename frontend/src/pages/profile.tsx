@@ -13,11 +13,13 @@ import EditIcon from '@mui/icons-material/Edit';
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
-
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
   useEffect(() => {
+    console.log(user)
 
-  }, []);
+  }, [user]);
 
 
   return (

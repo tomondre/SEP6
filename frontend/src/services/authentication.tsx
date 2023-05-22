@@ -21,9 +21,9 @@ const signup = (name:string, email:string, username:string, password:string, cou
       gender,
       role
     })
-    .then((response: { data: { accessToken: any; }; }) => {
-      if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+    .then((response: { data: { access_token: string; }; }) => {
+      if (response.data.access_token) {
+        localStorage.setItem("accessToken", JSON.stringify(response.data));
       }
 
       return response.data;
@@ -36,8 +36,8 @@ const login = (email: string, password: string) => {
       email,
       password,
     })
-    .then((response: { data: { accessToken: any; }; }) => {
-      if (response.data.accessToken) {
+    .then((response: { data: { access_token: any; }; }) => {
+      if (response.data.access_token) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
 
