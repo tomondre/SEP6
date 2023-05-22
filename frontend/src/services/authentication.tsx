@@ -36,9 +36,10 @@ const login = (email: string, password: string) => {
       email,
       password,
     })
-    .then((response: { data: { access_token: any; }; }) => {
-      if (response.data.access_token) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+    .then((response: { data: {}; }) => {
+      console.log(response.data)
+      if (response.data) {
+        localStorage.setItem("tokens", JSON.stringify(response.data));
       }
 
       return response.data;

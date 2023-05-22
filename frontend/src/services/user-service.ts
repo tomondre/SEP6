@@ -17,8 +17,8 @@ export function getUserTokens(): IUserTokens | null {
     return storedUserTokens ? JSON.parse(storedUserTokens) : null;
 }
 
-export function getDecodedToken(access_token: string): IDecodedToken {
-    return jwt_decode(access_token);
+export function getDecodedToken(): IDecodedToken {
+    return jwt_decode(getAccessToken() as string);
 }
 
 export function getAccessToken(): string | null {
@@ -28,5 +28,5 @@ export function getAccessToken(): string | null {
 
 export function getUserId(): number | null {
     const userTokens = getUserTokens();
-    return userTokens ? getDecodedToken(userTokens.access_token).user_id : null;
+    return userTokens ? getDecodedToken().user_id : null;
 }
