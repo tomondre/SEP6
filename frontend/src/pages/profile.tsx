@@ -10,35 +10,17 @@ import GenreFilter from '../components/GenreFilter';
 import { Movie } from "../types";
 import EditIcon from '@mui/icons-material/Edit';
 import jwt_decode from "jwt-decode";
-
-interface IUserTokens {
-  access_token: string;
-  refresh_token: string;
-}
-
-interface IDecodedToken {
-  user_id: number;
-  sub: string;
-  iat: number;
-  exp: number;
-}
+import profileServie from '../services/profile';
 
 
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
-  const storedUserTokens = localStorage.getItem("tokens");
-  const userTokens: IUserTokens | null = storedUserTokens ? JSON.parse(storedUserTokens) : null;
 
   useEffect(() => {
-    if(userTokens !== null)
-    {
-      console.log(userTokens.access_token)
-      const decoded: IDecodedToken = jwt_decode(userTokens.access_token);
-      console.log(decoded.user_id)
-    }
+    console.log(profileServie.getProfile());
 
-  }, [userTokens]);
+  }, []);
 
 
   return (
