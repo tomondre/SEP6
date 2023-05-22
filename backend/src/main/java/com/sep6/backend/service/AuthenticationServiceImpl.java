@@ -14,6 +14,7 @@ import com.sep6.backend.security.token.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,7 @@ import java.sql.Date;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService
 {
     private final AccountsRepository accountsRepository;
@@ -36,6 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
     public AuthenticationResponse register(RegisterRequest request) throws IllegalArgumentException
     {
+        log.info("Registering new user: {}", request.getUsername());
         var user = Account.builder()
                           .name(request.getName())
                           .username(request.getUsername())
@@ -46,6 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
                           .dateOfBirth(Date.valueOf(request.getDateOfBirth()))
                           .gender(request.getGender())
                           .role(Role.USER)
+                          .isEnabled(true)
                           .build();
         var savedUser = accountsRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -60,6 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public AuthenticationResponse authenticate(AuthenticationRequest request) throws IllegalArgumentException,
             AuthenticationException
     {
+        log.info("Authenticating user: {}", request.getEmail());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -79,18 +84,20 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     private void saveUserToken(Account user, String jwtToken) {
-            var token =
-                    Token.builder()
-                         .user(user)
-                         .token(jwtToken)
-                         .tokenType(TokenType.BEARER)
-                         .expired(false)
-                         .revoked(false)
-                         .build();
-            tokenRepository.save(token);
+        log.info("Saving token for user: {}", user.getEmail());
+        var token =
+                Token.builder()
+                     .user(user)
+                     .token(jwtToken)
+                     .tokenType(TokenType.BEARER)
+                     .expired(false)
+                     .revoked(false)
+                     .build();
+        tokenRepository.save(token);
     }
 
     private void revokeAllUserTokens(Account user) {
+        log.info("Revoking all tokens for user: {}", user.getEmail());
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;
@@ -106,6 +113,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
             HttpServletResponse response
     ) throws IOException
     {
+        log.info("Refreshing access token");
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
