@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from '../api/axios';
 
-const API_URL = 'http://localhost:8081/auth';
+const API_URL = '/auth';
 
 
 

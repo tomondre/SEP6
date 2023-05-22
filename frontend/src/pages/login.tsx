@@ -16,11 +16,10 @@ const Login = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
-  const { register, setValue, handleSubmit, formState: { errors } } = useForm<Account>();
+  const { register, handleSubmit, formState: { errors } } = useForm<Account>();
   const onSubmit = handleSubmit(data => handleLogin(data));
 
   const handleLogin = async (data:Account) => {
-    //e.preventDefault();
     try {
       await AuthService.login(data.email, data.password).then(
         () => {
@@ -76,16 +75,9 @@ const useStyles = makeStyles()(() => ({
   },
   
   login_button:{
-  //   // textAlign: 'center',
    fontSize:'2.188rem',
-  //   // fontStyle:'normal',
-  //   // fontFamily:'Rubik',
-  //   // fontWeight:'800',
-  //   //color:Colors.lightCyan,
     width:'16rem',
     height: '3rem',
-  //   //background: Colors.red1,
-  //   //borderRadius: '1.25rem',
     margin:'2rem'
    },
   group:{
@@ -127,5 +119,4 @@ const useStyles = makeStyles()(() => ({
 
 
 export default Login;
-
 

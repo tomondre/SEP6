@@ -6,6 +6,7 @@ import SignUp from './pages/sign-up';
 import Login from './pages/login';
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme/theme";
+import PeoplePage from './pages/people';
 
 
 
@@ -20,6 +21,7 @@ const AppRouter: React.FC = () => {
             <Route path="/"  element={<HomePage/>} />
             <Route path="/sign-up"  element={<SignUp/>} />
             <Route path="/login"  element={<Login/>} />
+            <Route path="/person"  element={<PeoplePage/>} />
           </Routes>
         </Router>
       </Layout>
