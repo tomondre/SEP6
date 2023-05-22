@@ -20,16 +20,17 @@ public class ActorsController {
 
     @GetMapping
     public ResponseEntity<List<PersonProjection>> getActors(@RequestParam(name = "search", required = false) String search) {
-        try
-        {
+
+        try {
+            log.info("Fetching actors");
             if (search != null) {
+                log.info("Searching actors by search query: {}", search);
                 return ResponseEntity.ok(service.getActorsBySearch(search));
             }
             return ResponseEntity.ok(service.getActors());
-        }
-        catch (Exception e)
-        {
-            //TODO logg the error
+        } catch (Exception e) {
+            log.error("An error occurred while fetching actors", e);
+
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Something went wrong, please try again later");
         }
     }
