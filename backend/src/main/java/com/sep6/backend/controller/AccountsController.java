@@ -7,6 +7,7 @@ import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.service.AccountsService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/accounts")
 @AllArgsConstructor
+@Slf4j
 public class AccountsController {
 
     private AccountsService service;
@@ -29,15 +31,17 @@ public class AccountsController {
     {
         try
         {
+            log.info("Editing account with id " + id);
             return ResponseEntity.ok(service.editAccount(id, account));
         }
         catch (NoSuchElementException e)
         {
+            log.warn("Account with id " + id + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while editing the account with ID: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -46,16 +50,18 @@ public class AccountsController {
     public ResponseEntity<String> deleteAccount(@PathVariable int id){
         try
         {
+            log.info("Deleting account with id " + id);
             service.deleteAccount(id);
             return ResponseEntity.ok("Account deleted successfully");
         }
         catch (IllegalArgumentException e)
         {
+            log.warn("Account with id " + id + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while deleting the account with ID: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -64,15 +70,17 @@ public class AccountsController {
     public ResponseEntity<AccountProjection> getAccountById(@PathVariable int id){
         try
         {
+            log.info("Getting account with id " + id);
             return ResponseEntity.ok(service.getAccountById(id));
         }
         catch (NoSuchElementException e)
         {
+            log.warn("Account with id " + id + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while getting the account with ID: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -81,16 +89,18 @@ public class AccountsController {
     public ResponseEntity<FavouriteRequest> addMovieToAccountFavourites(@PathVariable int id, @RequestBody FavouriteRequest request) {
         try
         {
+            log.info("Adding movie with id " + request.getMovieId() + " to account with id " + id);
             request.setAccountId(id);
             return ResponseEntity.ok(service.addMovieToAccountFavourites(request));
         }
         catch (NoSuchElementException e)
         {
+            log.warn("Account with id " + id + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while adding movie with id " + request.getMovieId() + " to account with id " + id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
 
@@ -100,15 +110,17 @@ public class AccountsController {
     public ResponseEntity<Set<Movie>> getAccountFavourites(@PathVariable int id) {
         try
         {
+            log.info("Getting favourites for account with id " + id);
             return ResponseEntity.ok(service.getAccountFavourites(id));
         }
         catch (NoSuchElementException e)
         {
+            log.warn("Account with id " + id + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while getting favourites for account with id " + id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -117,16 +129,18 @@ public class AccountsController {
     public ResponseEntity<String> deleteAccountFavourite(@PathVariable int accountId, @PathVariable int movieId) {
         try
         {
+            log.info("Deleting favourite with id " + movieId + " for account with id " + accountId);
             service.deleteAccountFavourite(accountId, movieId);
             return ResponseEntity.ok("Favourite deleted successfully");
         }
         catch (IllegalArgumentException e)
         {
+            log.warn("Account with id " + accountId + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + accountId + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while deleting favourite with id " + movieId + " for account with id " + accountId, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
@@ -135,15 +149,17 @@ public class AccountsController {
     public ResponseEntity<List<Review>> getAccountReviews(@PathVariable int id) {
         try
         {
+            log.info("Getting reviews for account with id " + id);
             return ResponseEntity.ok(service.getAccountReviews(id));
         }
         catch (NoSuchElementException e)
         {
+            log.warn("Account with id " + id + " does not exist.", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
         }
         catch (Exception e)
         {
-            //TODO log the error
+            log.error("An error occurred while getting reviews for account with id " + id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
         }
     }
