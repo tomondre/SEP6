@@ -21,7 +21,7 @@ const AppRouter: React.FC = () => {
             <Route path="/"  element={<HomePage/>} />
             <Route path="/sign-up"  element={<SignUp/>} />
             <Route path="/login"  element={<Login/>} />
-            <Route path="/actor"  element={<PeoplePage/>} />
+            <Route path="/person"  element={<PeoplePage/>} />
           </Routes>
         </Router>
       </Layout>
