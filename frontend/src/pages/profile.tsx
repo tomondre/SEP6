@@ -1,5 +1,5 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import CarouselComponent from '../components/Carousel';
 import MovieCard from '../components/MovieCard';
@@ -7,11 +7,11 @@ import { Colors } from '../constants/Colors';
 import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
-import { Movie } from "../types";
 import EditIcon from '@mui/icons-material/Edit';
 import jwt_decode from "jwt-decode";
 import profileServie from '../services/profile';
 import { profile } from 'console';
+import Reviews from '../components/Reviews';
 
 interface Profile {
     country: string;
@@ -34,6 +34,72 @@ const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
+
+  const fieldsAndValues = useMemo(() => {
+    if(!profile)
+      return [];
+
+    return [
+        {
+        field: "Email",
+        value: profile.email,
+        },
+        {
+        field: "Username",
+        value: profile.username,
+        },
+        {
+        field: "Country",
+        value: profile.country,
+        },
+        {
+        field: "Birthday",
+        value: profile.dateOfBirth,
+        },
+        {
+        field: "Gender",
+        value: profile.gender,
+        }
+    ]
+  }, [profile])
+  
+  const reviews = [
+    {
+      id: 1,
+      user: "John Doe",
+      date: "12/12/2012",
+      rating: 5,
+      comment: "lorem ipsum dolor sit amet",
+    },
+    {
+      id: 2,
+      user: "John Doe 2",
+      date: "12/12/2012",
+      rating: 9,
+      comment: "lorem ipsum dolor sit amet",
+    },
+    {
+      id: 3,
+      user: "John Doe 3",
+      date: "12/12/2012",
+      rating: 10,
+      comment: "lorem ipsum dolor sit amet",
+    },
+    {
+      id: 4,
+      user: "John Doe 4",
+      date: "12/12/2012",
+      rating: 5,
+      comment: "lorem ipsum dolor sit amet",
+    },
+    {
+      id: 5,
+      user: "John Doe 5",
+      date: "12/12/2012",
+      rating: 2,
+      comment: "lorem ipsum dolor sit amet",
+    },
+  ];
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -66,11 +132,13 @@ const ProfilePage = () => {
 
   return (
     <Grid container>
+
         <Grid item lg={4} className={classes.gridContainer}>
             <div className={classes.profileContainer}>
 
             </div>
         </Grid>
+
         <Grid item lg={8}>
             <div className={classes.profileContainer}>
                 <div className={classes.personalInformation}>
@@ -81,19 +149,17 @@ const ProfilePage = () => {
                         className={classes.icon} />
                     </div>
                     <div className={classes.infoContainer}>
-                        <ProfileInfo label="Email" value={profile.email} />
-                        <ProfileInfo label="Username" value={profile.username} />
-                        <ProfileInfo label="Country" value={profile.country} />
-                        <ProfileInfo label="Birthday" value={profile.dateOfBirth} />
-                        <ProfileInfo label="Gender" value={profile.gender} />
-                    </div>
+                    {fieldsAndValues.map((fieldAndValue) => (
+                        <ProfileInfo label={fieldAndValue.field} value={fieldAndValue.value} />
+                        ))}
+                        </div>
                 </div>
             </div>
 
 
         </Grid>
+        <Reviews reviews={reviews} />
 
-        <MovieCard poster={"/r8LPeldxskHrGJTPfhICguCip2H.jpg"} title={"Rambo"} id={7555} />
     </Grid>
   );
 };

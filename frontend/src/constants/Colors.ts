@@ -6,6 +6,6 @@ export const Colors = {
     red2: '#D74B4B',
     white: '#F5F5F5',
     white80: 'rgba(245, 245, 245, 0.8)',
-    yellow: '#B2CA1F',
+    yellow: '#FFDD2B',
     lightCyan: '#CDFCFF'
 }

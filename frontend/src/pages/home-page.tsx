@@ -7,12 +7,12 @@ import { Colors } from '../constants/Colors';
 import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
-import { Movie } from "../types";
+import { IMovie } from "../types";
 
 const HomePage = () => {
   const { classes } = useStyles();
   const [currentPage, setCurrentPage] = useState(1);
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<IMovie[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<number | "">("");
 
 
@@ -60,7 +60,7 @@ const HomePage = () => {
           </Grid>
 
         {
-           movies.map((movie: Movie, index: number) => (
+           movies.map((movie: IMovie, index: number) => (
             <Grid key={index} item lg={3}>
               <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id}/>
             </Grid>

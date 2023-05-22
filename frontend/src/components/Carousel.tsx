@@ -1,12 +1,12 @@
 import Carousel from "react-material-ui-carousel";
 import { makeStyles } from "tss-react/mui";
 import React from "react";
-import { Movie } from "../types";
+import { IMovie } from "../types";
 import {Link as RouterLink } from "react-router-dom";
 
 
 interface CarouselComponentProps {
-  movies: Movie[];
+  movies: IMovie[];
 }
 
 const CarouselComponent: React.FC<CarouselComponentProps> = ({ movies }) => {
