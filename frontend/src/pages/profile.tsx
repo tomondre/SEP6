@@ -25,6 +25,11 @@ interface Profile {
     username: string;
   }
 
+  interface ProfileInfoProps {
+    label: string;
+    value: string;
+  }
+
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
@@ -43,6 +48,17 @@ const ProfilePage = () => {
     fetchProfile();
 
   }, []);
+
+  const ProfileInfo = ({ label, value }: ProfileInfoProps) => {
+    return (
+      <div className={classes.textContainer}>
+        <Typography variant="h6">{label}: </Typography>
+        <Typography variant="p" className={classes.marginLeft}>
+          {value}
+        </Typography>
+      </div>
+    );
+  };
 
 
   if(!profile)
@@ -65,26 +81,11 @@ const ProfilePage = () => {
                         className={classes.icon} />
                     </div>
                     <div className={classes.infoContainer}>
-                        <div className={classes.textContainer}>
-                            <Typography variant="h6">Email: </Typography>
-                            <Typography variant="p" className={classes.marginLeft}>{profile.email}</Typography>
-                        </div>
-                        <div className={classes.textContainer}>
-                            <Typography variant="h6">Username: </Typography>
-                            <Typography variant="p" className={classes.marginLeft}>{profile.username}</Typography>
-                        </div>
-                        <div className={classes.textContainer}>
-                            <Typography variant="h6">Country: </Typography>
-                            <Typography variant="p" className={classes.marginLeft}>{profile.country}</Typography>
-                        </div>
-                        <div className={classes.textContainer}>
-                            <Typography variant="h6">Birthday: </Typography>
-                            <Typography variant="p" className={classes.marginLeft}>{profile.dateOfBirth}</Typography>
-                        </div>
-                        <div className={classes.textContainer}>
-                            <Typography variant="h6">Gender: </Typography>
-                            <Typography variant="p" className={classes.marginLeft}>{profile.gender}</Typography>
-                        </div>
+                        <ProfileInfo label="Email" value={profile.email} />
+                        <ProfileInfo label="Username" value={profile.username} />
+                        <ProfileInfo label="Country" value={profile.country} />
+                        <ProfileInfo label="Birthday" value={profile.dateOfBirth} />
+                        <ProfileInfo label="Gender" value={profile.gender} />
                     </div>
                 </div>
             </div>
