@@ -35,5 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
-application.properties
-/gradle/wrapper/gradle-wrapper.properties
+application-local.yml

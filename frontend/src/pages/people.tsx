@@ -4,7 +4,7 @@ import { makeStyles } from "tss-react/mui";
 import MovieCard from "../components/MovieCard";
 import { Grid, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import actorService from "../services/person-service";
+import personService from "../services/person-service";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
@@ -44,7 +44,7 @@ const PeoplePage = () => {
     const fetchActor = async () => {
       try {
         if (id !== -1) {
-          const people = await actorService.getPersonById(id);
+          const people = await personService.getPersonById(id);
           setPeople(people);
         }
       } catch (error) {
