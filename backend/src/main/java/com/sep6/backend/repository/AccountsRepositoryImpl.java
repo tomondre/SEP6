@@ -31,13 +31,12 @@ public class AccountsRepositoryImpl implements AccountsRepository{
         try {
             Account edited = jpaRepository.findById(id).orElseThrow();
 
+            edited.setUsername(account.getUsername());
+            edited.setPassword(account.getPassword());
             edited.setEmail(account.getEmail());
             edited.setName(account.getName());
             edited.setCountry(account.getCountry());
             edited.setProfilePictureUrl(account.getProfilePictureUrl());
-            edited.setPassword(account.getPassword());
-            edited.setEnabled(account.isEnabled());
-            edited.setFavourites(account.getFavourites());
             return Optional.of(jpaRepository.save(edited));
 
         } catch (NoSuchElementException e) {
