@@ -1,20 +1,16 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Pagination, Select, TextField, Typography } from '@mui/material';
+import { Grid, OutlinedInput, Typography } from '@mui/material';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import CarouselComponent from '../components/Carousel';
 import MovieCard from '../components/MovieCard';
 import { Colors } from '../constants/Colors';
-import { SelectChangeEvent } from '@mui/material';
-import MovieService from "../services/movies";
-import GenreFilter from '../components/GenreFilter';
 import EditIcon from '@mui/icons-material/Edit';
-import jwt_decode from "jwt-decode";
+import DoneIcon from '@mui/icons-material/Done';
 import profileServie from '../services/account-service';
-import { profile } from 'console';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
+import { IMovie } from '../types';
 
-interface Profile {
+interface IProfile {
     country: string;
     dateOfBirth: string;
     email: string;
@@ -29,15 +25,15 @@ interface Profile {
     label: string;
     value: string;
     editable: boolean;
-    // onValueChange: (value: string) => void;
-    profileAttribute: keyof Profile;
+    profileAttribute: keyof IProfile;
   }
 
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
-  const [profile, setProfile] = useState<Profile | null>(null);
-  const { handleSubmit, register, setValue, getValues } = useForm<Profile>();
+  const [profile, setProfile] = useState<IProfile | null>(null);
+  const [movies, setMovies] = useState<IMovie[]>([]);
+  const { handleSubmit, register, setValue } = useForm<IProfile>();
 
   const fieldsAndValues = useMemo(() => {
     if(!profile)
@@ -128,6 +124,15 @@ const ProfilePage = () => {
         console.error("Error fetching profile:", error);
       }
 
+      try {
+        const response = await profileServie.getFavoriteMovies();
+        setMovies(response);
+        console.log(response)
+      }
+      catch(error){
+        console.error("Error fetching favorite movies:", error);
+      } 
+
 
     };
 
@@ -139,20 +144,12 @@ const ProfilePage = () => {
 
   const ProfileInfo = ({ label, value, editable, profileAttribute }: ProfileInfoProps) => {
 
-      // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      //   onValueChange(event.target.value);
-      // };
-
     return (
         <div className={classes.textContainer}>
         <Typography variant="h6">{label}: </Typography>
         {editable ? (
           <OutlinedInput
-            // value={getValues(profileAttribute)}
-            // inputRef={inputRef}
-            // placeholder={value}
             {...register(profileAttribute)}
-            // onChange={handleChange}
             className={classes.marginLeft + " " + classes.input}
           />
         ) : (
@@ -162,18 +159,6 @@ const ProfilePage = () => {
         )}
       </div>
     );
-  };
-  const handleValueChange = (field: keyof Profile, value: string) => {
-    console.log(`Updating ${field} to:`, value);
-    setProfile((prevProfile) => {
-      if (prevProfile) {
-        return {
-          ...prevProfile,
-          [field]: value,
-        };
-    }
-      return null;
-    });
   };
   
   const handleEditIconClick = () => {
@@ -185,9 +170,11 @@ const ProfilePage = () => {
 
   };
 
-  const handleSubmitForm = (data: Profile) => {
-    console.log("Form submitted:", data);
+  const handleSubmitForm = (data: IProfile) => {
     setProfile(data);
+
+    //request to update profile
+
   };
 
   if(!profile)
@@ -202,15 +189,17 @@ const ProfilePage = () => {
             </div>
         </Grid>
 
-        <Grid item lg={8}>
-            <div className={classes.profileContainer}>
+        <Grid item lg={8} className={classes.profileContainer}>
                 <div className={classes.personalInformation}>
                     <div className={classes.title}>
                         <Typography variant="h3">Personal Information</Typography>
-                        <EditIcon
-                        // onClick={() => setEditMode(!editMode)}
-                        onClick={handleEditIconClick}
-                        className={classes.icon} />
+                        <div onClick={handleEditIconClick}>
+                            {editMode ? (
+                                <DoneIcon className={classes.icon} />
+                            ) : (
+                                <EditIcon className={classes.icon} />
+                            )}
+                        </div>
                     </div>
                     <div className={classes.infoContainer}>
                     {fieldsAndValues.map((fieldAndValue, index) => (
@@ -219,17 +208,31 @@ const ProfilePage = () => {
                             label={fieldAndValue.field}
                             value={fieldAndValue.value || ""}
                             editable={editMode}
-                            profileAttribute = {fieldAndValue.for as keyof Profile}
-                            // onValueChange={(value) => handleValueChange(fieldAndValue.for as keyof Profile, value)}
+                            profileAttribute = {fieldAndValue.for as keyof IProfile}
                         />
                         ))}
                         </div>
                 </div>
-            </div>
 
 
         </Grid>
-        <Reviews reviews={reviews} />
+
+          <Reviews reviews={reviews} />
+
+          <Grid item container>
+            <Grid item lg={12}>
+              <Typography variant="h5">Favorite Movies</Typography>
+            </Grid>
+            <Grid item lg={4}>
+              <Grid container spacing={2}>
+                {movies.map((movie) => (
+                  <Grid item lg={3} key={movie.id}>
+                    <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
 
     </Grid>
   );
