@@ -1,4 +1,5 @@
-export interface Movie {
+
+export interface IMovie {
     id:number;
     title:string;
     description?:string;
@@ -13,4 +14,12 @@ export interface Movie {
     people?:{id:number; name:string; profileImg:string; type:string}[];
     review?:{id:number;rating:number; comment:string; createdOn:string; movieId:number;accountId:number}[];
     rating?:number
+}
+
+export interface IReview {
+    id: number;
+    user: string;
+    comment: string;
+    rating: number;
+    date: string;
 }

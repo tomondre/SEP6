@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../services/authentication";
 import { useForm } from "react-hook-form";
 
-type Account = {
+type IAccount = {
   email: string,
   password: string
 }
@@ -16,14 +16,14 @@ const Login = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<Account>();
+  const { register, handleSubmit, formState: { errors } } = useForm<IAccount>();
   const onSubmit = handleSubmit(data => handleLogin(data));
 
-  const handleLogin = async (data:Account) => {
+  const handleLogin = async (data:IAccount) => {
     try {
       await AuthService.login(data.email, data.password).then(
         () => {
-          navigate("/");
+          navigate("/profile");
           window.location.reload();
         },
         (error) => {

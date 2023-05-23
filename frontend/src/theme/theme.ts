@@ -4,17 +4,21 @@ import { Colors } from '../constants/Colors';
 declare module '@mui/material/styles/createTypography' {
     interface Typography {
         p: TypographyStyleOptions | undefined;
+        h5r: TypographyStyleOptions | undefined;
 
     }
 
     interface TypographyOptions {
         p: TypographyStyleOptions | undefined;
+        h5r: TypographyStyleOptions | undefined;
     }
 }
 
 declare module '@mui/material/Typography/Typography' {
     interface TypographyPropsVariantOverrides {
         p: true;
+        h5r: true;
+
 
     }
 }
@@ -45,6 +49,17 @@ const media = createTheme({
 export const theme = createTheme({
     ...media,
     components: {
+        // MuiOutlinedInput: {
+        //     styleOverrides: {
+        //         root: {
+        //             width: '38.5rem',
+        //             height: '2.5rem',
+        //             background: Colors.lightCyan,
+        //             border: '0.063rem',
+        //             borderRadius: '0.625rem',
+        //         },
+        //     }
+        // },
         MuiButton: {
             styleOverrides: {
                 contained: {
@@ -73,7 +88,7 @@ export const theme = createTheme({
         h1: {
             fontSize: '6.3rem',
             fontWeight: '800',
-            lineHeight: '1.2rem',
+            lineHeight: 1.2,
             color: Colors.lightCyan,
             [media.breakpoints.down('sm')]: {
                 fontSize: '3.4rem'
@@ -82,7 +97,7 @@ export const theme = createTheme({
         h2: {
             fontSize: '4.5rem',
             fontWeight: '800',
-            lineHeight: '1.2rem',
+            lineHeight: 1.2,
             color: Colors.lightCyan,
             [media.breakpoints.down('sm')]: {
                 fontSize: '2.75rem'
@@ -91,7 +106,7 @@ export const theme = createTheme({
         h3: {
             fontSize: '3.1rem',
             fontWeight: '800',
-            lineHeight: '1.2rem',
+            lineHeight: 1.2,
             color: Colors.lightCyan,
             [media.breakpoints.down('sm')]: {
                 fontSize: '2.1rem'
@@ -100,7 +115,7 @@ export const theme = createTheme({
         h4: {
             fontSize: '2.25rem',
             fontWeight: '800',
-            lineHeight: '1.2rem',
+            lineHeight: 1.2,
             color: Colors.lightCyan,
             [media.breakpoints.down('sm')]: {
                 fontSize: '1.75rem'
@@ -109,7 +124,16 @@ export const theme = createTheme({
         h5: {
             fontSize: '1.5rem',
             fontWeight: '800',
-            lineHeight: '1.2rem',
+            lineHeight: 1.2,
+            color: Colors.lightCyan,
+            [media.breakpoints.down('sm')]: {
+                fontSize: '1.4rem'
+            }
+        },
+        h5r: {
+            fontSize: '1.5rem',
+            fontWeight: '300',
+            lineHeight: 1.2,
             color: Colors.lightCyan,
             [media.breakpoints.down('sm')]: {
                 fontSize: '1.4rem'
@@ -118,7 +142,7 @@ export const theme = createTheme({
         h6: {
             fontSize: '1.1rem',
             fontWeight: '800',
-            lineHeight: '1.2rem',
+            lineHeight: 1.2,
             color: Colors.lightCyan,
         },
         p: {

@@ -8,7 +8,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme/theme";
 import PeoplePage from './pages/people';
 import MoviePage from './pages/movie';
-
+import ProfilePage from './pages/profile';
 
 
 
@@ -24,6 +24,7 @@ const AppRouter: React.FC = () => {
             <Route path="/login"  element={<Login/>} />
             <Route path="/person"  element={<PeoplePage/>} />
             <Route path="/movies"  element={<MoviePage/>} />
+            <Route path="/profile"  element={<ProfilePage/>} />
           </Routes>
         </Router>
       </Layout>
