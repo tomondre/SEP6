@@ -6,17 +6,18 @@ import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
-import { Movie } from "../types";
+import { IMovie } from "../types";
 import MovieService from "../services/movies";
 import PeopleCard from "../components/PeopleCard";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { getUserId } from "../services/user-service";
 
 const MoviePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState<Movie>();
+  const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
-
+  const userId = getUserId();
   const baseUrl = "https://image.tmdb.org/t/p/original";
 
   useEffect(() => {
