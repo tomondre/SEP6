@@ -1,6 +1,16 @@
 export interface Movie {
-    id: number;
+    id:number;
+    title:string;
+    description?:string;
+    posterUrl:string;
+    runtime?:number;
+    language?:string;
+    boxOffice?:number;
+    budget?:number;
+    status?:string;
+    releaseDate?:string;
     genres: { id: number; name: string }[];
-    posterUrl: string;
-    title: string;
+    people?:{id:number; name:string; profileImg:string; type:string}[];
+    review?:{id:number;rating:number; comment:string; createdOn:string; movieId:number;accountId:number}[];
+    rating?:number
 }

@@ -4,11 +4,11 @@ import { makeStyles } from "tss-react/mui";
 import MovieCard from "../components/MovieCard";
 import { Grid, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import actorService from "../services/person-service";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
+import personService from "../services/person-service";
 
 
 interface Movie {
@@ -41,10 +41,10 @@ const PeoplePage = () => {
 
 
   useEffect(() => {
-    const fetchActor = async () => {
+    const fetchPerson = async () => {
       try {
         if (id !== -1) {
-          const people = await actorService.getPersonById(id);
+          const people = await personService.getPersonById(id);
           setPeople(people);
         }
       } catch (error) {
@@ -52,7 +52,7 @@ const PeoplePage = () => {
       }
     };
 
-    fetchActor();
+    fetchPerson();
   }, []);
 
 

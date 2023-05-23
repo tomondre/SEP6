@@ -40,10 +40,22 @@ const filterMovies = async (pageNumber: number, genreId?: number | ""): Promise<
     }
 };
 
+const getMovieById = async (id: number): Promise<Movie> => {
+    try {
+        const response = await axios.get(`${API_URL}/${id}`);
+        const movie = response.data;
+        return movie as Movie;
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        throw error;
+    }
+};
+
 
 const MovieService = {
     getMovies,
     filterMovies,
+    getMovieById
 };
 
 export default MovieService;
