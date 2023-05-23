@@ -9,6 +9,7 @@ import { useIdFromUrl } from "../hooks/useIdFromUrl";
 import { Movie } from "../types";
 import MovieService from "../services/movies";
 import PeopleCard from "../components/PeopleCard";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -33,6 +34,7 @@ const MoviePage = () => {
     fetchMovie();
   }, []);
 
+
   if (!movie) {
     return <div>Loading...</div>;
   }
@@ -55,8 +57,14 @@ const MoviePage = () => {
             <Grid className={classes.ratingGoal}>/ 10</Grid>
           </Grid>
 
+          <Grid className={classes.moviecontainer}>
+
           <Grid className={classes.movieTitle}>
             <Typography variant="h2">{movie.title}</Typography>
+          </Grid>
+          <Grid >
+            <FavoriteBorderIcon className={classes.favorite} />
+          </Grid>
           </Grid>
 
           {movie.genres && (
@@ -85,6 +93,12 @@ const MoviePage = () => {
             </Grid>
             <Grid className={classes.language}>
               <Typography variant="h6">Language: {movie.language}</Typography>
+            </Grid>
+            <Grid className={classes.budget}>
+              <Typography variant="h6">Budget: {movie.budget} $ </Typography>
+            </Grid>
+            <Grid className={classes.boxOffice}>
+              <Typography variant="h6">Box office: {movie.boxOffice} $ </Typography>
             </Grid>
           </Grid>
 
@@ -163,25 +177,21 @@ const useStyles = makeStyles()(() => ({
     height: "10%",
   },
   status: {
-    color: Colors.yellow,
     fontSize: "2rem",
   },
   releaseDate: {
-    color: Colors.yellow,
     fontWeight: "800",
     fontSize: "2rem",
     alignContent: "center",
     marginLeft: "1rem",
   },
   runtime: {
-    color: Colors.yellow,
     fontWeight: "800",
     fontSize: "2rem",
     alignContent: "center",
     marginLeft: "1rem",
   },
   language: {
-    color: Colors.yellow,
     fontWeight: "800",
     fontSize: "2rem",
     alignContent: "center",
@@ -211,6 +221,27 @@ const useStyles = makeStyles()(() => ({
     height: '4rem',
     marginTop:'6rem'
   },
+  favorite:{
+    color:Colors.red1,
+    height:'3rem',
+    width:'3rem'
+  },
+  moviecontainer:{
+    display: "flex",
+    alignItems: "center",
+  },
+  boxOffice:{
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
+  },
+  budget:{
+    fontWeight: "800",
+    fontSize: "2rem",
+    alignContent: "center",
+    marginLeft: "1rem",
+  }
 }));
 
 export default MoviePage;
