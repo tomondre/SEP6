@@ -1,5 +1,5 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Pagination, Select, Typography } from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Button, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Pagination, Select, TextField, Typography } from '@mui/material';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import CarouselComponent from '../components/Carousel';
 import MovieCard from '../components/MovieCard';
@@ -9,9 +9,10 @@ import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
 import EditIcon from '@mui/icons-material/Edit';
 import jwt_decode from "jwt-decode";
-import profileServie from '../services/profile';
+import profileServie from '../services/account-service';
 import { profile } from 'console';
 import Reviews from '../components/Reviews';
+import { useForm } from 'react-hook-form';
 
 interface Profile {
     country: string;
@@ -20,7 +21,6 @@ interface Profile {
     gender: string;
     id: number;
     name: string;
-    password: string;
     profilePictureUrl: string;
     username: string;
   }
@@ -28,12 +28,15 @@ interface Profile {
   interface ProfileInfoProps {
     label: string;
     value: string;
+    editable: boolean;
+    onValueChange: (value: string) => void;
   }
 
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const { handleSubmit, register, setValue } = useForm<Profile>();
 
   const fieldsAndValues = useMemo(() => {
     if(!profile)
@@ -43,22 +46,27 @@ const ProfilePage = () => {
         {
         field: "Email",
         value: profile.email,
+        for: "email"
         },
         {
         field: "Username",
         value: profile.username,
+        for: "username"
         },
         {
         field: "Country",
         value: profile.country,
+        for: "country"
         },
         {
         field: "Birthday",
         value: profile.dateOfBirth,
+        for: "dateOfBirth"
         },
         {
         field: "Gender",
         value: profile.gender,
+        for: "gender"
         }
     ]
   }, [profile])
@@ -115,17 +123,58 @@ const ProfilePage = () => {
 
   }, []);
 
-  const ProfileInfo = ({ label, value }: ProfileInfoProps) => {
+  const ProfileInfo = ({ label, value, editable, onValueChange }: ProfileInfoProps) => {
+
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        onValueChange(event.target.value);
+      };
+
     return (
-      <div className={classes.textContainer}>
+        <div className={classes.textContainer}>
         <Typography variant="h6">{label}: </Typography>
-        <Typography variant="p" className={classes.marginLeft}>
-          {value}
-        </Typography>
+        {editable ? (
+          <OutlinedInput
+            value={value}
+            // inputRef={inputRef}
+            // placeholder={value}
+            // {...register(profileAttribute)}
+            onChange={handleChange}
+            className={classes.marginLeft + " " + classes.input}
+          />
+        ) : (
+          <Typography variant="p" className={classes.marginLeft}>
+            {value}
+          </Typography>
+        )}
       </div>
     );
   };
+  const handleValueChange = (field: keyof Profile, value: string) => {
+    console.log(`Updating ${field} to:`, value);
+    setProfile((prevProfile) => {
+      if (prevProfile) {
+        return {
+          ...prevProfile,
+          [field]: value,
+        };
+    }
+      return null;
+    });
+  };
+  
+  const handleEditIconClick = () => {
+    if (editMode) {
+        handleSubmit(handleSubmitForm)();
+      }
 
+    setEditMode((prevEditMode) => !prevEditMode);
+
+  };
+
+  const handleSubmitForm = (data: Profile) => {
+    console.log("Form submitted:", data);
+    setProfile(data);
+  };
 
   if(!profile)
     return null;
@@ -149,8 +198,15 @@ const ProfilePage = () => {
                         className={classes.icon} />
                     </div>
                     <div className={classes.infoContainer}>
-                    {fieldsAndValues.map((fieldAndValue) => (
-                        <ProfileInfo label={fieldAndValue.field} value={fieldAndValue.value} />
+                    {fieldsAndValues.map((fieldAndValue, index) => (
+                            <ProfileInfo
+                            key={index}
+                            label={fieldAndValue.field}
+                            value={fieldAndValue.value || ""}
+                            editable={editMode}
+                            // profileAttribute = {fieldAndValue.for as keyof Profile}
+                            onValueChange={(value) => handleValueChange(fieldAndValue.for as keyof Profile, value)}
+                        />
                         ))}
                         </div>
                 </div>
@@ -200,6 +256,14 @@ const useStyles = makeStyles()(() => ({
     title:{
         display: 'flex',
         alignItems: 'center',
+    },
+    input:{
+        width: '38.5rem',
+        height: '2.5rem',
+        background: Colors.lightCyan,
+        border: '0.063rem',
+        borderRadius: '0.625rem',
+        color: Colors.black,
     }
 }));
 

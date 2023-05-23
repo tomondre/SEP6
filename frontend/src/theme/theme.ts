@@ -49,6 +49,17 @@ const media = createTheme({
 export const theme = createTheme({
     ...media,
     components: {
+        // MuiOutlinedInput: {
+        //     styleOverrides: {
+        //         root: {
+        //             width: '38.5rem',
+        //             height: '2.5rem',
+        //             background: Colors.lightCyan,
+        //             border: '0.063rem',
+        //             borderRadius: '0.625rem',
+        //         },
+        //     }
+        // },
         MuiButton: {
             styleOverrides: {
                 contained: {

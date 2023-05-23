@@ -22,8 +22,10 @@ const Reviews: FunctionComponent<Props> = ({ reviews }) => {
         className={`${classes.reviewsContaier} ${classes.scrollbar}`}
         ref={horizontalScrollRef as any}
       >
-        {reviews.map((review) => (
-          <Review review={review} />
+        {reviews.map((review, index) => (
+          <Review 
+          key={index}
+          review={review} />
         ))}
       </div>
     </section>

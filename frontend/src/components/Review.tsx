@@ -33,7 +33,7 @@ const Review: FunctionComponent<Props> = ({ review }) => {
 const useStyles = makeStyles()(() => ({
   reviewContainer: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
-    color: "white",
+    color: Colors.white,
     padding: "1rem 2rem",
     textAlign: "left",
     minWidth: "512px",
