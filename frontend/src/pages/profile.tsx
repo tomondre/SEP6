@@ -29,14 +29,15 @@ interface Profile {
     label: string;
     value: string;
     editable: boolean;
-    onValueChange: (value: string) => void;
+    // onValueChange: (value: string) => void;
+    profileAttribute: keyof Profile;
   }
 
 const ProfilePage = () => {
   const { classes } = useStyles();
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const { handleSubmit, register, setValue } = useForm<Profile>();
+  const { handleSubmit, register, setValue, getValues } = useForm<Profile>();
 
   const fieldsAndValues = useMemo(() => {
     if(!profile)
@@ -114,31 +115,44 @@ const ProfilePage = () => {
       try {
         const response = await profileServie.getProfile();
         setProfile(response);
+
+        if(response){
+          setValue('email', response.email);
+          setValue('username', response.username);
+          setValue('country', response.country);
+          setValue('dateOfBirth', response.dateOfBirth);
+          setValue('gender', response.gender);
+        }
+
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
+
+
     };
 
     fetchProfile();
 
+
+
   }, []);
 
-  const ProfileInfo = ({ label, value, editable, onValueChange }: ProfileInfoProps) => {
+  const ProfileInfo = ({ label, value, editable, profileAttribute }: ProfileInfoProps) => {
 
-      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onValueChange(event.target.value);
-      };
+      // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      //   onValueChange(event.target.value);
+      // };
 
     return (
         <div className={classes.textContainer}>
         <Typography variant="h6">{label}: </Typography>
         {editable ? (
           <OutlinedInput
-            value={value}
+            // value={getValues(profileAttribute)}
             // inputRef={inputRef}
             // placeholder={value}
-            // {...register(profileAttribute)}
-            onChange={handleChange}
+            {...register(profileAttribute)}
+            // onChange={handleChange}
             className={classes.marginLeft + " " + classes.input}
           />
         ) : (
@@ -194,7 +208,8 @@ const ProfilePage = () => {
                     <div className={classes.title}>
                         <Typography variant="h3">Personal Information</Typography>
                         <EditIcon
-                        onClick={() => setEditMode(!editMode)}
+                        // onClick={() => setEditMode(!editMode)}
+                        onClick={handleEditIconClick}
                         className={classes.icon} />
                     </div>
                     <div className={classes.infoContainer}>
@@ -204,8 +219,8 @@ const ProfilePage = () => {
                             label={fieldAndValue.field}
                             value={fieldAndValue.value || ""}
                             editable={editMode}
-                            // profileAttribute = {fieldAndValue.for as keyof Profile}
-                            onValueChange={(value) => handleValueChange(fieldAndValue.for as keyof Profile, value)}
+                            profileAttribute = {fieldAndValue.for as keyof Profile}
+                            // onValueChange={(value) => handleValueChange(fieldAndValue.for as keyof Profile, value)}
                         />
                         ))}
                         </div>
