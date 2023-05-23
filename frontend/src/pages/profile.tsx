@@ -127,7 +127,6 @@ const ProfilePage = () => {
       try {
         const response = await profileServie.getFavoriteMovies();
         setMovies(response);
-        console.log(response)
       }
       catch(error){
         console.error("Error fetching favorite movies:", error);
@@ -223,15 +222,11 @@ const ProfilePage = () => {
             <Grid item lg={12}>
               <Typography variant="h5">Favorite Movies</Typography>
             </Grid>
-            <Grid item lg={4}>
-              <Grid container spacing={2}>
                 {movies.map((movie) => (
                   <Grid item lg={3} key={movie.id}>
                     <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id} />
                   </Grid>
                 ))}
-              </Grid>
-            </Grid>
           </Grid>
 
     </Grid>
