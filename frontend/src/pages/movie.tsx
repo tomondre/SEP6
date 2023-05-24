@@ -10,7 +10,9 @@ import { IMovie } from "../types";
 import MovieService from "../services/movies";
 import PeopleCard from "../components/PeopleCard";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { getUserId } from "../services/user-service";
+import profileService from "../services/account-service";
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -18,7 +20,31 @@ const MoviePage = () => {
   const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
   const userId = getUserId();
+  console.log(userId);
   const baseUrl = "https://image.tmdb.org/t/p/original";
+
+  const [favourites, setFavourites] = useState<IMovie[]>([]);
+
+  const addFavouriteMovie = async (favourite:IMovie) => {
+    try {
+     userId&&
+      await profileService.addFavourite(userId, favourite.id).then(
+        () => {
+          if(!favourites.includes(favourite)) {
+          setFavourites([...favourites, favourite]);
+          }else{
+            setFavourites([...favourites.filter((item)=>item!== favourite)]);
+          }
+          console.log(favourites);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -63,9 +89,11 @@ const MoviePage = () => {
           <Grid className={classes.movieTitle}>
             <Typography variant="h2">{movie.title}</Typography>
           </Grid>
+          {
           <Grid >
-            <FavoriteBorderIcon className={classes.favorite} />
+            <FavoriteBorderIcon className={classes.favorite}  onClick={() => addFavouriteMovie(movie)}/>
           </Grid>
+          }
           </Grid>
 
           {movie.genres && (

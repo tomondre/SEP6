@@ -14,8 +14,20 @@ const getProfile = async () => {
     }
 };
 
-const profileServie = {
+const addFavourite = (userId: number, movieId:number) => {
+    return axios
+      .post(`/accounts/${userId}/favourites`, {
+        userId,
+        movieId,
+      })
+      .then((response: { data: {}; }) => {
+        return response.data;
+      });
+  };
+
+const profileService = {
     getProfile,
+    addFavourite
 };
 
-export default profileServie;
+export default profileService;
