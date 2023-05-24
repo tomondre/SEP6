@@ -70,6 +70,7 @@ class AuthenticationServiceImplTest
         String dateOfBirth = "1999-01-01";
         savedUser.setPassword(encodedPassword);
         savedUser.setDateOfBirth(Date.valueOf(dateOfBirth));
+        savedUser.setEnabled(true);
         savedUser.setRole(Role.USER);
 
         when(request.getDateOfBirth()).thenReturn(dateOfBirth);

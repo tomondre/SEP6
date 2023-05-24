@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 @Data
 @Builder
@@ -33,4 +34,6 @@ public class Person {
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Movie> movies;
+    @Formula(value = "(SELECT AVG(m.rating) FROM movie m JOIN person_movie pm ON m.id = pm.movie_id WHERE pm.person_id = id)")
+    private double ratingAverage;
 }

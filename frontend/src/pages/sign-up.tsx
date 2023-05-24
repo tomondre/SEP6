@@ -76,7 +76,6 @@ const SignUp = () => {
         <div className={classes.radioContainer}> 
         <input type="radio" value="Male" className={classes.radioInput} {...register("gender")} defaultChecked /> Male
         <input type="radio" value="Female" className={classes.radioInput} {...register("gender")}  /> Female
-        <input type="radio" value="Other" className={classes.radioInput} {...register("gender")}  /> Other
         </div>
         <div>
         <Button className={classes.sign_up_button} type="submit" variant="contained">Register</Button>
