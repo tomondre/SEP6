@@ -5,6 +5,7 @@ import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.models.Review;
+import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.service.AccountsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -107,7 +108,7 @@ public class AccountsController {
     }
 
     @GetMapping(value = "/{id}/favourites")
-    public ResponseEntity<Set<Movie>> getAccountFavourites(@PathVariable int id) {
+    public ResponseEntity<Set<FavouriteMovieProjection>> getAccountFavourites(@PathVariable int id) {
         try
         {
             log.info("Getting favourites for account with id " + id);
