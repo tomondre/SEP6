@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
 import {Link as RouterLink } from "react-router-dom";
+import { Colors } from "../constants/Colors";
 
 type MovieCardProps = {
   poster: string;
@@ -33,7 +34,7 @@ const useStyles = makeStyles()(() => ({
     },
     movieTitle:{
         padding: '1rem 0',
-    }
+    },
 }));
   
 

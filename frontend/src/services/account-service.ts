@@ -25,9 +25,19 @@ const getFavoriteMovies = async () => {
     }
 };
 
+const deleteFavoriteMovie = async (movieId: number) => {
+    try {
+        await axios.delete(`/accounts/${userId}/favourites/${movieId}`);
+    } catch (error) {
+        console.error('Error deleting favorite movie:', error);
+        throw error;
+    }
+};
+
 const profileServie = {
     getProfile,
-    getFavoriteMovies
+    getFavoriteMovies,
+    deleteFavoriteMovie,
 };
 
 export default profileServie;

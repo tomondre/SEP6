@@ -9,6 +9,8 @@ import profileServie from '../services/account-service';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
 import { IMovie } from '../types';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteButton from '../components/FavoriteButton';
 
 interface IProfile {
     country: string;
@@ -189,9 +191,9 @@ const ProfilePage = () => {
         </Grid>
 
         <Grid item lg={8} className={classes.profileContainer}>
-                <div className={classes.personalInformation}>
+                <div className={classes.alignStart}>
                     <div className={classes.title}>
-                        <Typography variant="h3">Personal Information</Typography>
+                        <Typography variant="h5">Personal Information</Typography>
                         <div onClick={handleEditIconClick}>
                             {editMode ? (
                                 <DoneIcon className={classes.icon} />
@@ -219,12 +221,15 @@ const ProfilePage = () => {
           <Reviews reviews={reviews} />
 
           <Grid item container>
-            <Grid item lg={12}>
+            <Grid item lg={12} className={classes.alignStart}>
               <Typography variant="h5">Favorite Movies</Typography>
             </Grid>
                 {movies.map((movie) => (
-                  <Grid item lg={3} key={movie.id}>
-                    <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id} />
+                  <Grid item lg={3} key={movie.id} className={classes.movieCardContainer}>
+                      <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id} />
+                      <div className={classes.favoriteButtonContainer}>
+                        <FavoriteButton movieId={movie.id} isFave={true}/>
+                      </div>
                   </Grid>
                 ))}
           </Grid>
@@ -236,7 +241,6 @@ const ProfilePage = () => {
 const useStyles = makeStyles()(() => ({
     profileContainer:{
         backgroundColor:Colors.black50,
-        // height: '100%',
         border: '1rem',
         padding: '2.5rem',
     },
@@ -251,7 +255,7 @@ const useStyles = makeStyles()(() => ({
         cursor: 'pointer'
 
     },
-    personalInformation:{
+    alignStart:{
         display: 'grid',
         justifyContent: 'start',
     },
@@ -277,7 +281,22 @@ const useStyles = makeStyles()(() => ({
         border: '0.063rem',
         borderRadius: '0.625rem',
         color: Colors.black,
-    }
+    },
+    favoriteIcon: {
+      position: "absolute",
+      top: 10,
+      right: 10,
+      color: Colors.red1,
+    },
+    movieCardContainer: {
+      position: 'relative',
+      display: 'inline-block',
+    },
+    favoriteButtonContainer: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+    },
 }));
 
 
