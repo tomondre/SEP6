@@ -25,8 +25,30 @@ const addFavourite = (userId: number, movieId:number) => {
       });
   };
 
+const getFavoriteMovies = async () => {
+    try {
+        const response = await axios.get(`/accounts/${userId}/favourites`);
+        const favoriteMovies = response.data;
+        return favoriteMovies;
+    } catch (error) {
+        console.error('Error fetching favorite movies:', error);
+        throw error;
+    }
+};
+
+const deleteFavoriteMovie = async (movieId: number) => {
+    try {
+        await axios.delete(`/accounts/${userId}/favourites/${movieId}`);
+    } catch (error) {
+        console.error('Error deleting favorite movie:', error);
+        throw error;
+    }
+};
+
 const profileService = {
     getProfile,
+    getFavoriteMovies,
+    deleteFavoriteMovie,
     addFavourite
 };
 

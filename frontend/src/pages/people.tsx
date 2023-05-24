@@ -17,7 +17,6 @@ interface Movie {
   posterUrl:string;
 }
 
-
 interface Person {
   id: number;
   name: string;
@@ -203,8 +202,7 @@ const useStyles = makeStyles()(() => ({
     margin:'4rem 4rem 4rem 0rem'
   },
   moviesContainer:{
-    justifyContent: 'space-around',
-    border:'0.05rem solid white'
+    justifyContent: 'space-around'
   }
 
 }));

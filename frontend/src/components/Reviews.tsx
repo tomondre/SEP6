@@ -17,7 +17,7 @@ const Reviews: FunctionComponent<Props> = ({ reviews }) => {
 
   return (
     <section className={classes.reviewsSection}>
-      <Typography variant="h2">Your Reviews</Typography>
+      <Typography variant="h5">Your Reviews</Typography>
       <div
         className={`${classes.reviewsContaier} ${classes.scrollbar}`}
         ref={horizontalScrollRef as any}

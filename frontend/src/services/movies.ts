@@ -1,4 +1,3 @@
-
 import { IMovie } from "../types";
 import axios from '../api/axios';
 
