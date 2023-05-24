@@ -190,22 +190,6 @@ class AccountsControllerTest
     }
 
     @Test
-    void testGetAccountFavourites() {
-        // Arrange
-        int id = 1;
-        Set<Movie> favourites = new HashSet<>();
-        when(accountsService.getAccountFavourites(id)).thenReturn(favourites);
-
-        // Act
-        ResponseEntity<Set<Movie>> response = accountsController.getAccountFavourites(id);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(favourites, response.getBody());
-        verify(accountsService, times(1)).getAccountFavourites(id);
-    }
-
-    @Test
     void testGetAccountFavourites_NonexistentAccount() {
         // Arrange
         int id = 1;

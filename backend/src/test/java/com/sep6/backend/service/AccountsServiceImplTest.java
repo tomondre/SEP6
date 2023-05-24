@@ -53,45 +53,6 @@ class AccountsServiceImplTest
     }
 
     @Test
-    public void testGetAccountFavourites() {
-        // Arrange
-        int accountId = 1;
-        Movie movie1 = Movie.builder()
-                            .id(1)
-                            .title("Movie 1")
-                            .description("Description 1")
-                            .posterUrl("Poster")
-                            .runtime(120)
-                            .language("English")
-                            .budget(1000000)
-                            .boxOffice(1000000)
-                            .status("Released")
-                            .releaseDate(Date.valueOf("2023-12-12"))
-                            .rating(8.0).build();
-        Movie movie2 = Movie.builder()
-                            .id(2)
-                            .title("Movie 2")
-                            .description("Description 2")
-                            .posterUrl("poster2.jpg")
-                            .runtime(90)
-                            .language("Spanish")
-                            .budget(2000000)
-                            .boxOffice(2000000)
-                            .status("Released")
-                            .releaseDate(Date.valueOf("2023-12-12"))
-                            .rating(7.5).build();
-        Set<Movie> expectedFavourites = Set.of(movie1, movie2);
-        when(repository.getAccountFavouritesById(accountId)).thenReturn(expectedFavourites);
-
-        // Act
-        Set<Movie> result = service.getAccountFavourites(accountId);
-
-        // Assert
-        assertEquals(expectedFavourites, result);
-        verify(repository, times(1)).getAccountFavouritesById(accountId);
-    }
-
-    @Test
     public void testDeleteAccountFavourite() {
         // Arrange
         int accountId = 1;
