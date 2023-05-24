@@ -7,9 +7,10 @@ import profileServie from '../services/account-service';
 type ButtonProps = {
   movieId: number;
   isFave: boolean;
+  removeMovie?: (movieId: number) => void;
 };
 
-const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave }) => {
+const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave, removeMovie }) => {
   const [isFavorite, setIsFavorite] = useState(isFave);
   const { classes } = useStyles();
 
@@ -17,6 +18,8 @@ const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave }) => {
     try{
         if(isFavorite){
          await profileServie.deleteFavoriteMovie(movieId);
+         if(removeMovie)
+         removeMovie(movieId);
         } else {
             //await profileServie.addFavoriteMovie(movieId);
         }

@@ -178,6 +178,10 @@ const ProfilePage = () => {
 
   };
 
+  const removeMovie = (movieId: number) => {
+    setMovies((currentMovies) => currentMovies.filter((movie) => movie.id !== movieId));
+  };
+
   if(!profile)
     return null;
 
@@ -228,7 +232,7 @@ const ProfilePage = () => {
                   <Grid item lg={3} key={movie.id} className={classes.movieCardContainer}>
                       <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id} />
                       <div className={classes.favoriteButtonContainer}>
-                        <FavoriteButton movieId={movie.id} isFave={true}/>
+                        <FavoriteButton movieId={movie.id} isFave={true} removeMovie={removeMovie}/>
                       </div>
                   </Grid>
                 ))}
