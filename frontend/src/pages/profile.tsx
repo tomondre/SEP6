@@ -5,12 +5,13 @@ import MovieCard from '../components/MovieCard';
 import { Colors } from '../constants/Colors';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
-import profileServie from '../services/account-service';
+import profileService from '../services/account-service';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
-import { IMovie } from '../types';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { IMovie, IReview} from '../types';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteButton from '../components/FavoriteButton';
+import accountService from '../services/account-service';
 
 interface IProfile {
     country: string;
@@ -35,7 +36,10 @@ const ProfilePage = () => {
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState<IProfile | null>(null);
   const [movies, setMovies] = useState<IMovie[]>([]);
+  const [userReviews, setUserReviews] = useState<IReview[]>([]);
+
   const { handleSubmit, register, setValue } = useForm<IProfile>();
+
 
   const fieldsAndValues = useMemo(() => {
     if(!profile)
@@ -76,7 +80,7 @@ const ProfilePage = () => {
       user: "John Doe",
       date: "12/12/2012",
       rating: 5,
-      comment: "lorem ipsum dolor sit amet",
+      comment: "lorem ipsum dolor sit amet aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     },
     {
       id: 2,
@@ -111,9 +115,9 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await profileServie.getProfile();
+        const response = await profileService.getProfile();
         setProfile(response);
-
+  
         if(response){
           setValue('email', response.email);
           setValue('username', response.username);
@@ -121,25 +125,28 @@ const ProfilePage = () => {
           setValue('dateOfBirth', response.dateOfBirth);
           setValue('gender', response.gender);
         }
-
+  
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
-
+  
       try {
-        const response = await profileServie.getFavoriteMovies();
+        const response = await profileService.getFavoriteMovies();
         setMovies(response);
       }
       catch(error){
         console.error("Error fetching favorite movies:", error);
       } 
-
-
     };
 
+    const fetchUserReviews = () => {
+    accountService.getUserReviews().then(res => {
+      setUserReviews(res);
+    })
+    }
+
     fetchProfile();
-
-
+    fetchUserReviews();
 
   }, []);
 
@@ -190,7 +197,8 @@ const ProfilePage = () => {
 
         <Grid item lg={4} className={classes.gridContainer}>
             <div className={classes.profileContainer}>
-
+              <AccountCircleIcon className={classes.profilePic}/>
+              <Typography variant="h5">{profile.name}</Typography>
             </div>
         </Grid>
 
@@ -221,8 +229,7 @@ const ProfilePage = () => {
 
 
         </Grid>
-
-          <Reviews reviews={reviews} />
+          <Reviews reviews={userReviews} />
 
           <Grid item container>
             <Grid item lg={12} className={classes.alignStart}>
@@ -301,6 +308,11 @@ const useStyles = makeStyles()(() => ({
       top: 10,
       right: 10,
     },
+    profilePic:{
+      width: '10rem',
+      height: '10rem',
+      color: Colors.lightCyan,
+    }
 }));
 
 
