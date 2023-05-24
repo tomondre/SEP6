@@ -17,7 +17,7 @@ const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave }) => {
     try{
         if(isFavorite){
          await profileServie.deleteFavoriteMovie(movieId);
-        }else{
+        } else {
             //await profileServie.addFavoriteMovie(movieId);
         }
     }
