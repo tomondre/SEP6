@@ -22,8 +22,10 @@ public class Account implements UserDetails
     @Id
     @GeneratedValue
     private int id;
+    @Column(unique = true)
     private String username;
     private String password;
+    @Column(unique = true)
     private String email;
     private String name;
     private String country;
@@ -61,7 +63,7 @@ public class Account implements UserDetails
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
