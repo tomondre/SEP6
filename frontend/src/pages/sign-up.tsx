@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../services/authentication";
 import { useForm } from "react-hook-form";
 
-type Account = {
+type IAccount = {
     name: string,
     username: string,
     email: string,
@@ -23,17 +23,16 @@ const SignUp = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<Account>();
+  const { register, handleSubmit, formState: { errors } } = useForm<IAccount>();
   const onSubmit = handleSubmit(data => handleSignup(data));
 
 
-  const handleSignup = async (data: Account) => {
+  const handleSignup = async (data: IAccount) => {
 
     try {
       await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender, data.dateOfBirth).then(
-        (response) => {
+        () => {
           navigate("/");
-          window.location.reload();
         },
         (error) => {
           console.log(error);
