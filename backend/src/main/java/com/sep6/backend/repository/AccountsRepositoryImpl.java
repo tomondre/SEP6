@@ -6,7 +6,8 @@ import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.projections.FavouriteMovieProjection;
-import lombok.AllArgsConstructor;
+import com.sep6.backend.util.AccountMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +17,13 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AccountsRepositoryImpl implements AccountsRepository{
 
-    private AccountsJpaRepository jpaRepository;
-    private MoviesRepository movieJpaRepository;
+    private final AccountsJpaRepository jpaRepository;
+    private final MoviesRepository movieJpaRepository;
+    private final AccountMapper accountMapper;
 
     @Override
     public Optional<Account> findByEmail(String email) {
@@ -32,15 +34,10 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     public Optional<Account> editAccount(int id, Account account) {
         try {
             log.info("Editing account with ID: {}", id);
-            Account edited = jpaRepository.findById(id).orElseThrow();
+            Account toEdit = jpaRepository.findById(id).orElseThrow();
+            accountMapper.updateAccount(account, toEdit);
 
-            edited.setUsername(account.getUsername());
-            edited.setPassword(account.getPassword());
-            edited.setEmail(account.getEmail());
-            edited.setName(account.getName());
-            edited.setCountry(account.getCountry());
-            edited.setProfilePictureUrl(account.getProfilePictureUrl());
-            return Optional.of(jpaRepository.save(edited));
+            return Optional.of(jpaRepository.save(toEdit));
 
         } catch (NoSuchElementException e) {
             log.error("Account not found with ID: {}", id);
@@ -67,7 +64,7 @@ public class AccountsRepositoryImpl implements AccountsRepository{
         try {
             log.info("Saving account: {}", user);
             return jpaRepository.save(user);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             log.error("Failed to save account: {}", user, e);
             throw new IllegalArgumentException("Failed to save account.", e);
         }
