@@ -19,4 +19,7 @@ public interface TokenRepository
     Token save(Token storedToken) throws IllegalArgumentException;
 
     List<Token> saveAll(List<Token> validUserTokens) throws IllegalArgumentException;
+    List<Token> getAllExpiredTokens();
+
+    void deleteAll(List<Token> expiredTokens);
 }
