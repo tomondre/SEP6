@@ -13,27 +13,13 @@ import { getUserId } from "../services/user-service";
 import FavoriteButton from "../components/FavoriteButton";
 import profileService from "../services/account-service";
 
-// const fav = async () => {
-//   try {
-//     const response = await profileService.getFavoriteMovies();
-//     console.log(response)
-
-//   }
-//   catch(error){
-//     console.error("Error fetching favorite movies:", error);
-//   }
-
-// };
-
-// fav();
-
 const MoviePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
-  const userId = getUserId() ||0;
-  const [favMovie, setFavMovie] = useState<boolean>(false);
+  const userId = getUserId() || 0;
+  const [favMovies, setFavMovies] = useState<IMovie[]>([]);
   const baseUrl = "https://image.tmdb.org/t/p/original";
 
   useEffect(() => {
@@ -43,14 +29,14 @@ const MoviePage = () => {
           const movie = await MovieService.getMovieById(id);
           setMovie(movie);
           const response = await profileService.getFavoriteMovies();
-          console.log(response);
+          setFavMovies(response);
 
-          for (let index = 0; index < response.length; index++) {
-            const id = response[index].id;
-            if (id === movie.id) {
-              setFavMovie(true);
-            }
-          }
+          // for (let index = 0; index < response.length; index++) {
+          //   const id = response[index].id;
+          //   if (id === movie.id) {
+          //     setFavMovie(true);
+          //   }
+          // }
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -59,6 +45,18 @@ const MoviePage = () => {
 
     fetchMovie();
   }, []);
+
+  // const initValue= () => {
+  //   if (favMovies && movie) {
+  //     for (let index = 0; index < favMovies.length; index++) {
+  //       const id = favMovies[index].id;
+  //       if (id === movie.id) {
+  //         return true;
+  //       } else return false;
+  //     }
+  //   } else return false;
+  // };
+  const [favMovie, setFavMovie] = useState<boolean>(false);
 
   if (!movie) {
     return <div>Loading...</div>;
