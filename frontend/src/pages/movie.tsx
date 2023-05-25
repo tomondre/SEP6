@@ -45,16 +45,6 @@ const MoviePage = () => {
     fetchMovie();
   }, []);
 
-  // const initValue= () => {
-  //   if (favMovies && movie) {
-  //     for (let index = 0; index < favMovies.length; index++) {
-  //       const id = favMovies[index].id;
-  //       if (id === movie.id) {
-  //         return true;
-  //       } else return false;
-  //     }
-  //   } else return false;
-  // };
 
   if (!movie) {
     return <div>Loading...</div>;
