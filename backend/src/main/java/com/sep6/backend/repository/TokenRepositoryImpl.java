@@ -49,4 +49,18 @@ public class TokenRepositoryImpl implements TokenRepository
             throw new IllegalArgumentException("There are null tokens in the list");
         }
     }
+
+    @Override
+    public List<Token> getAllExpiredTokens()
+    {
+        log.info("Getting all expired tokens");
+        return jpaRepository.findAllExpiredByExpiredTrue();
+    }
+
+    @Override
+    public void deleteAll(List<Token> expiredTokens)
+    {
+        log.info("Deleting all expired tokens");
+        jpaRepository.deleteAll(expiredTokens);
+    }
 }
