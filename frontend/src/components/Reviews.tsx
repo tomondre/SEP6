@@ -34,8 +34,9 @@ const Reviews: FunctionComponent<Props> = ({ reviews }) => {
 
 const useStyles = makeStyles()(() => ({
   reviewsSection: {
-    paddingBlock: "4rem",
+    paddingBlock: "2rem",
     width: "100%",
+    textAlign:'left'
   },
   reviewsContaier: {
     display: "flex",

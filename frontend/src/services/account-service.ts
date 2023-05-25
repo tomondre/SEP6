@@ -45,6 +45,17 @@ const getFavoriteMovies = async () => {
     }
 };
 
+const getUserReviews = async () => {
+    try {
+        const response = await axios.get(`/accounts/${userId}/reviews`);
+        const userReviews = await response.data;
+        return userReviews;
+    } catch (error) {
+        console.error('Error fetching favorite reviews:', error);
+        throw error;
+    }
+}
+
 const deleteFavoriteMovie = async (movieId: number) => {
     try {
         await axios.delete(`/accounts/${userId}/favourites/${movieId}`, {
@@ -61,6 +72,7 @@ const deleteFavoriteMovie = async (movieId: number) => {
 const profileService = {
     getProfile,
     getFavoriteMovies,
+    getUserReviews,
     deleteFavoriteMovie,
     addFavourite
 };

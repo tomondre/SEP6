@@ -8,9 +8,10 @@ import { getUserId } from "../services/user-service";
 type ButtonProps = {
   movieId: number;
   isFave: boolean;
+  removeMovie?: (movieId: number) => void;
 };
 
-const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave= false }) => {
+const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave=false, removeMovie }) => {
   const [isFavorite, setIsFavorite] = useState(isFave);
   useEffect(() => { setIsFavorite(isFave)}, [isFave] );
   const { classes } = useStyles();
@@ -20,6 +21,8 @@ const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave= false }) => {
     try{
         if(isFavorite){
          await profileService.deleteFavoriteMovie(movieId);
+         if(removeMovie)
+         removeMovie(movieId);
         } else {
           userId!==0 && await profileService.addFavourite(userId,movieId);
         }
