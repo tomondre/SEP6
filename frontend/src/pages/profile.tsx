@@ -165,31 +165,29 @@ const ProfilePage = () => {
         </Grid>
 
         <Grid item lg={8} className={classes.profileContainer}>
-                <div className={classes.alignStart}>
-                    <div className={classes.title}>
-                        <Typography variant="h5">Personal Information</Typography>
-                        <div onClick={handleEditIconClick}>
-                            {editMode ? (
-                                <DoneIcon className={classes.icon} />
-                            ) : (
-                                <EditIcon className={classes.icon} />
-                            )}
-                        </div>
-                    </div>
-                    <div className={classes.infoContainer}>
-                    {fieldsAndValues.map((fieldAndValue, index) => (
-                            <ProfileInfo
-                            key={index}
-                            label={fieldAndValue.field}
-                            value={fieldAndValue.value || ""}
-                            editable={fieldAndValue.for === "username" ? false : editMode}
-                            profileAttribute = {fieldAndValue.for as keyof IProfile}
-                        />
-                        ))}
-                        </div>
-                </div>
-
-
+          <div className={classes.alignStart}>
+              <div className={classes.title}>
+                  <Typography variant="h5">Personal Information</Typography>
+                  <div onClick={handleEditIconClick}>
+                      {editMode ? (
+                          <DoneIcon className={classes.icon} />
+                      ) : (
+                          <EditIcon className={classes.icon} />
+                      )}
+                  </div>
+              </div>
+              <div className={classes.infoContainer}>
+              {fieldsAndValues.map((fieldAndValue, index) => (
+                      <ProfileInfo
+                      key={index}
+                      label={fieldAndValue.field}
+                      value={fieldAndValue.value || ""}
+                      editable={fieldAndValue.for === "username" ? false : editMode}
+                      profileAttribute = {fieldAndValue.for as keyof IProfile}
+                  />
+                  ))}
+                  </div>
+          </div>
         </Grid>
           <Reviews reviews={userReviews} />
 
