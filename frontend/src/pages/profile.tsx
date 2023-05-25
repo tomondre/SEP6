@@ -5,7 +5,7 @@ import MovieCard from '../components/MovieCard';
 import { Colors } from '../constants/Colors';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
-import profileServie from '../services/account-service';
+import profileService from '../services/account-service';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
 import { IMovie } from '../types';
@@ -111,7 +111,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await profileServie.getProfile();
+        const response = await profileService.getProfile();
         setProfile(response);
 
         if(response){
@@ -127,7 +127,7 @@ const ProfilePage = () => {
       }
 
       try {
-        const response = await profileServie.getFavoriteMovies();
+        const response = await profileService.getFavoriteMovies();
         setMovies(response);
       }
       catch(error){

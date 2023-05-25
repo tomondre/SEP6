@@ -9,42 +9,32 @@ import { useIdFromUrl } from "../hooks/useIdFromUrl";
 import { IMovie } from "../types";
 import MovieService from "../services/movies";
 import PeopleCard from "../components/PeopleCard";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { getUserId } from "../services/user-service";
+import FavoriteButton from "../components/FavoriteButton";
 import profileService from "../services/account-service";
+
+// const fav = async () => {
+//   try {
+//     const response = await profileService.getFavoriteMovies();
+//     console.log(response)
+
+//   }
+//   catch(error){
+//     console.error("Error fetching favorite movies:", error);
+//   }
+
+// };
+
+// fav();
 
 const MoviePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
-  const userId = getUserId();
-  console.log(userId);
+  const userId = getUserId() ||0;
+  const [favMovie, setFavMovie] = useState<boolean>(false);
   const baseUrl = "https://image.tmdb.org/t/p/original";
-
-  const [favourites, setFavourites] = useState<IMovie[]>([]);
-
-  const addFavouriteMovie = async (favourite:IMovie) => {
-    try {
-     userId&&
-      await profileService.addFavourite(userId, favourite.id).then(
-        () => {
-          if(!favourites.includes(favourite)) {
-          setFavourites([...favourites, favourite]);
-          }else{
-            setFavourites([...favourites.filter((item)=>item!== favourite)]);
-          }
-          console.log(favourites);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -52,6 +42,15 @@ const MoviePage = () => {
         if (id !== -1) {
           const movie = await MovieService.getMovieById(id);
           setMovie(movie);
+          const response = await profileService.getFavoriteMovies();
+          console.log(response);
+
+          for (let index = 0; index < response.length; index++) {
+            const id = response[index].id;
+            if (id === movie.id) {
+              setFavMovie(true);
+            }
+          }
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -60,7 +59,6 @@ const MoviePage = () => {
 
     fetchMovie();
   }, []);
-
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -85,15 +83,15 @@ const MoviePage = () => {
           </Grid>
 
           <Grid className={classes.moviecontainer}>
+            <Grid className={classes.movieTitle}>
+              <Typography variant="h2">{movie.title}</Typography>
+            </Grid>
 
-          <Grid className={classes.movieTitle}>
-            <Typography variant="h2">{movie.title}</Typography>
-          </Grid>
-          {
-          <Grid >
-            <FavoriteBorderIcon className={classes.favorite}  onClick={() => addFavouriteMovie(movie)}/>
-          </Grid>
-          }
+            <Grid>
+              {userId && (
+                <FavoriteButton movieId={movie.id} isFave={favMovie} />
+              )}
+            </Grid>
           </Grid>
 
           {movie.genres && (
@@ -127,7 +125,9 @@ const MoviePage = () => {
               <Typography variant="h6">Budget: {movie.budget} $ </Typography>
             </Grid>
             <Grid className={classes.boxOffice}>
-              <Typography variant="h6">Box office: {movie.boxOffice} $ </Typography>
+              <Typography variant="h6">
+                Box office: {movie.boxOffice} ${" "}
+              </Typography>
             </Grid>
           </Grid>
 
@@ -135,8 +135,8 @@ const MoviePage = () => {
             <Typography variant="p">{movie.description}</Typography>
           </Grid>
           <Button className={classes.button} variant="contained">
-          Add review
-        </Button>
+            Add review
+          </Button>
         </Grid>
       </Grid>
 
@@ -244,33 +244,33 @@ const useStyles = makeStyles()(() => ({
   personContainer: {
     justifyContent: "space-around",
   },
-  button:{
-    fontSize:'2.188rem',
-    width:'22rem',
-    height: '4rem',
-    marginTop:'6rem'
+  button: {
+    fontSize: "2.188rem",
+    width: "22rem",
+    height: "4rem",
+    marginTop: "6rem",
   },
-  favorite:{
-    color:Colors.red1,
-    height:'3rem',
-    width:'3rem'
+  favorite: {
+    color: Colors.red1,
+    height: "3rem",
+    width: "3rem",
   },
-  moviecontainer:{
+  moviecontainer: {
     display: "flex",
     alignItems: "center",
   },
-  boxOffice:{
+  boxOffice: {
     fontWeight: "800",
     fontSize: "2rem",
     alignContent: "center",
     marginLeft: "1rem",
   },
-  budget:{
+  budget: {
     fontWeight: "800",
     fontSize: "2rem",
     alignContent: "center",
     marginLeft: "1rem",
-  }
+  },
 }));
 
 export default MoviePage;

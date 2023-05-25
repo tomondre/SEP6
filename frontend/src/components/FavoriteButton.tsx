@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { makeStyles } from 'tss-react/mui';
 import { Colors } from '../constants/Colors';
-import profileServie from '../services/account-service';
+import profileService from '../services/account-service';
+import { getUserId } from "../services/user-service";
 
 type ButtonProps = {
   movieId: number;
@@ -12,13 +13,14 @@ type ButtonProps = {
 const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave }) => {
   const [isFavorite, setIsFavorite] = useState(isFave);
   const { classes } = useStyles();
+  const userId = getUserId() || 0;
 
   const handleFavoriteClick = async () => {
     try{
         if(isFavorite){
-         await profileServie.deleteFavoriteMovie(movieId);
+         await profileService.deleteFavoriteMovie(movieId);
         } else {
-            //await profileServie.addFavoriteMovie(movieId);
+          userId!==0 && await profileService.addFavourite(userId,movieId);
         }
     }
     catch(error){
@@ -46,11 +48,11 @@ const useStyles = makeStyles()(() => ({
         },
     },
     notFavorite: {
-        color: Colors.black,
+        color: Colors.white,
         cursor: 'pointer',
         fontSize: '2rem',
         '&:hover': {
-            color: Colors.black50,
+            color: Colors.white80,
         },
     },
 
