@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/accounts/**",
-                        "/movies/*/reviews/")
+                        "/movies/*/reviews")
                 .authenticated()
                 .anyRequest()
                 .permitAll()
