@@ -37,4 +37,16 @@ public class Review {
     private Account account;
     @Column(name = "account_id", insertable=false, updatable=false)
     private int accountId;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private String movieTitle;
+
+    public String getMovieTitle() {
+        if (movie != null) {
+            return movie.getTitle();
+        }
+        return null;
+    }
 }
