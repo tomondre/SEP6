@@ -5,6 +5,7 @@ import com.sep6.backend.models.Account;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
+import com.sep6.backend.projections.FavouriteMovieProjection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -85,10 +86,9 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     }
 
     @Override
-    public Set<Movie> getAccountFavouritesById(int id) {
+    public Set<FavouriteMovieProjection> getAccountFavouritesById(int id) {
         log.info("Getting account favourites by ID: {}", id);
-        Account account = getAccountById(id).orElseThrow();
-        return account.getFavourites();
+        return jpaRepository.findFavouriteMoviesByAccountId(id);
     }
 
     public void addMovieToAccountFavourites(int accountId, int movieId) {
