@@ -4,7 +4,7 @@ import { getUserTokens } from "../services/user-service";
 const userTokens = getUserTokens();
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_URL,
+  baseURL: "https://sep6-api.tomondre.com",
   headers: {
     "Content-type": "application/json",
   },
@@ -15,3 +15,4 @@ if (userTokens) {
 }
 
 export default instance;
+
