@@ -73,44 +73,6 @@ const ProfilePage = () => {
         }
     ]
   }, [profile])
-  
-  const reviews = [
-    {
-      id: 1,
-      user: "John Doe",
-      date: "12/12/2012",
-      rating: 5,
-      comment: "lorem ipsum dolor sit amet aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    },
-    {
-      id: 2,
-      user: "John Doe 2",
-      date: "12/12/2012",
-      rating: 9,
-      comment: "lorem ipsum dolor sit amet",
-    },
-    {
-      id: 3,
-      user: "John Doe 3",
-      date: "12/12/2012",
-      rating: 10,
-      comment: "lorem ipsum dolor sit amet",
-    },
-    {
-      id: 4,
-      user: "John Doe 4",
-      date: "12/12/2012",
-      rating: 5,
-      comment: "lorem ipsum dolor sit amet",
-    },
-    {
-      id: 5,
-      user: "John Doe 5",
-      date: "12/12/2012",
-      rating: 2,
-      comment: "lorem ipsum dolor sit amet",
-    },
-  ];
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -220,7 +182,7 @@ const ProfilePage = () => {
                             key={index}
                             label={fieldAndValue.field}
                             value={fieldAndValue.value || ""}
-                            editable={editMode}
+                            editable={fieldAndValue.for === "username" ? false : editMode}
                             profileAttribute = {fieldAndValue.for as keyof IProfile}
                         />
                         ))}
