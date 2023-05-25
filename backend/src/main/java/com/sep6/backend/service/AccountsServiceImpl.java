@@ -5,6 +5,7 @@ import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
+import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.repository.AccountsRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Set<Movie> getAccountFavourites(int id) {
+    public Set<FavouriteMovieProjection> getAccountFavourites(int id) {
         log.info("Getting account favourites for account with ID {}", id);
         return repository.getAccountFavouritesById(id);
     }
