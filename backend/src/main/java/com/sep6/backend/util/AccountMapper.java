@@ -1,7 +1,6 @@
 package com.sep6.backend.util;
 
 import com.sep6.backend.models.Account;
-import com.sep6.backend.models.Tet;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
