@@ -19,7 +19,7 @@ const MoviePage = () => {
   const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
   const userId = getUserId() || 0;
-  const [favMovies, setFavMovies] = useState<IMovie[]>([]);
+  const [favMovie, setFavMovie] = useState<boolean>(false);
   const baseUrl = "https://image.tmdb.org/t/p/original";
 
   useEffect(() => {
@@ -29,14 +29,13 @@ const MoviePage = () => {
           const movie = await MovieService.getMovieById(id);
           setMovie(movie);
           const response = await profileService.getFavoriteMovies();
-          setFavMovies(response);
 
-          // for (let index = 0; index < response.length; index++) {
-          //   const id = response[index].id;
-          //   if (id === movie.id) {
-          //     setFavMovie(true);
-          //   }
-          // }
+          for (let index = 0; index < response.length; index++) {
+            const id = response[index].id;
+            if (id === movie.id) {
+              setFavMovie(true);
+            }
+          }
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -56,7 +55,6 @@ const MoviePage = () => {
   //     }
   //   } else return false;
   // };
-  const [favMovie, setFavMovie] = useState<boolean>(false);
 
   if (!movie) {
     return <div>Loading...</div>;

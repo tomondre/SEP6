@@ -1,5 +1,6 @@
 import axios from '../api/axios';
-import { getUserId } from "./user-service";
+import {getUserId} from "./user-service";
+import authHeader from "./auth-header";
 
 const userId = getUserId();
 
@@ -18,7 +19,11 @@ const addFavourite = (userId: number, movieId:number) => {
     return axios
       .post(`/accounts/${userId}/favourites`, {
         userId,
-        movieId,
+        movieId
+      }, {
+          headers: {
+              ...authHeader()
+          }
       })
       .then((response: { data: {}; }) => {
         return response.data;
@@ -27,7 +32,11 @@ const addFavourite = (userId: number, movieId:number) => {
 
 const getFavoriteMovies = async () => {
     try {
-        const response = await axios.get(`/accounts/${userId}/favourites`);
+        const response = await axios.get(`/accounts/${userId}/favourites`, {
+            headers: {
+                ...authHeader()
+            }
+        });
         const favoriteMovies = response.data;
         return favoriteMovies;
     } catch (error) {
@@ -38,7 +47,11 @@ const getFavoriteMovies = async () => {
 
 const deleteFavoriteMovie = async (movieId: number) => {
     try {
-        await axios.delete(`/accounts/${userId}/favourites/${movieId}`);
+        await axios.delete(`/accounts/${userId}/favourites/${movieId}`, {
+                headers: {
+                    ...authHeader()
+                }
+        });
     } catch (error) {
         console.error('Error deleting favorite movie:', error);
         throw error;

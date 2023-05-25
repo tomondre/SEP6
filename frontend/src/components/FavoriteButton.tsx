@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { makeStyles } from 'tss-react/mui';
 import { Colors } from '../constants/Colors';
@@ -10,8 +10,9 @@ type ButtonProps = {
   isFave: boolean;
 };
 
-const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave }) => {
+const FavoriteButton: React.FC<ButtonProps> = ({ movieId, isFave= false }) => {
   const [isFavorite, setIsFavorite] = useState(isFave);
+  useEffect(() => { setIsFavorite(isFave)}, [isFave] );
   const { classes } = useStyles();
   const userId = getUserId() || 0;
 
