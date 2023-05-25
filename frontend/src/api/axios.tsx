@@ -1,17 +1,15 @@
 import axios from "axios";
-import { getUserTokens } from "../services/user-service";
+import { getDecodedToken, getUserTokens } from "../services/user-service";
 
 const userTokens = getUserTokens();
-
+const baseURL = process.env.REACT_APP_URL;
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_URL,
+  baseURL,
   headers: {
     "Content-type": "application/json",
+    Authorization: userTokens ? `Bearer ${userTokens.access_token}` : "",
   },
 });
 
-if (userTokens) {
-  instance.defaults.headers.common["Authorization"] = `Bearer ${userTokens.access_token}`;
-}
-
 export default instance;
+
