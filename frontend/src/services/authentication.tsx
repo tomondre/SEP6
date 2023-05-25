@@ -47,18 +47,13 @@ const login = (email: string, password: string) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
-};
-
-const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user")|| '{}');
+  localStorage.removeItem("tokens");
 };
 
 const authService = {
   signup,
   login,
   logout,
-  getCurrentUser,
 };
 
 export default authService;

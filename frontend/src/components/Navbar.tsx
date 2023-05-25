@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Grid, Typography, Link } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import { Colors } from "../constants/Colors";
 import SearchBar from "./SearchBar";
 import { getUserId } from "../services/user-service";
+import authService from "../services/authentication";
 
 interface Links {
   destination: string;
@@ -13,9 +14,9 @@ interface Links {
 const Navbar: FunctionComponent = () => {
   const logo = require("../images/Logo.png");
   const { classes } = useStyles();
-  const user = getUserId();
+  const [userId, setUserId] = useState(getUserId());
 
-  const links: Links[] = user
+  const links: Links[] = userId
   ? [{ destination: "Home", link: "/" }]
   : [
       { destination: "Home", link: "/" },
@@ -23,6 +24,11 @@ const Navbar: FunctionComponent = () => {
       { destination: "Login", link: "/login" },
     ];
 
+    const handleLogout = () => {
+      authService.logout();
+      setUserId(null);
+      window.location.href="/";
+    };
 
   return (
     <Grid container className={classes.navbar}>
@@ -55,9 +61,9 @@ const Navbar: FunctionComponent = () => {
         ))}
           <Grid item>
             {
-              user && 
-              <Typography className={classes.navbarText} variant="h6">
-                Log-out
+              userId && 
+              <Typography className={classes.navbarText + " " + classes.logout} variant="h6" onClick={handleLogout}>
+                Logout
               </Typography>
             }
             </Grid>
@@ -96,6 +102,9 @@ const useStyles = makeStyles()(() => ({
   menu: {
     justifyContent: "space-between",
   },
+  logout: {
+    cursor: "pointer",
+  }
 }));
 
 export default Navbar;

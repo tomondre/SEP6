@@ -12,6 +12,7 @@ import { IMovie, IReview} from '../types';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteButton from '../components/FavoriteButton';
 import accountService from '../services/account-service';
+import { getUserId } from '../services/user-service';
 
 interface IProfile {
     country: string;
@@ -152,7 +153,12 @@ const ProfilePage = () => {
   };
 
   if(!profile)
+  {
+    if(getUserId() === null){
+      window.location.href="/login";
+    }
     return null;
+  }
 
   return (
     <Grid container>
