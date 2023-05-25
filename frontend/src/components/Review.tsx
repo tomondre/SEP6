@@ -23,7 +23,7 @@ const Review: FunctionComponent<Props> = ({ review }) => {
     <div className={classes.reviewContainer}>
       <div className={classes.titleAndRatingContainer}>
         <span>
-          <Typography variant="h5">{'Movie name'}</Typography>
+          <Typography variant="h5">{review.movieTitle}</Typography>
           <Typography variant="p">{date}</Typography>
         </span>
         <Rating rating={rating} />

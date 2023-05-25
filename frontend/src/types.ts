@@ -11,4 +11,5 @@ export interface IReview {
     comment: string;
     rating: number;
     date: string;
+    movieTitle: string;
 }
