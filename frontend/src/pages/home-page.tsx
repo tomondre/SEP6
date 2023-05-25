@@ -8,12 +8,15 @@ import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
 import { IMovie } from "../types";
+import { getUserId } from '../services/user-service';
+import { Link as RouterLink } from 'react-router-dom';
 
 const HomePage = () => {
   const { classes } = useStyles();
   const [currentPage, setCurrentPage] = useState(1);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<number | "">("");
+  const userId= getUserId();
 
 
   useEffect(() => {
@@ -46,9 +49,13 @@ const HomePage = () => {
 
       <Grid item lg={6} display='grid' justifyContent="flex-start">
         <Typography variant="h1" className={classes.heroText}>DISCOVER THE UNIVERSE OF MOVIES</Typography>
-        <Button className={classes.button} variant="contained">
-          Get Started
-        </Button>
+       {!userId && 
+       <RouterLink className={classes.button} to="/sign-up">
+        <Button variant="contained">
+            Get Started
+          </Button>
+      </RouterLink>
+      }
       </Grid>
       <Grid item lg={6}>
         <CarouselComponent movies={movies} />
