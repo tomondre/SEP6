@@ -27,6 +27,7 @@ interface Person {
   biography: string;
   deathDate: string;
   profileImg: string;
+  ratingAverage:number;
   movies:Movie[]
 }
 
@@ -35,8 +36,6 @@ const PeoplePage = () => {
   const navigate = useNavigate();
   const [people, setPeople] = useState<Person>();
   const id = useIdFromUrl();
-
-
   const baseUrl = 'https://image.tmdb.org/t/p/original'
 
 
@@ -71,7 +70,7 @@ const PeoplePage = () => {
         <Grid className={classes.peopleDetails}>
           <Grid className={classes.ratingGroup}>
             <StarIcon className={classes.star} />
-            <Grid className={classes.rating}>Rating</Grid>
+            <Grid className={classes.rating}>{people.ratingAverage}</Grid>
             <Grid className={classes.ratingGoal}>/ 10</Grid>
           </Grid>
 
