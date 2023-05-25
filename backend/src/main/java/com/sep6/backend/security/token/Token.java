@@ -1,5 +1,6 @@
 package com.sep6.backend.security.token;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sep6.backend.models.Account;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,5 +40,6 @@ public class Token {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     public Account user;
 }
