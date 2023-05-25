@@ -5,6 +5,7 @@ import com.sep6.backend.models.FavouriteRequest;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
+import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.service.AccountsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -187,6 +188,22 @@ class AccountsControllerTest
         // Act & Assert
         assertThrows(ResponseStatusException.class, () -> accountsController.addMovieToAccountFavourites(id, request));
         verify(accountsService, times(1)).addMovieToAccountFavourites(request);
+    }
+
+    @Test
+    void testGetAccountFavourites() {
+        // Arrange
+        int id = 1;
+        Set<FavouriteMovieProjection> favourites = new HashSet<>();
+        when(accountsService.getAccountFavourites(id)).thenReturn(favourites);
+
+        // Act
+        ResponseEntity<Set<FavouriteMovieProjection>> response = accountsController.getAccountFavourites(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(favourites, response.getBody());
+        verify(accountsService, times(1)).getAccountFavourites(id);
     }
 
     @Test
