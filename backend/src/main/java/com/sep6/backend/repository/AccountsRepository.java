@@ -1,6 +1,7 @@
 package com.sep6.backend.repository;
 
 import com.sep6.backend.models.Account;
+import com.sep6.backend.models.AccountDTO;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 public interface AccountsRepository {
     Optional<Account> findByEmail(String email);
-    Optional<Account> editAccount(int id, Account account);
+    Optional<Account> editAccount(int id, AccountDTO account);
     void deleteAccount(int id);
 
     Account save(Account user);
