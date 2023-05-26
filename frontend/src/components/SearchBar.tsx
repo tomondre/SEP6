@@ -39,6 +39,7 @@ const SearchBar: FunctionComponent = ({}) => {
   };
 
   const debouncedHandleSearch = debounce(searchMoviesByName, 250);
+  const debounceHideSearch = debounce(hideSearchResults, 250);
 
   return (
     <>
@@ -47,7 +48,7 @@ const SearchBar: FunctionComponent = ({}) => {
         variant="outlined"
         placeholder="Search..."
         onChange={debouncedHandleSearch}
-        onBlur={hideSearchResults}
+        onBlur={debounceHideSearch}
         onFocus={showSearchResults}
         InputProps={{
           startAdornment: (
