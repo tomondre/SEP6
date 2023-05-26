@@ -1,6 +1,7 @@
 package com.sep6.backend.security.config;
 
 import com.sep6.backend.repository.TokenRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,12 +44,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            sendUnauthorizedResponse(response);
             return;
         }
         log.info("Auth header: {}", authHeader);
         jwt = authHeader.substring(7);
+        try {
+            jwtService.extractUsername(jwt);
+        } catch (ExpiredJwtException e) {
+            log.info("Token expired: {}", jwt);
+            sendTokenExpiredResponse(response);
+            return;
+        }
         userEmail = jwtService.extractUsername(jwt);
         log.info("User email: {}", userEmail);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -69,8 +77,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
                 log.info("User authenticated: {}", userEmail);
+            } else {
+                sendUnauthorizedResponse(response);
+                return;
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void sendUnauthorizedResponse(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Not authorized");
+    }
+
+    private void sendTokenExpiredResponse(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Token expired");
     }
 }
