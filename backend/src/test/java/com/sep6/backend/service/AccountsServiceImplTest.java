@@ -54,6 +54,7 @@ class AccountsServiceImplTest
         verify(repository, times(1)).addMovieToAccountFavourites(request.getAccountId(), request.getMovieId());
     }
 
+    @Test
     public void testGetAccountFavourites() {
         // Arrange
         int accountId = 1;

@@ -57,7 +57,10 @@ public class AccountsServiceImpl implements AccountsService {
     @Override
     public Account editAccount(int id, Account account) {
         log.info("Editing account with ID {}", id);
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        if (account.getPassword() != null)
+        {
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
+        }
         return repository.editAccount(id, account).orElseThrow();
     }
 
