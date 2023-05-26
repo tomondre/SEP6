@@ -30,4 +30,6 @@ public interface AccountsJpaRepository extends JpaRepository<Account, Integer>
     void disableAccount(int id);
     @Query("SELECT f.title AS title, f.id AS id, f.posterUrl AS posterUrl FROM Account a JOIN a.favourites f WHERE a.id = :accountId")
     Set<FavouriteMovieProjection> findFavouriteMoviesByAccountId(Integer accountId);
+
+    Optional<Account> findByUsername(String username);
 }
