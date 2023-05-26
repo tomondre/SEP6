@@ -1,41 +1,43 @@
 
 import axios from '../api/axios';
 const API_URL = "/people";
-
-interface Movie {
-  id:number;
-  title:string;
-  posterUrl:string;
-}
-
-interface Person {
-  id: number;
-  name: string;
-  type: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  gender: string;
-  biography: string;
-  deathDate: string;
-  profileImg: string;
-  movies:Movie[]
-}
+import { IPerson } from "../types";
 
 
-  const getPersonById = async (id: number): Promise<Person> => {
-    try {
-        const response = await axios.get(`${API_URL}/${id}`);
-        const person = response.data;
-        return person as Person;
-    } catch (error) {
-        console.error('Error fetching movies:', error);
-        throw error;
-    }
+const getPeople = async (personName: string): Promise<IPerson[]> => {
+  try {
+    const response = await axios.get(API_URL, {
+      params: {
+        search: personName,
+      },
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    const people = response.data;
+    return people as IPerson[];
+  } catch (error) {
+    console.error('Error fetching people:', error);
+    throw error;
+  }
 };
 
-  const personService = {
-    getPersonById
-  };
-  
-  export default personService;
+const getPersonById = async (id: number): Promise<IPerson> => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    const person = response.data;
+    return person as IPerson;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+const personService = {
+  getPersonById,
+  getPeople,
+};
+
+export default personService;
 

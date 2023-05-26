@@ -24,27 +24,10 @@ const getMovies = async (pageNumber?: number, genreId?: number | "", movieName?:
     }
 };
 
-const filterMovies = async (pageNumber: number, genreId?: number | ""): Promise<IMovie[]> => {
-    try {
-        let movies = await getMovies(pageNumber, genreId);
-
-        const filteredMovies = movies.map((movie: IMovie) => {
-            const { id, genres, posterUrl, title } = movie;
-            const filteredGenres = genres.map((genre) => ({ id: genre.id, name: genre.name }));
-            return { id, genres: filteredGenres, posterUrl, title };
-        });
-
-        return filteredMovies;
-    } catch (error) {
-        console.error('Error filtering:', error);
-        return [];
-    }
-};
 
 
 const MovieService = {
     getMovies,
-    filterMovies,
 };
 
 export default MovieService;

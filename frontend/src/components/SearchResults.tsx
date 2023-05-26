@@ -1,30 +1,87 @@
 import React, { FunctionComponent } from "react";
-import { IMovie } from "../types";
+import { IMovie, IPerson } from "../types";
 import { makeStyles } from "tss-react/mui";
 import { Colors } from "../constants/Colors";
 import Typography from "@mui/material/Typography";
-
 import { movieSearchLimit } from "../constants/GeneralConstants";
-import {Link as RouterLink } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { Link } from "react-router-dom";
 
 
 interface Props {
-  movies?: IMovie[];
+  items?: (IMovie | IPerson)[];
 }
 
-const SearchResults: FunctionComponent<Props> = ({ movies }) => {
+interface MovieItemProps {
+  movie: IMovie;
+  shouldHaveSeparator: boolean;
+  navigateToMovie: (movieId: number) => void;
+}
+
+interface PersonItemProps {
+  person: IPerson;
+  shouldHaveSeparator: boolean;
+  navigateToPerson: (personId: number) => void;
+}
+
+const MovieItem: FunctionComponent<MovieItemProps> = ({
+  movie,
+  shouldHaveSeparator,
+  navigateToMovie,
+}) => {
+  const { classes } = useStyles();
+
+  return (
+    <li
+      className={`${classes.result} ${shouldHaveSeparator && classes.separation}`}
+      onClick={() => navigateToMovie(movie.id)}
+    >
+      <img
+        src={`https://image.tmdb.org/t/p/w200${movie.posterUrl}`}
+        className={classes.poster}
+      />
+      <Typography variant="p" color={Colors.black75}>
+        {movie.title}
+      </Typography>
+    </li>
+  );
+};
+
+const PersonItem: FunctionComponent<PersonItemProps> = ({
+  person,
+  shouldHaveSeparator,
+  navigateToPerson,
+}) => {
+  const { classes } = useStyles();
+
+  return (
+    <li
+      className={`${classes.result} ${shouldHaveSeparator && classes.separation}`}
+      onClick={() => navigateToPerson(person.id)}
+    >
+      <img
+        src={`https://image.tmdb.org/t/p/w200${person.profileImg}`}
+        className={classes.poster}
+      />
+      <Typography variant="p" color={Colors.black75}>
+        {person.name}
+      </Typography>
+    </li>
+  );
+};
+
+const SearchResults: FunctionComponent<Props> = ({ items }) => {
   const { classes } = useStyles();
 
   const navigateToMovie = (movieId: number) => {
-    const movieUrl = `/movies?id=${movieId}`;
-    window.location.href = movieUrl;
+    window.location.href = `/movies?id=${movieId}`;
   };
 
-  if (!movies) return null;
+  const navigateToPerson = (personId: number) => {
+    window.location.href = `/person?id=${personId}`;
+  };
 
-  if (!movies.length)
+  if (!items) return null;
+
+  if (!items.length)
     return (
       <div className={classes.resultContainer}>
         <Typography variant="p" color={Colors.black75}>
@@ -36,25 +93,30 @@ const SearchResults: FunctionComponent<Props> = ({ movies }) => {
   return (
     <div className={classes.resultContainer}>
       <ul className={classes.ulStyling}>
-        {movies.slice(0, movieSearchLimit).map((movie, index) => {
+        {items.slice(0, movieSearchLimit).map((item, index) => {
           const shouldHaveSeparator = index !== 0;
 
-          return (
-            <li
+          if ("title" in item) {
+            const movie = item as IMovie;
+            return (
+              <MovieItem
                 key={movie.id}
-                className={`${classes.result} ${shouldHaveSeparator &&
-                  classes.separation}`}
-                onClick={() => navigateToMovie(movie.id)}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/w200${movie.posterUrl}`}
-                  className={classes.moviePoster}
-                />
-                <Typography variant="p" color={Colors.black75}>
-                  {movie.title}
-                </Typography>
-              </li>
-          );
+                movie={movie}
+                shouldHaveSeparator={shouldHaveSeparator}
+                navigateToMovie={navigateToMovie}
+              />
+            );
+          } else {
+            const person = item as IPerson;
+            return (
+              <PersonItem
+                key={person.id}
+                person={person}
+                shouldHaveSeparator={shouldHaveSeparator}
+                navigateToPerson={navigateToPerson}
+              />
+            );
+          }
         })}
       </ul>
     </div>
@@ -86,7 +148,7 @@ const useStyles = makeStyles()(() => ({
       backgroundColor: Colors.gray,
     },
   },
-  moviePoster: {
+  poster: {
     width: "3rem",
     height: "4.5rem",
     marginLeft: "1.5rem",

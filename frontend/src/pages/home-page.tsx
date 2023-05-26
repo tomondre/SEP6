@@ -22,7 +22,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const movies = await MovieService.filterMovies(currentPage, selectedGenre);
+        const movies = await MovieService.getMovies(currentPage, selectedGenre);
         setMovies(movies);
       } catch (error) {
         console.error('Error fetching movies:', error);

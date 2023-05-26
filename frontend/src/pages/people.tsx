@@ -9,6 +9,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
+import { IPerson } from "../types";
 
 
 interface Movie {
@@ -17,23 +18,11 @@ interface Movie {
   posterUrl:string;
 }
 
-interface Person {
-  id: number;
-  name: string;
-  type: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  gender: string;
-  biography: string;
-  deathDate: string;
-  profileImg: string;
-  movies:Movie[]
-}
 
 const PeoplePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const [people, setPeople] = useState<Person>();
+  const [people, setPeople] = useState<IPerson>();
   const id = useIdFromUrl();
 
 

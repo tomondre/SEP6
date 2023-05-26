@@ -6,40 +6,58 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Colors } from "../constants/Colors";
 import debounce from "../utils/debounce";
 
-import { IMovie } from "../types";
+import { IMovie, IPerson } from "../types";
 import MovieService from "../services/movies";
+import PersonService from "../services/person-service";
 import SearchResults from "./SearchResults";
 
 const SearchBar: FunctionComponent = ({}) => {
   const { classes } = useStyles();
 
-  const [movies, setMovies] = useState<IMovie[] | undefined>();
+  const [movies, setMovies] = useState<IMovie[] | undefined>([]);
+  const [persons, setPersons] = useState<IPerson[] | undefined>([]);
   const [tempMovies, setTempMovies] = useState<IMovie[] | undefined>();
+  const [tempPersons, setTempPersons] = useState<IPerson[] | undefined>();
 
-  const searchMoviesByName = async (event: ChangeEvent<HTMLInputElement>) => {
+
+  const searchItemsByName = async (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
     if (!inputValue) {
-      return setMovies([]);
+      setMovies([]);
+      setPersons([]);
+
+      return;
     }
 
-    const retrievedMovies = await MovieService.getMovies(0, "", inputValue);
+    const [retrievedMovies, retrievedPersons] = await Promise.all([
+      MovieService.getMovies(0, "", inputValue),
+      PersonService.getPeople(inputValue),
+    ]);
+
     setMovies(retrievedMovies);
+    setPersons(retrievedPersons);
   };
 
   const hideSearchResults = () => {
-    //save the last movies so when the user clicks on searchbar again it will not do another request
-    setTempMovies(movies); 
+    // save the last movies so when the user clicks on searchbar again it will not do another request
+    setTempMovies(movies);
+    setTempPersons(persons);
     setMovies(undefined);
+    setPersons(undefined);
   };
 
   const showSearchResults = () => {
-    setMovies(tempMovies); // set movies to the last movies
-    setTempMovies(undefined); // reset tempMovies
+    setMovies(tempMovies);// set movies to the last movies
+    setPersons(tempPersons);
+    setTempMovies(undefined);// reset tempMovies
+    setTempPersons(undefined);
   };
 
-  const debouncedHandleSearch = debounce(searchMoviesByName, 250);
+  const debouncedHandleSearch = debounce(searchItemsByName, 250);
   const debounceHideSearch = debounce(hideSearchResults, 250);
+
+  const combinedItems = [...(movies || []), ...(persons || [])];
 
   return (
     <>
@@ -61,7 +79,7 @@ const SearchBar: FunctionComponent = ({}) => {
         }}
       />
 
-      <SearchResults movies={movies} />
+      <SearchResults items={combinedItems} />
     </>
   );
 };

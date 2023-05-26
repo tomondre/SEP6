@@ -13,3 +13,16 @@ export interface IReview {
     date: string;
     movieTitle: string;
 }
+
+export interface IPerson {
+    id: number;
+    name: string;
+    type: string;
+    dateOfBirth: string;
+    placeOfBirth: string;
+    gender: string;
+    biography: string;
+    deathDate: string;
+    profileImg: string;
+    movies: IMovie[]
+}
