@@ -1,10 +1,7 @@
 package com.sep6.backend.controller;
 
-import com.sep6.backend.models.Account;
-import com.sep6.backend.models.FavouriteRequest;
-import com.sep6.backend.models.Movie;
+import com.sep6.backend.models.*;
 import com.sep6.backend.projections.AccountProjection;
-import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.service.AccountsService;
 import lombok.AllArgsConstructor;
@@ -28,17 +25,17 @@ public class AccountsController {
     private AccountsService service;
 
     @PutMapping(value = "{id}")
-    public ResponseEntity<Account> editAccount(@PathVariable int id, @RequestBody Account account)
+    public ResponseEntity<Account> editAccount(@PathVariable int id, @RequestBody AccountDTO account)
     {
         try
         {
             log.info("Editing account with id " + id);
             return ResponseEntity.ok(service.editAccount(id, account));
         }
-        catch (NoSuchElementException e)
+        catch (NoSuchElementException | IllegalArgumentException e)
         {
             log.warn("Account with id " + id + " does not exist.", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist.", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account with id " + id + " does not exist. Or the input data is invalid", e);
         }
         catch (Exception e)
         {
