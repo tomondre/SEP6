@@ -27,6 +27,7 @@ const MoviePage = () => {
   const baseUrl = "https://image.tmdb.org/t/p/original";
   const [movieReviews, setMovieReviews] = useState<IReview[]>([]);
   const [open, setOpen] = React.useState(false);
+  const [rating, setRating] = useState<number>();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,14 +42,22 @@ const MoviePage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IReview>();
+
+  const changeRating = (event:any, value:number|null)=>{
+    if(value)
+    setRating(value);
+  }
+
+
+
   const onSubmit = handleSubmit((data) => handleData(data));
 
   const handleData = async (data: IReview) => {
     try {
-      movie &&
+      movie && rating &&
         (await MovieService.addReview(
           movie.id,
-          data.rating,
+          rating,
           data.comment,
           data.date,
           userId,
@@ -59,6 +68,7 @@ const MoviePage = () => {
             console.log(error);
           }
         ));
+        window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -79,8 +89,7 @@ const MoviePage = () => {
             }
           }
         const reviews = await MovieService.getReviewsByMovieId(movie.id);
-        setMovieReviews(reviews)
-
+        setMovieReviews(reviews);
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -177,21 +186,8 @@ const MoviePage = () => {
               <form onSubmit={onSubmit}>
                 <DialogContent>
                   <Box>
-                    <Typography component="legend">Rating</Typography>
-                    <Rating name="customized-10" defaultValue={2} max={10} />
+                    <Rating name="customized-10" defaultValue={2} max={10} onChange={changeRating} />
                   </Box>
-                  
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Rating"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    {...register("rating")}
-                  />
-
                   <TextField
                     autoFocus
                     margin="dense"
@@ -238,7 +234,6 @@ const MoviePage = () => {
 
 
       <Grid className={classes.starsLabel}>
-        <Typography variant="h4">Reviews:</Typography>
         <Reviews reviews={movieReviews} />
       </Grid>
       
