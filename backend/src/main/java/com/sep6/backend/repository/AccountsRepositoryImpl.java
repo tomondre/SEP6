@@ -118,6 +118,12 @@ public class AccountsRepositoryImpl implements AccountsRepository{
     }
 
     @Override
+    public Optional<Account> findByUsername(String username)
+    {
+        return jpaRepository.findByUsername(username);
+    }
+
+    @Override
     public Optional<AccountProjection> getAccountProjectionById(int id) {
         log.info("Getting account projection by ID: {}", id);
         return jpaRepository.findByIdAndIdNotNull(id);
