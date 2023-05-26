@@ -23,4 +23,6 @@ public interface AccountsRepository {
     void deleteAccountFavourite(int accountId, int movieId);
     Optional<AccountProjection> getAccountProjectionById(int id);
     List<Review> getAccountReviews(int id);
+
+    Optional<Account> findByUsername(String username);
 }
