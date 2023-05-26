@@ -9,7 +9,7 @@ spring:
       hibernate:
         format_sql: true
     database: MYSQL
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 server:
   port: '8000'
