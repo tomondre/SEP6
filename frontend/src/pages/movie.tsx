@@ -15,7 +15,6 @@ import profileService from "../services/account-service";
 import { IReview } from "../types";
 import { useForm } from "react-hook-form";
 import Reviews from "../components/Reviews";
-import { async } from "q";
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -231,12 +230,7 @@ const MoviePage = () => {
             </Grid>
           ))}
       </Grid>
-
-
-      <Grid className={classes.starsLabel}>
         <Reviews reviews={movieReviews} />
-      </Grid>
-      
     </Grid>
   );
 };
