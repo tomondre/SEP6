@@ -1,9 +1,6 @@
 package com.sep6.backend.service;
 
-import com.sep6.backend.models.Account;
-import com.sep6.backend.models.FavouriteRequest;
-import com.sep6.backend.models.Movie;
-import com.sep6.backend.models.Review;
+import com.sep6.backend.models.*;
 import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.repository.AccountsRepository;
@@ -55,12 +52,8 @@ public class AccountsServiceImpl implements AccountsService {
     }
 
     @Override
-    public Account editAccount(int id, Account account) {
+    public Account editAccount(int id, AccountDTO account) {
         log.info("Editing account with ID {}", id);
-        if (account.getPassword() != null)
-        {
-            account.setPassword(passwordEncoder.encode(account.getPassword()));
-        }
         return repository.editAccount(id, account).orElseThrow();
     }
 
