@@ -1,5 +1,6 @@
-import { IMovie } from "../types";
+import { IMovie, IReview } from "../types";
 import axios from '../api/axios';
+import authHeader from "./auth-header";
 
 const API_URL = "/movies";
 
@@ -51,11 +52,43 @@ const getMovieById = async (id: number): Promise<IMovie> => {
     }
 };
 
+const addReview = (movieId:number, rating:number, comment: string, createdOn: string,accountId:number,movieTitle:string) => {
+    return axios
+      .post(`${API_URL}/${movieId}/reviews`, {
+        movieId,
+        rating,
+        comment,
+        createdOn,
+        accountId,
+        movieTitle
+      })
+      .then((response: { data: {}; }) => {
+        return response.data;
+      });
+  };
 
+  const getReviewsByMovieId = async (id: number): Promise<IReview[]>  => {
+    try {
+        const response = await axios.get(`${API_URL}/${id}/reviews`,{
+             
+                headers: {
+                    ...authHeader()
+                }
+            
+        });
+        const reviews = response.data;
+        return reviews as IReview[];
+    } catch (error) {
+        console.error('Error fetching reviews:', error);
+        throw error;
+    }
+};
 const MovieService = {
     getMovies,
     filterMovies,
-    getMovieById
+    getMovieById,
+    addReview,
+    getReviewsByMovieId
 };
 
 export default MovieService;

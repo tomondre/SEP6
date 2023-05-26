@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
-import { Grid, Typography, Link, Button } from "@mui/material";
+import { Grid, Typography, Link, Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField, styled, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
@@ -12,6 +12,10 @@ import PeopleCard from "../components/PeopleCard";
 import { getUserId } from "../services/user-service";
 import FavoriteButton from "../components/FavoriteButton";
 import profileService from "../services/account-service";
+import { IReview } from "../types";
+import { useForm } from "react-hook-form";
+import Reviews from "../components/Reviews";
+import { async } from "q";
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -21,6 +25,44 @@ const MoviePage = () => {
   const userId = getUserId() || 0;
   const [favMovie, setFavMovie] = useState<boolean>(false);
   const baseUrl = "https://image.tmdb.org/t/p/original";
+  const [movieReviews, setMovieReviews] = useState<IReview[]>([]);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IReview>();
+  const onSubmit = handleSubmit((data) => handleData(data));
+
+  const handleData = async (data: IReview) => {
+    try {
+      movie &&
+        (await MovieService.addReview(
+          movie.id,
+          data.rating,
+          data.comment,
+          data.date,
+          userId,
+          movie.title
+        ).then(
+          () => {},
+          (error) => {
+            console.log(error);
+          }
+        ));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -36,15 +78,17 @@ const MoviePage = () => {
               setFavMovie(true);
             }
           }
+        const reviews = await MovieService.getReviewsByMovieId(movie.id);
+        setMovieReviews(reviews)
+
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
-      }
+      } 
     };
 
     fetchMovie();
   }, []);
-
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -120,9 +164,58 @@ const MoviePage = () => {
           <Grid className={classes.description}>
             <Typography variant="p">{movie.description}</Typography>
           </Grid>
-          <Button className={classes.button} variant="contained">
-            Add review
-          </Button>
+          <Grid>
+            <Button
+              className={classes.button}
+              variant="contained"
+              onClick={handleClickOpen}
+            >
+              Add review
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle className={classes.dialogTitle}>Review</DialogTitle>
+              <form onSubmit={onSubmit}>
+                <DialogContent>
+                  <Box>
+                    <Typography component="legend">Rating</Typography>
+                    <Rating name="customized-10" defaultValue={2} max={10} />
+                  </Box>
+                  
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Rating"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    {...register("rating")}
+                  />
+
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Comment"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    {...register("comment")}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    className={classes.button}
+                    type="submit"
+                    variant="contained"
+                    onClick={handleClose}
+                  >
+                    Submit
+                  </Button>
+                </DialogActions>
+              </form>
+            </Dialog>
+          </Grid>
         </Grid>
       </Grid>
 
@@ -142,6 +235,13 @@ const MoviePage = () => {
             </Grid>
           ))}
       </Grid>
+
+
+      <Grid className={classes.starsLabel}>
+        <Typography variant="h4">Reviews:</Typography>
+        <Reviews reviews={movieReviews} />
+      </Grid>
+      
     </Grid>
   );
 };
@@ -256,6 +356,10 @@ const useStyles = makeStyles()(() => ({
     fontSize: "2rem",
     alignContent: "center",
     marginLeft: "1rem",
+  },
+  dialogTitle: {
+    color: Colors.black75,
+    fontSize: "2rem",
   },
 }));
 

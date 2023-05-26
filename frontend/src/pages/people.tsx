@@ -10,11 +10,10 @@ import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
 import personService from "../services/person-service";
 
-
 interface Movie {
-  id:number;
-  title:string;
-  posterUrl:string;
+  id: number;
+  title: string;
+  posterUrl: string;
 }
 
 interface Person {
@@ -27,8 +26,8 @@ interface Person {
   biography: string;
   deathDate: string;
   profileImg: string;
-  ratingAverage:number;
-  movies:Movie[]
+  ratingAverage: number;
+  movies: Movie[];
 }
 
 const PeoplePage = () => {
@@ -36,8 +35,7 @@ const PeoplePage = () => {
   const navigate = useNavigate();
   const [people, setPeople] = useState<Person>();
   const id = useIdFromUrl();
-  const baseUrl = 'https://image.tmdb.org/t/p/original'
-
+  const baseUrl = "https://image.tmdb.org/t/p/original";
 
   useEffect(() => {
     const fetchPerson = async () => {
@@ -53,18 +51,19 @@ const PeoplePage = () => {
     fetchPerson();
   }, []);
 
-
-
-  if(!people)
-  {
-    return <div>Loading...</div>
+  if (!people) {
+    return <div>Loading...</div>;
   }
 
   return (
     <Grid container>
       <Grid className={classes.container}>
         <Grid>
-          <img src={`${baseUrl}${people.profileImg}`} className={classes.image} alt="people" />
+          <img
+            src={`${baseUrl}${people.profileImg}`}
+            className={classes.image}
+            alt="people"
+          />
         </Grid>
 
         <Grid className={classes.peopleDetails}>
@@ -82,15 +81,24 @@ const PeoplePage = () => {
             <Grid className={classes.type}>
               <Typography variant="h6">{people.type}</Typography>
             </Grid>
-            <Grid className={classes.dateOfBirth}>
-              <Typography variant="h6">Born: {people.dateOfBirth.substring(0,10)}</Typography>
-            </Grid>
-            { people.deathDate &&
+            {people.dateOfBirth && (
+              <Grid className={classes.dateOfBirth}>
+                <Typography variant="h6">
+                  Born: {people.dateOfBirth.substring(0, 10)}
+                </Typography>
+              </Grid>
+            )}
+            {people.deathDate && (
               <Grid className={classes.deathDate}>
-              <Typography variant="h6">Died: {people.deathDate.substring(0,10)}</Typography>
-            </Grid>}
+                <Typography variant="h6">
+                  Died: {people.deathDate.substring(0, 10)}
+                </Typography>
+              </Grid>
+            )}
             <Grid className={classes.birthPlace}>
-              <Typography variant="h6">Place of birth: {people.placeOfBirth}</Typography>
+              <Typography variant="h6">
+                Place of birth: {people.placeOfBirth}
+              </Typography>
             </Grid>
             <Grid className={classes.gender}>
               <Typography variant="h6">Gender: {people.gender}</Typography>
@@ -103,12 +111,16 @@ const PeoplePage = () => {
         </Grid>
       </Grid>
       <Grid className={classes.knownForLabel}>
-      <Typography variant="h4">Known for:</Typography>
+        <Typography variant="h4">Known for:</Typography>
       </Grid>
       <Grid item container className={classes.moviesContainer}>
         {people.movies.map((movie, index) => (
           <Grid item lg={2} key={index}>
-            <MovieCard id={movie.id} poster={`${baseUrl}${movie.posterUrl}`} title={movie.title} />
+            <MovieCard
+              id={movie.id}
+              poster={`${baseUrl}${movie.posterUrl}`}
+              title={movie.title}
+            />
           </Grid>
         ))}
       </Grid>
@@ -193,17 +205,16 @@ const useStyles = makeStyles()(() => ({
     alignContent: "center",
     marginLeft: "1rem",
   },
-  biography:{
-    textAlign:'justify',
-    fontWeight:'300',
+  biography: {
+    textAlign: "justify",
+    fontWeight: "300",
   },
-  knownForLabel:{
-    margin:'4rem 4rem 4rem 0rem'
+  knownForLabel: {
+    margin: "4rem 4rem 4rem 0rem",
   },
-  moviesContainer:{
-    justifyContent: 'space-around'
-  }
-
+  moviesContainer: {
+    justifyContent: "space-around",
+  },
 }));
 
 export default PeoplePage;

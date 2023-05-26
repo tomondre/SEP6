@@ -18,9 +18,11 @@ export interface IMovie {
 
 export interface IReview {
     id: number;
-    user: string;
+    user?: string;
     comment: string;
     rating: number;
     date: string;
     movieTitle: string;
+    movieId:number;
+    accountId:number;
 }
