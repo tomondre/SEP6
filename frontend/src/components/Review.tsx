@@ -6,6 +6,8 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { Colors } from "../constants/Colors";
 import Rating from "./Rating";
 import { getUserId } from "../services/user-service";
+import { async } from "q";
+import MovieService from "../services/movies";
 
 
 interface Props {
@@ -14,12 +16,22 @@ interface Props {
 
 const Review: FunctionComponent<Props> = ({ review }) => {
   const { classes } = useStyles();
-  const { id, date, rating, comment, user, accountId } = review;
+  const { id, date, rating, comment, user, accountId, movieId } = review;
   const userId = getUserId() || 0;
   const [showMore, setShowMore] = useState(false);
   const toggleViewMore = () => setShowMore(currentValue => !currentValue);
 
   const isSeeMoreButtonVisible = comment.length > 100;
+
+  const handleClick = async()=> {
+    try{
+       await MovieService.deleteReview(movieId,id);
+       window.location.reload();
+  }
+  catch(error){
+      console.log(error);
+  }
+  }
 
   return (
     <div className={classes.reviewContainer}>
@@ -40,7 +52,7 @@ const Review: FunctionComponent<Props> = ({ review }) => {
       </div>
       {  userId&& (accountId==userId)  &&
       <IconButton aria-label="delete">
-          <DeleteIcon className={classes.deleteIcon} />
+          <DeleteIcon className={classes.deleteIcon} onClick={handleClick}/>
         </IconButton>
         }
       </div>

@@ -83,12 +83,26 @@ const addReview = (movieId:number, rating:number, comment: string, createdOn: st
         throw error;
     }
 };
+
+const deleteReview = async (movieId: number, reviewId:number) => {
+    try {
+        await axios.delete(`${API_URL}/${movieId}/reviews/${reviewId}`, {
+                headers: {
+                    ...authHeader()
+                }
+        });
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        throw error;
+    }
+};
 const MovieService = {
     getMovies,
     filterMovies,
     getMovieById,
     addReview,
-    getReviewsByMovieId
+    getReviewsByMovieId,
+    deleteReview
 };
 
 export default MovieService;
