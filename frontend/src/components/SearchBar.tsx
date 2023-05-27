@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, FunctionComponent, useEffect } from "react";
+import React, { ChangeEvent, useState, FunctionComponent, useEffect, useRef } from "react";
 import { makeStyles } from "tss-react/mui";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,13 +15,14 @@ import FilterSelection from "./FilterSelection";
 
 const SearchBar: FunctionComponent = ({}) => {
   const { classes } = useStyles();
-
-  const [results, setResults] = useState<(IMovie | IPerson)[] | [] | undefined>()
+  const componentRef = useRef(null);
+  const [results, setResults] = useState<(IMovie | IPerson)[] | []>()
   const [filterVisbility, setFilterVisibility] = useState<boolean>(false);
   const [filters, setFilters] = useState<{
     people:boolean;
     movies:boolean;
-  }>({people:true, movies:true})
+  }>({people:true, movies:true});
+  const [viewResults, setViewResults] = useState(false);
 
   const searchItemsByName = async (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
@@ -41,23 +42,18 @@ const SearchBar: FunctionComponent = ({}) => {
       ...retrievedMovies,
       ...retrievedPersons,
     ])
+    setViewResults(true);
   };
 
   const hideSearchResults = () => {
-    localStorage.setItem("searchResults", JSON.stringify(results));
-    setResults(undefined);
+    setViewResults(false);
   };
 
   const showSearchResults = () => {
-    const searchResults = JSON.parse(
-      localStorage.getItem("searchResults") || "[]"
-    );
-
-    setResults(searchResults);
+    setViewResults(true);
   };
 
   const debouncedHandleSearch = debounce(searchItemsByName, 250);
-  const debounceHideSearch = debounce(hideSearchResults, 250);
 
   const toggleFiltersVisibility = () => {
     setFilterVisibility(curr => !curr)
@@ -76,14 +72,30 @@ const SearchBar: FunctionComponent = ({}) => {
     }
   },[results])
 
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (
+        componentRef.current &&
+        // @ts-ignore
+        !componentRef.current.contains(event.target)
+      ) {
+        hideSearchResults();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [componentRef]);
+
   return (
-    <>
+    <div ref={componentRef}>
       <TextField
         className={classes.searchInput}
         variant="outlined"
         placeholder="Search..."
         onChange={debouncedHandleSearch}
-        onBlur={debounceHideSearch}
         onFocus={showSearchResults}
         InputProps={{
           startAdornment: (
@@ -103,7 +115,7 @@ const SearchBar: FunctionComponent = ({}) => {
         }}
       />
 
-      <SearchResults items={results} filters={filters}/>
+      <SearchResults items={results} filters={filters} visible={viewResults}/>
 
       {
         filterVisbility && 
@@ -112,7 +124,7 @@ const SearchBar: FunctionComponent = ({}) => {
           filters={filters}
         />
       }
-    </>
+    </div>
   );
 };
 
@@ -128,3 +140,4 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export default SearchBar;
+

@@ -12,7 +12,8 @@ interface Props {
   filters:{
     people:boolean;
     movies:boolean;
-  }
+  },
+  visible:boolean;
 }
 
 interface MovieItemProps {
@@ -73,7 +74,7 @@ const PersonItem: FunctionComponent<PersonItemProps> = ({
   );
 };
 
-const SearchResults: FunctionComponent<Props> = ({ items, filters}) => {
+const SearchResults: FunctionComponent<Props> = ({ items, filters, visible}) => {
   const { classes } = useStyles();
 
   const navigateToMovie = (movieId: number) => {
@@ -84,7 +85,7 @@ const SearchResults: FunctionComponent<Props> = ({ items, filters}) => {
     window.location.href = `/person?id=${personId}`;
   };
 
-  if (!items) return null;
+  if (!items || !visible) return null;
 
   if (!items.length)
     return (
