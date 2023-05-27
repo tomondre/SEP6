@@ -6,7 +6,7 @@ import { Colors } from "../constants/Colors";
 import { Typography } from "@mui/material";
 
 interface Props {
-  rating: number;
+  rating: number|undefined;
 }
 
 const Rating: FunctionComponent<Props> = ({ rating }) => {

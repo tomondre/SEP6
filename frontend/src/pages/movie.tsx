@@ -116,7 +116,7 @@ const MoviePage = () => {
 
         <Grid className={classes.movieDetails}>
           <Grid className={classes.ratingGroup}>
-             {movie.rating && 
+             {!(typeof(movie.rating)===undefined) && 
             <RatingStars rating={movie.rating}/>
              }
           </Grid>
