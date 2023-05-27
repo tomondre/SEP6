@@ -9,7 +9,7 @@ spring:
       hibernate:
         format_sql: true
     database: MYSQL
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 server:
   port: '8000'
@@ -33,6 +33,6 @@ application:
   security:
     jwt:
       secret-key: ${JWT_SECRET_KEY}
-      expiration: 1800000 # 30 minutes
+      expiration: 86400000 # one day
       refresh-token:
-        expiration: 14400000 # 4 hours
+        expiration: 172800000 # two days

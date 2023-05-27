@@ -36,7 +36,7 @@ public class AuthenticationController
             return ResponseEntity.ok(service.register(request));
         } catch (IllegalArgumentException e) {
             log.error("Invalid registration request", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username or email already exists");
         } catch (Exception e) {
             log.error("An error occurred during registration", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
@@ -48,12 +48,12 @@ public class AuthenticationController
         try {
             log.info("Authenticating user: {}", request.getEmail());
             return ResponseEntity.ok(service.authenticate(request));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NoSuchElementException e) {
             log.error("Invalid authentication request", e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid credentials");
         } catch (AuthenticationException e) {
             log.warn("Authentication failed for user: {}", request.getEmail(), e);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials, account might be deactivated");
         } catch (Exception e) {
             log.error("An error occurred during authentication", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong, please try again later");
