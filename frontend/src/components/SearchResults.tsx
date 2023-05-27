@@ -4,10 +4,15 @@ import { makeStyles } from "tss-react/mui";
 import { Colors } from "../constants/Colors";
 import Typography from "@mui/material/Typography";
 import { movieSearchLimit } from "../constants/GeneralConstants";
+import FilterSelection from "./FilterSelection";
 
 
 interface Props {
   items?: (IMovie | IPerson)[];
+  filters:{
+    people:boolean;
+    movies:boolean;
+  }
 }
 
 interface MovieItemProps {
@@ -68,7 +73,7 @@ const PersonItem: FunctionComponent<PersonItemProps> = ({
   );
 };
 
-const SearchResults: FunctionComponent<Props> = ({ items }) => {
+const SearchResults: FunctionComponent<Props> = ({ items, filters}) => {
   const { classes } = useStyles();
 
   const navigateToMovie = (movieId: number) => {
@@ -97,7 +102,9 @@ const SearchResults: FunctionComponent<Props> = ({ items }) => {
           const shouldHaveSeparator = index !== 0;
 
           if ("title" in item) {
+            if(!filters.movies) return null;
             const movie = item as IMovie;
+
             return (
               <MovieItem
                 key={movie.id}
@@ -107,6 +114,7 @@ const SearchResults: FunctionComponent<Props> = ({ items }) => {
               />
             );
           } else {
+            if(!filters.people) return null;
             const person = item as IPerson;
             return (
               <PersonItem

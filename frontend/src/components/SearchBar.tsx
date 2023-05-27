@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, FunctionComponent } from "react";
+import React, { ChangeEvent, useState, FunctionComponent, useEffect } from "react";
 import { makeStyles } from "tss-react/mui";
 import { TextField, IconButton, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -10,22 +10,24 @@ import { IMovie, IPerson } from "../types";
 import MovieService from "../services/movies";
 import PersonService from "../services/person-service";
 import SearchResults from "./SearchResults";
+import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import FilterSelection from "./FilterSelection";
 
 const SearchBar: FunctionComponent = ({}) => {
   const { classes } = useStyles();
 
-  const [movies, setMovies] = useState<IMovie[] | undefined>([]);
-  const [persons, setPersons] = useState<IPerson[] | undefined>([]);
-  const [tempMovies, setTempMovies] = useState<IMovie[] | undefined>();
-  const [tempPersons, setTempPersons] = useState<IPerson[] | undefined>();
-
+  const [results, setResults] = useState<(IMovie | IPerson)[] | [] | undefined>()
+  const [filterVisbility, setFilterVisibility] = useState<boolean>(false);
+  const [filters, setFilters] = useState<{
+    people:boolean;
+    movies:boolean;
+  }>({people:true, movies:true})
 
   const searchItemsByName = async (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
     if (!inputValue) {
-      setMovies([]);
-      setPersons([]);
+      setResults([]);
 
       return;
     }
@@ -35,29 +37,44 @@ const SearchBar: FunctionComponent = ({}) => {
       PersonService.getPeople(inputValue),
     ]);
 
-    setMovies(retrievedMovies);
-    setPersons(retrievedPersons);
+    setResults([
+      ...retrievedMovies,
+      ...retrievedPersons,
+    ])
   };
 
   const hideSearchResults = () => {
-    // save the last movies so when the user clicks on searchbar again it will not do another request
-    setTempMovies(movies);
-    setTempPersons(persons);
-    setMovies(undefined);
-    setPersons(undefined);
+    localStorage.setItem("searchResults", JSON.stringify(results));
+    setResults(undefined);
   };
 
   const showSearchResults = () => {
-    setMovies(tempMovies);// set movies to the last movies
-    setPersons(tempPersons);
-    setTempMovies(undefined);// reset tempMovies
-    setTempPersons(undefined);
+    const searchResults = JSON.parse(
+      localStorage.getItem("searchResults") || "[]"
+    );
+
+    setResults(searchResults);
   };
 
   const debouncedHandleSearch = debounce(searchItemsByName, 250);
   const debounceHideSearch = debounce(hideSearchResults, 250);
 
-  const combinedItems = [...(movies || []), ...(persons || [])];
+  const toggleFiltersVisibility = () => {
+    setFilterVisibility(curr => !curr)
+  }
+
+  const changeFilters = (people:boolean, movies:boolean) => {
+    setFilters({
+      people,
+      movies,
+    })
+  }
+
+  useEffect(() => {
+    if(!!results) {
+      setFilterVisibility(false);
+    }
+  },[results])
 
   return (
     <>
@@ -76,10 +93,25 @@ const SearchBar: FunctionComponent = ({}) => {
               </IconButton>
             </InputAdornment>
           ),
+          endAdornment:(
+            <InputAdornment position="end" onClick={toggleFiltersVisibility}>
+              <IconButton>
+                <FilterListRoundedIcon/>
+              </IconButton>
+            </InputAdornment>
+          )
         }}
       />
 
-      <SearchResults items={combinedItems} />
+      <SearchResults items={results} filters={filters}/>
+
+      {
+        filterVisbility && 
+        <FilterSelection
+          setFilters={changeFilters}
+          filters={filters}
+        />
+      }
     </>
   );
 };
