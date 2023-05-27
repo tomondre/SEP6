@@ -36,7 +36,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         log.info("Filtering request: {}", request.getServletPath());
-        if ((!request.getServletPath().matches("/accounts/.*")) && (!request.getServletPath().matches("/movies/[^/]+/reviews.*"))) {
+        if ((!request.getServletPath().matches("/accounts/.*")) &&
+            ((!request.getServletPath().matches("/movies/[^/]+/reviews.*")) || request.getMethod().equals("GET")))
+        {
             filterChain.doFilter(request, response);
             return;
         }
@@ -45,6 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            log.info("No auth header");
             sendUnauthorizedResponse(response);
             return;
         }
