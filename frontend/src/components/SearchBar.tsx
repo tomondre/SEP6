@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Colors } from "../constants/Colors";
 import debounce from "../utils/debounce";
 
-import { IMovie, IPerson } from "../types";
+import { IMovie, IPerson } from "../utils/types";
 import MovieService from "../services/movies";
 import PersonService from "../services/person-service";
 import SearchResults from "./SearchResults";

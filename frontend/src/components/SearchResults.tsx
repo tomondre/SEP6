@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { IMovie, IPerson } from "../types";
+import { IMovie, IPerson } from "../utils/types";
 import { makeStyles } from "tss-react/mui";
 import { Colors } from "../constants/Colors";
 import Typography from "@mui/material/Typography";

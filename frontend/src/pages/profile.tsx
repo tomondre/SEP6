@@ -8,7 +8,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import profileService from '../services/account-service';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
-import { IMovie, IReview} from '../types';
+import { IMovie, IReview} from '../utils/types';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteButton from '../components/FavoriteButton';
 import accountService from '../services/account-service';

@@ -17,7 +17,10 @@ const Navbar: FunctionComponent = () => {
   const [userId, setUserId] = useState(getUserId());
 
   const links: Links[] = userId
-  ? [{ destination: "Home", link: "/" }]
+  ? [
+    { destination: "Home", link: "/" },
+    { destination: "Profile", link: "/profile" },
+    ]
   : [
       { destination: "Home", link: "/" },
       { destination: "Sign Up", link: "/sign-up" },

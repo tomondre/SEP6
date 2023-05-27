@@ -1,7 +1,7 @@
 
 import axios from '../api/axios';
 const API_URL = "/people";
-import { IPerson } from "../types";
+import { IPerson } from "../utils/types";
 
 
 const getPeople = async (personName: string): Promise<IPerson[]> => {

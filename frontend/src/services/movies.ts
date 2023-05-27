@@ -1,4 +1,4 @@
-import { IMovie, IReview } from "../types";
+import { IMovie, IReview } from "../utils/types";
 import axios from '../api/axios';
 import authHeader from "./auth-header";
 

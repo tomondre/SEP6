@@ -7,7 +7,7 @@ import { Colors } from '../constants/Colors';
 import { SelectChangeEvent } from '@mui/material';
 import MovieService from "../services/movies";
 import GenreFilter from '../components/GenreFilter';
-import { IMovie } from "../types";
+import { IMovie } from "../utils/types";
 import { getUserId } from '../services/user-service';
 import { Link as RouterLink } from 'react-router-dom';
 

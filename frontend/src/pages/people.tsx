@@ -8,7 +8,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
-import { IPerson } from "../types";
+import { IPerson } from "../utils/types";
 import personService from "../services/person-service";
 import RatingStars from "../components/Rating";
 
