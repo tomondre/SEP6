@@ -8,8 +8,10 @@ import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
+import { IPerson } from "../utils/types";
 import personService from "../services/person-service";
 import RatingStars from "../components/Rating";
+
 
 interface Movie {
   id: number;
@@ -17,24 +19,11 @@ interface Movie {
   posterUrl: string;
 }
 
-interface Person {
-  id: number;
-  name: string;
-  type: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  gender: string;
-  biography: string;
-  deathDate: string;
-  profileImg: string;
-  ratingAverage: number;
-  movies: Movie[];
-}
 
 const PeoplePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const [people, setPeople] = useState<Person>();
+  const [people, setPeople] = useState<IPerson>();
   const id = useIdFromUrl();
   const baseUrl = "https://image.tmdb.org/t/p/original";
 

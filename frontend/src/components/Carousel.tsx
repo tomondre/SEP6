@@ -1,7 +1,7 @@
 import Carousel from "react-material-ui-carousel";
 import { makeStyles } from "tss-react/mui";
 import React from "react";
-import { IMovie } from "../types";
+import { IMovie } from "../utils/types";
 import {Link as RouterLink } from "react-router-dom";
 
 

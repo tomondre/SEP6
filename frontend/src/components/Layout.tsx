@@ -31,7 +31,8 @@ const useStyles = makeStyles()(() => ({
         backgroundImage: `url(${background}) `,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: '100vh',
+        backgroundRepeat: 'repeat-y',
+        // height: '100%',
     },
     mainContainer:{
       padding: '3rem'

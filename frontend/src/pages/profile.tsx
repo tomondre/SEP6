@@ -8,10 +8,11 @@ import DoneIcon from '@mui/icons-material/Done';
 import profileService from '../services/account-service';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
-import { IMovie, IReview} from '../types';
+import { IMovie, IReview} from '../utils/types';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteButton from '../components/FavoriteButton';
 import accountService from '../services/account-service';
+import { getUserId } from '../services/user-service';
 
 interface IProfile {
     country: string;
@@ -152,7 +153,12 @@ const ProfilePage = () => {
   };
 
   if(!profile)
+  {
+    if(getUserId() === null){
+      window.location.href="/login";
+    }
     return null;
+  }
 
   return (
     <Grid container>
@@ -165,31 +171,29 @@ const ProfilePage = () => {
         </Grid>
 
         <Grid item lg={8} className={classes.profileContainer}>
-                <div className={classes.alignStart}>
-                    <div className={classes.title}>
-                        <Typography variant="h5">Personal Information</Typography>
-                        <div onClick={handleEditIconClick}>
-                            {editMode ? (
-                                <DoneIcon className={classes.icon} />
-                            ) : (
-                                <EditIcon className={classes.icon} />
-                            )}
-                        </div>
-                    </div>
-                    <div className={classes.infoContainer}>
-                    {fieldsAndValues.map((fieldAndValue, index) => (
-                            <ProfileInfo
-                            key={index}
-                            label={fieldAndValue.field}
-                            value={fieldAndValue.value || ""}
-                            editable={fieldAndValue.for === "username" ? false : editMode}
-                            profileAttribute = {fieldAndValue.for as keyof IProfile}
-                        />
-                        ))}
-                        </div>
-                </div>
-
-
+          <div className={classes.alignStart}>
+              <div className={classes.title}>
+                  <Typography variant="h5">Personal Information</Typography>
+                  <div onClick={handleEditIconClick}>
+                      {editMode ? (
+                          <DoneIcon className={classes.icon} />
+                      ) : (
+                          <EditIcon className={classes.icon} />
+                      )}
+                  </div>
+              </div>
+              <div className={classes.infoContainer}>
+              {fieldsAndValues.map((fieldAndValue, index) => (
+                      <ProfileInfo
+                      key={index}
+                      label={fieldAndValue.field}
+                      value={fieldAndValue.value || ""}
+                      editable={fieldAndValue.for === "username" ? false : editMode}
+                      profileAttribute = {fieldAndValue.for as keyof IProfile}
+                  />
+                  ))}
+                  </div>
+          </div>
         </Grid>
           <Reviews reviews={userReviews} />
 

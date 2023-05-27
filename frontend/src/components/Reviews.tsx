@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { IReview } from "../types";
+import { IReview } from "../utils/types";
 import { makeStyles } from "tss-react/mui";
 
 import { Typography } from "@mui/material";

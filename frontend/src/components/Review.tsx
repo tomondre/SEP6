@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import { IReview } from "../types";
+import { IReview } from "../utils/types";
 import { makeStyles } from "tss-react/mui";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, IconButton, Typography } from "@mui/material";

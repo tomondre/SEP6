@@ -1,15 +1,16 @@
-import { IMovie, IReview } from "../types";
+import { IMovie, IReview } from "../utils/types";
 import axios from '../api/axios';
 import authHeader from "./auth-header";
 
 const API_URL = "/movies";
 
-const getMovies = async (pageNumber?: number, genreId?: number | ""): Promise<IMovie[]> => {
+const getMovies = async (pageNumber?: number, genreId?: number | "", movieName?: string): Promise<IMovie[]> => {
     try {
         const response = await axios.get(`${API_URL}`, {
             params: {
                 page: pageNumber,
                 genreId: genreId,
+                search: movieName
             },
             headers: {
                 'Accept': 'application/json',
@@ -24,22 +25,6 @@ const getMovies = async (pageNumber?: number, genreId?: number | ""): Promise<IM
     }
 };
 
-const filterMovies = async (pageNumber: number, genreId?: number | ""): Promise<IMovie[]> => {
-    try {
-        let movies = await getMovies(pageNumber, genreId);
-
-        const filteredMovies = movies.map((movie: IMovie) => {
-            const { id, genres, posterUrl, title } = movie;
-            const filteredGenres = genres.map((genre) => ({ id: genre.id, name: genre.name }));
-            return { id, genres: filteredGenres, posterUrl, title };
-        });
-
-        return filteredMovies;
-    } catch (error) {
-        console.error('Error filtering:', error);
-        return [];
-    }
-};
 
 const getMovieById = async (id: number): Promise<IMovie> => {
     try {
@@ -52,29 +37,29 @@ const getMovieById = async (id: number): Promise<IMovie> => {
     }
 };
 
-const addReview = (movieId:number, rating:number, comment: string, createdOn: string,accountId:number,movieTitle:string) => {
+const addReview = (movieId: number, rating: number, comment: string, createdOn: string, accountId: number, movieTitle: string) => {
     return axios
-      .post(`${API_URL}/${movieId}/reviews`, {
-        movieId,
-        rating,
-        comment,
-        createdOn,
-        accountId,
-        movieTitle
-      })
-      .then((response: { data: {}; }) => {
-        return response.data;
-      });
-  };
+        .post(`${API_URL}/${movieId}/reviews`, {
+            movieId,
+            rating,
+            comment,
+            createdOn,
+            accountId,
+            movieTitle
+        })
+        .then((response: { data: {}; }) => {
+            return response.data;
+        });
+};
 
-  const getReviewsByMovieId = async (id: number): Promise<IReview[]>  => {
+const getReviewsByMovieId = async (id: number): Promise<IReview[]> => {
     try {
-        const response = await axios.get(`${API_URL}/${id}/reviews`,{
-             
-                headers: {
-                    ...authHeader()
-                }
-            
+        const response = await axios.get(`${API_URL}/${id}/reviews`, {
+
+            headers: {
+                ...authHeader()
+            }
+
         });
         const reviews = response.data;
         return reviews as IReview[];
@@ -84,12 +69,12 @@ const addReview = (movieId:number, rating:number, comment: string, createdOn: st
     }
 };
 
-const deleteReview = async (movieId: number, reviewId:number) => {
+const deleteReview = async (movieId: number, reviewId: number) => {
     try {
         await axios.delete(`${API_URL}/${movieId}/reviews/${reviewId}`, {
-                headers: {
-                    ...authHeader()
-                }
+            headers: {
+                ...authHeader()
+            }
         });
     } catch (error) {
         console.error('Error deleting review:', error);
@@ -98,7 +83,6 @@ const deleteReview = async (movieId: number, reviewId:number) => {
 };
 const MovieService = {
     getMovies,
-    filterMovies,
     getMovieById,
     addReview,
     getReviewsByMovieId,
