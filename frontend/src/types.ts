@@ -23,6 +23,8 @@ export interface IReview {
     rating: number;
     createdOn: string;
     movieTitle: string;
+    movieId: number;
+    accountId: number;
 }
 
 export interface IPerson {
@@ -35,5 +37,6 @@ export interface IPerson {
     biography: string;
     deathDate: string;
     profileImg: string;
+    ratingAverage: number;
     movies: IMovie[]
 }
