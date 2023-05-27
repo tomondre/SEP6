@@ -1,5 +1,6 @@
 package com.sep6.backend.security.config;
 
+import com.sep6.backend.models.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -38,10 +40,8 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers(
-                        "/accounts/**",
-                        "/movies/*/reviews/**")
-                .authenticated()
+                .requestMatchers("/accounts/**").authenticated()
+                .requestMatchers(POST, "/movies/*/reviews/**").authenticated()
                 .anyRequest()
                 .permitAll()
                 .and()
