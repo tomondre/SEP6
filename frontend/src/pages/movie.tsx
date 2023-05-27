@@ -16,6 +16,7 @@ import { IReview } from "../utils/types";
 import { useForm } from "react-hook-form";
 import Reviews from "../components/Reviews";
 import RatingStars from "../components/Rating";
+import ExampleChart from "../components/ExampleChart";
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -239,6 +240,8 @@ const MoviePage = () => {
       {!!(movieReviews.length) &&
         <Reviews reviews={movieReviews} />
       }
+
+      <ExampleChart />
     </Grid>
   );
 };
