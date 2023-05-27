@@ -15,7 +15,7 @@ interface Props {
 
 const Review: FunctionComponent<Props> = ({ review }) => {
   const { classes } = useStyles();
-  const { id, date, rating, comment, user, accountId, movieId } = review;
+  const { id, createdOn, rating, comment, user, accountId, movieId } = review;
   const userId = getUserId() || 0;
   const [showMore, setShowMore] = useState(false);
   const toggleViewMore = () => setShowMore(currentValue => !currentValue);
@@ -37,7 +37,7 @@ const Review: FunctionComponent<Props> = ({ review }) => {
       <div className={classes.titleAndRatingContainer}>
         <span>
           <Typography variant="h5">{review.movieTitle}</Typography>
-          <Typography variant="p">{date}</Typography>
+          <Typography variant="p">{createdOn.substring(0, 10)}</Typography>
         </span>
         <Rating rating={rating} />
       </div>

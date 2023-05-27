@@ -9,6 +9,7 @@ import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
 import personService from "../services/person-service";
+import RatingStars from "../components/Rating";
 
 interface Movie {
   id: number;
@@ -68,9 +69,9 @@ const PeoplePage = () => {
 
         <Grid className={classes.peopleDetails}>
           <Grid className={classes.ratingGroup}>
-            <StarIcon className={classes.star} />
-            <Grid className={classes.rating}>{people.ratingAverage}</Grid>
-            <Grid className={classes.ratingGoal}>/ 10</Grid>
+             {people.ratingAverage && 
+            <RatingStars rating={people.ratingAverage}/>
+             }
           </Grid>
 
           <Grid className={classes.peopleName}>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
-import { Grid, Typography, Link, Button, Dialog, DialogActions, DialogContent, DialogTitle, Rating, TextField, styled, Box } from "@mui/material";
+import { Grid, Typography, Link, Button, Dialog, DialogActions, DialogContent, Rating, DialogTitle, TextField, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
@@ -15,13 +15,14 @@ import profileService from "../services/account-service";
 import { IReview } from "../types";
 import { useForm } from "react-hook-form";
 import Reviews from "../components/Reviews";
+import RatingStars from "../components/Rating";
 
 const MoviePage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
-  const userId = getUserId() || 0;
+  const userId = getUserId();
   const [favMovie, setFavMovie] = useState<boolean>(false);
   const baseUrl = "https://image.tmdb.org/t/p/original";
   const [movieReviews, setMovieReviews] = useState<IReview[]>([]);
@@ -53,12 +54,12 @@ const MoviePage = () => {
 
   const handleData = async (data: IReview) => {
     try {
-      movie && rating &&
+      movie && rating && userId &&
         (await MovieService.addReview(
           movie.id,
           rating,
           data.comment,
-          data.date,
+          data.createdOn,
           userId,
           movie.title
         ).then(
@@ -115,9 +116,9 @@ const MoviePage = () => {
 
         <Grid className={classes.movieDetails}>
           <Grid className={classes.ratingGroup}>
-            <StarIcon className={classes.star} />
-            <Grid className={classes.rating}>{movie.rating}</Grid>
-            <Grid className={classes.ratingGoal}>/ 10</Grid>
+             {movie.rating && 
+            <RatingStars rating={movie.rating}/>
+             }
           </Grid>
 
           <Grid className={classes.moviecontainer}>
@@ -172,6 +173,7 @@ const MoviePage = () => {
             <Typography variant="p">{movie.description}</Typography>
           </Grid>
           <Grid>
+          {userId &&
             <Button
               className={classes.button}
               variant="contained"
@@ -179,6 +181,7 @@ const MoviePage = () => {
             >
               Add review
             </Button>
+}
             <Dialog open={open} onClose={handleClose}>
               <DialogTitle className={classes.dialogTitle}>Review</DialogTitle>
               <form onSubmit={onSubmit}>
@@ -215,7 +218,7 @@ const MoviePage = () => {
       </Grid>
       
       <Grid className={classes.starsLabel}>
-        {movie.people &&
+        {movie.people && !!(movie.people.length) &&
         <Typography variant="h5">Movie stars</Typography>
         }
       </Grid>
@@ -233,7 +236,9 @@ const MoviePage = () => {
             </Grid>
           ))}
       </Grid>
+      {!!(movieReviews.length) &&
         <Reviews reviews={movieReviews} />
+      }
     </Grid>
   );
 };
@@ -249,7 +254,6 @@ const useStyles = makeStyles()(() => ({
   ratingGroup: {
     display: "flex",
     alignItems: "center",
-    height: "10%",
   },
   star: {
     color: Colors.yellow,
@@ -270,7 +274,6 @@ const useStyles = makeStyles()(() => ({
   },
   movieTitle: {
     width: "100%",
-    height: "5rem",
     textAlign: "start"
   },
   movieDetails: {

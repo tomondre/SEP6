@@ -21,7 +21,7 @@ export interface IReview {
     user?: string;
     comment: string;
     rating: number;
-    date: string;
+    createdOn: string;
     movieTitle: string;
     movieId:number;
     accountId:number;
