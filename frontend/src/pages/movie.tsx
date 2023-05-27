@@ -27,7 +27,7 @@ const MoviePage = () => {
   const baseUrl = "https://image.tmdb.org/t/p/original";
   const [movieReviews, setMovieReviews] = useState<IReview[]>([]);
   const [open, setOpen] = React.useState(false);
-  const [rating, setRating] = useState<number>();
+  const [rating, setRating] = useState<number>(1);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -187,7 +187,7 @@ const MoviePage = () => {
               <form onSubmit={onSubmit}>
                 <DialogContent>
                   <Box>
-                    <Rating name="customized-10" defaultValue={2} max={10} onChange={changeRating} />
+                    <Rating name="customized-10" defaultValue={1} max={10} onChange={changeRating} />
                   </Box>
                   <TextField
                     className={classes.commentArea}
