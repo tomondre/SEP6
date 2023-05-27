@@ -1,9 +1,6 @@
 package com.sep6.backend.service;
 
-import com.sep6.backend.models.Account;
-import com.sep6.backend.models.FavouriteRequest;
-import com.sep6.backend.models.Movie;
-import com.sep6.backend.models.Review;
+import com.sep6.backend.models.*;
 import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.repository.AccountsRepository;
@@ -19,7 +16,6 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -143,16 +139,16 @@ class AccountsServiceImplTest
     public void testEditAccount() {
         // Arrange
         int accountId = 1;
-        Account account = new Account();
+        AccountDTO accountDto = new AccountDTO();
         Account expectedAccount = new Account();
-        when(repository.editAccount(accountId, account)).thenReturn(Optional.of(expectedAccount));
+        when(repository.editAccount(accountId, accountDto)).thenReturn(Optional.of(expectedAccount));
 
         // Act
-        Account result = service.editAccount(accountId, account);
+        Account result = service.editAccount(accountId, accountDto);
 
         // Assert
         assertEquals(expectedAccount, result);
-        verify(repository, times(1)).editAccount(accountId, account);
+        verify(repository, times(1)).editAccount(accountId, accountDto);
     }
 
     @Test

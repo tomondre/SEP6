@@ -4,18 +4,19 @@ import { makeStyles } from "tss-react/mui";
 import MovieCard from "../components/MovieCard";
 import { Grid, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import actorService from "../services/person-service";
 import StarIcon from "@mui/icons-material/Star";
 import { Colors } from "../constants/Colors";
 import { useLocation } from "react-router-dom";
 import { useIdFromUrl } from "../hooks/useIdFromUrl";
 import { IPerson } from "../types";
+import personService from "../services/person-service";
+import RatingStars from "../components/Rating";
 
 
 interface Movie {
-  id:number;
-  title:string;
-  posterUrl:string;
+  id: number;
+  title: string;
+  posterUrl: string;
 }
 
 
@@ -24,45 +25,42 @@ const PeoplePage = () => {
   const navigate = useNavigate();
   const [people, setPeople] = useState<IPerson>();
   const id = useIdFromUrl();
-
-
-  const baseUrl = 'https://image.tmdb.org/t/p/original'
-
+  const baseUrl = "https://image.tmdb.org/t/p/original";
 
   useEffect(() => {
-    const fetchActor = async () => {
+    const fetchPerson = async () => {
       try {
         if (id !== -1) {
-          const people = await actorService.getPersonById(id);
+          const people = await personService.getPersonById(id);
           setPeople(people);
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
     };
-
-    fetchActor();
+    fetchPerson();
   }, []);
 
-
-
-  if(!people)
-  {
-    return <div>Loading...</div>
+  if (!people) {
+    return <div>Loading...</div>;
   }
 
   return (
     <Grid container>
       <Grid className={classes.container}>
         <Grid>
-          <img src={`${baseUrl}${people.profileImg}`} className={classes.image} alt="people" />
+          <img
+            src={`${baseUrl}${people.profileImg}`}
+            className={classes.image}
+            alt="people"
+          />
         </Grid>
 
         <Grid className={classes.peopleDetails}>
           <Grid className={classes.ratingGroup}>
-            <StarIcon className={classes.star} />
-            <Grid className={classes.rating}>Rating</Grid>
-            <Grid className={classes.ratingGoal}>/ 10</Grid>
+             {people.ratingAverage && 
+            <RatingStars rating={people.ratingAverage}/>
+             }
           </Grid>
 
           <Grid className={classes.peopleName}>
@@ -73,15 +71,24 @@ const PeoplePage = () => {
             <Grid className={classes.type}>
               <Typography variant="h6">{people.type}</Typography>
             </Grid>
-            <Grid className={classes.dateOfBirth}>
-              <Typography variant="h6">Born: {people.dateOfBirth.substring(0,10)}</Typography>
-            </Grid>
-            { people.deathDate &&
+            {people.dateOfBirth && (
+              <Grid className={classes.dateOfBirth}>
+                <Typography variant="h6">
+                  Born: {people.dateOfBirth.substring(0, 10)}
+                </Typography>
+              </Grid>
+            )}
+            {people.deathDate && (
               <Grid className={classes.deathDate}>
-              <Typography variant="h6">Died: {people.deathDate.substring(0,10)}</Typography>
-            </Grid>}
+                <Typography variant="h6">
+                  Died: {people.deathDate.substring(0, 10)}
+                </Typography>
+              </Grid>
+            )}
             <Grid className={classes.birthPlace}>
-              <Typography variant="h6">Place of birth: {people.placeOfBirth}</Typography>
+              <Typography variant="h6">
+                Place of birth: {people.placeOfBirth}
+              </Typography>
             </Grid>
             <Grid className={classes.gender}>
               <Typography variant="h6">Gender: {people.gender}</Typography>
@@ -94,12 +101,16 @@ const PeoplePage = () => {
         </Grid>
       </Grid>
       <Grid className={classes.knownForLabel}>
-      <Typography variant="h4">Known for:</Typography>
+        <Typography variant="h4">Known for:</Typography>
       </Grid>
       <Grid item container className={classes.moviesContainer}>
         {people.movies.map((movie, index) => (
           <Grid item lg={2} key={index}>
-            <MovieCard id={movie.id} poster={`${baseUrl}${movie.posterUrl}`} title={movie.title} />
+            <MovieCard
+              id={movie.id}
+              poster={`${baseUrl}${movie.posterUrl}`}
+              title={movie.title}
+            />
           </Grid>
         ))}
       </Grid>
@@ -184,17 +195,16 @@ const useStyles = makeStyles()(() => ({
     alignContent: "center",
     marginLeft: "1rem",
   },
-  biography:{
-    textAlign:'justify',
-    fontWeight:'300',
+  biography: {
+    textAlign: "justify",
+    fontWeight: "300",
   },
-  knownForLabel:{
-    margin:'4rem 4rem 4rem 0rem'
+  knownForLabel: {
+    margin: "4rem 4rem 4rem 0rem",
   },
-  moviesContainer:{
-    justifyContent: 'space-around'
-  }
-
+  moviesContainer: {
+    justifyContent: "space-around",
+  },
 }));
 
 export default PeoplePage;

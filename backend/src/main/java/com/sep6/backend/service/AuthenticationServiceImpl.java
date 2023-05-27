@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) throws IllegalArgumentException
+    public AuthenticationResponse register(RegisterRequest request)
     {
         log.info("Registering new user: {}", request.getUsername());
         var user = Account.builder()

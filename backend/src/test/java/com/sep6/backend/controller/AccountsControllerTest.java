@@ -1,9 +1,6 @@
 package com.sep6.backend.controller;
 
-import com.sep6.backend.models.Account;
-import com.sep6.backend.models.FavouriteRequest;
-import com.sep6.backend.models.Movie;
-import com.sep6.backend.models.Review;
+import com.sep6.backend.models.*;
 import com.sep6.backend.projections.AccountProjection;
 import com.sep6.backend.projections.FavouriteMovieProjection;
 import com.sep6.backend.service.AccountsService;
@@ -40,16 +37,17 @@ class AccountsControllerTest
     void testEditAccount() {
         // Arrange
         int id = 1;
+        AccountDTO accountDto = new AccountDTO();
         Account account = new Account();
-        when(accountsService.editAccount(id, account)).thenReturn(account);
+        when(accountsService.editAccount(id, accountDto)).thenReturn(account);
 
         // Act
-        ResponseEntity<Account> response = accountsController.editAccount(id, account);
+        ResponseEntity<Account> response = accountsController.editAccount(id, accountDto);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(account, response.getBody());
-        verify(accountsService, times(1)).editAccount(id, account);
+        verify(accountsService, times(1)).editAccount(id, accountDto);
     }
 
     @Test
@@ -57,11 +55,12 @@ class AccountsControllerTest
         // Arrange
         int id = 1;
         Account account = new Account();
-        when(accountsService.editAccount(id, account)).thenThrow(NoSuchElementException.class);
+        AccountDTO accountDto = new AccountDTO();
+        when(accountsService.editAccount(id, accountDto)).thenThrow(NoSuchElementException.class);
 
         // Act & Assert
-        assertThrows(ResponseStatusException.class, () -> accountsController.editAccount(id, account));
-        verify(accountsService, times(1)).editAccount(id, account);
+        assertThrows(ResponseStatusException.class, () -> accountsController.editAccount(id, accountDto));
+        verify(accountsService, times(1)).editAccount(id, accountDto);
     }
 
     @Test
@@ -69,11 +68,12 @@ class AccountsControllerTest
         // Arrange
         int id = 1;
         Account account = new Account();
-        when(accountsService.editAccount(id, account)).thenThrow(RuntimeException.class);
+        AccountDTO accountDto = new AccountDTO();
+        when(accountsService.editAccount(id, accountDto)).thenThrow(RuntimeException.class);
 
         // Act & Assert
-        assertThrows(ResponseStatusException.class, () -> accountsController.editAccount(id, account));
-        verify(accountsService, times(1)).editAccount(id, account);
+        assertThrows(ResponseStatusException.class, () -> accountsController.editAccount(id, accountDto));
+        verify(accountsService, times(1)).editAccount(id, accountDto);
     }
 
     @Test
