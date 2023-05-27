@@ -18,6 +18,7 @@ interface Person {
   biography: string;
   deathDate: string;
   profileImg: string;
+  ratingAverage:number;
   movies:Movie[]
 }
 
