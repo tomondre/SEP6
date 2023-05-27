@@ -121,11 +121,10 @@ const MoviePage = () => {
           </Grid>
 
           <Grid className={classes.moviecontainer}>
-            <Grid className={classes.movieTitle}>
+            <Grid item lg={10} className={classes.movieTitle}>
               <Typography variant="h2">{movie.title}</Typography>
             </Grid>
-
-            <Grid>
+            <Grid >
               {userId && (
                 <FavoriteButton movieId={movie.id} isFave={favMovie} />
               )}
@@ -188,6 +187,7 @@ const MoviePage = () => {
                     <Rating name="customized-10" defaultValue={2} max={10} onChange={changeRating} />
                   </Box>
                   <TextField
+                    className={classes.commentArea}
                     autoFocus
                     margin="dense"
                     id="name"
@@ -200,7 +200,7 @@ const MoviePage = () => {
                 </DialogContent>
                 <DialogActions>
                   <Button
-                    className={classes.button}
+                    className={classes.submitButton}
                     type="submit"
                     variant="contained"
                     onClick={handleClose}
@@ -213,10 +213,13 @@ const MoviePage = () => {
           </Grid>
         </Grid>
       </Grid>
-
+      
       <Grid className={classes.starsLabel}>
-        <Typography variant="h4">Movie stars:</Typography>
+        {movie.people &&
+        <Typography variant="h5">Movie stars</Typography>
+        }
       </Grid>
+      
       <Grid item container className={classes.personContainer}>
         {movie.people &&
           movie.people.map((person, index) => (
@@ -268,8 +271,7 @@ const useStyles = makeStyles()(() => ({
   movieTitle: {
     width: "100%",
     height: "5rem",
-    textAlign: "start",
-    marginTop: "3rem",
+    textAlign: "start"
   },
   movieDetails: {
     width: "70%",
@@ -325,6 +327,11 @@ const useStyles = makeStyles()(() => ({
     height: "4rem",
     marginTop: "6rem",
   },
+  submitButton:{
+    fontSize: "2.188rem",
+    width: "16rem",
+    height: "3rem",
+  },
   favorite: {
     color: Colors.red1,
     height: "3rem",
@@ -333,6 +340,7 @@ const useStyles = makeStyles()(() => ({
   moviecontainer: {
     display: "flex",
     alignItems: "center",
+    marginTop: "3rem",
   },
   boxOffice: {
     fontWeight: "800",
@@ -350,6 +358,9 @@ const useStyles = makeStyles()(() => ({
     color: Colors.black75,
     fontSize: "2rem",
   },
+  commentArea:{
+    width:'35rem'
+  }
 }));
 
 export default MoviePage;

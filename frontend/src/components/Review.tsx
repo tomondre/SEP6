@@ -6,7 +6,6 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { Colors } from "../constants/Colors";
 import Rating from "./Rating";
 import { getUserId } from "../services/user-service";
-import { async } from "q";
 import MovieService from "../services/movies";
 
 
@@ -51,8 +50,8 @@ const Review: FunctionComponent<Props> = ({ review }) => {
         </Typography>
       </div>
       {  userId&& (accountId==userId)  &&
-      <IconButton aria-label="delete">
-          <DeleteIcon className={classes.deleteIcon} onClick={handleClick}/>
+      <IconButton aria-label="delete" onClick={handleClick}>
+          <DeleteIcon className={classes.deleteIcon} />
         </IconButton>
         }
       </div>

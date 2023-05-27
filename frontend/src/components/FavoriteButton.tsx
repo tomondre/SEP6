@@ -50,6 +50,8 @@ const useStyles = makeStyles()(() => ({
         '&:hover': {
             color: Colors.red2,
         },
+        width:'3rem',
+        height:'3rem'
     },
     notFavorite: {
         color: Colors.white,
@@ -58,6 +60,8 @@ const useStyles = makeStyles()(() => ({
         '&:hover': {
             color: Colors.white80,
         },
+        width:'3rem',
+        height:'3rem'
     },
 
 }));
