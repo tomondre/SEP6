@@ -21,6 +21,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.11.1",
     "react-scripts": "^2.1.3",
+    "recharts": "^2.6.2",
     "tss-react": "^4.8.3",
     "web-vitals": "^2.1.4"
   },
