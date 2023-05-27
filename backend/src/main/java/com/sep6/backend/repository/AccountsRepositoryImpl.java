@@ -2,6 +2,7 @@ package com.sep6.backend.repository;
 
 import com.sep6.backend.jpa.AccountsJpaRepository;
 import com.sep6.backend.models.Account;
+import com.sep6.backend.models.AccountDTO;
 import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import com.sep6.backend.projections.AccountProjection;
@@ -31,7 +32,7 @@ public class AccountsRepositoryImpl implements AccountsRepository{
         return jpaRepository.findByEmail(email);
     }
 
-    public Optional<Account> editAccount(int id, Account account) {
+    public Optional<Account> editAccount(int id, AccountDTO account) {
         try {
             log.info("Editing account with ID: {}", id);
             Account toEdit = jpaRepository.findById(id).orElseThrow();
