@@ -25,8 +25,8 @@ const Navbar: FunctionComponent = () => {
   } else {
     links = [{ destination: "Home", link: "/" },
       { destination: "Sign Up", link: "/sign-up" },
-      { destination: "Login", link: "/login" },
-      { destination: "Statistics", link: "/statistics" }];
+      { destination: "Statistics", link: "/statistics" },
+      { destination: "Login", link: "/login" }];
   }
 
     const handleLogout = () => {
@@ -54,7 +54,7 @@ const Navbar: FunctionComponent = () => {
         <SearchBar />
       </Grid>
 
-      <Grid item container lg={2} className={classes.menu}>
+      <Grid item container lg={3} className={classes.menu}>
         {links.map(({ destination, link }, index) => (
           <Grid item key={index}>
             <Link href={link} key={index}>
@@ -105,7 +105,7 @@ const useStyles = makeStyles()(() => ({
   },
   navbarText: {},
   menu: {
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   logout: {
     cursor: "pointer",
