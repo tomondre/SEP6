@@ -16,16 +16,18 @@ const Navbar: FunctionComponent = () => {
   const { classes } = useStyles();
   const [userId, setUserId] = useState(getUserId());
 
-  const links: Links[] = userId
-  ? [
-    { destination: "Home", link: "/" },
-    { destination: "Profile", link: "/profile" },
-    ]
-  : [
-      { destination: "Home", link: "/" },
+  let links: Links[];
+
+  if (userId){
+    links = [{ destination: "Home", link: "/" },
+      { destination: "Profile", link: "/profile" },
+      { destination: "Statistics", link: "/statistics" }]
+  } else {
+    links = [{ destination: "Home", link: "/" },
       { destination: "Sign Up", link: "/sign-up" },
       { destination: "Login", link: "/login" },
-    ];
+      { destination: "Statistics", link: "/statistics" }];
+  }
 
     const handleLogout = () => {
       authService.logout();
@@ -64,7 +66,7 @@ const Navbar: FunctionComponent = () => {
         ))}
           <Grid item>
             {
-              userId && 
+              userId &&
               <Typography className={classes.navbarText + " " + classes.logout} variant="h6" onClick={handleLogout}>
                 Logout
               </Typography>

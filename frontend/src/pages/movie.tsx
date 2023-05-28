@@ -240,8 +240,6 @@ const MoviePage = () => {
       {!!(movieReviews.length) &&
         <Reviews reviews={movieReviews} />
       }
-
-      <Chart />
     </Grid>
   );
 };

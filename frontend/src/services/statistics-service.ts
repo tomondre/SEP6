@@ -68,8 +68,6 @@ const processAvgFieldByYear = (movies: any[], field: string): StatisticsPoint[] 
     return sortByX(mapToStatisticsPoints(tempMap));
 };
 
-
-
 const processGenreRevenueStatistics = (movies: any[]): StatisticsPoint[] => {
     let tempMap = new Map();
     for (let movie of movies) {
@@ -110,6 +108,34 @@ const processMovieLanguages = async (): Promise<StatisticsPoint[]> => {
     }
     return result;
 }
+
+const processMovieReleases = async (): Promise<StatisticsPoint[]> => {
+    let tempMap = new Map<string, number>();
+    for (let movie of movies) {
+        let year;
+        try {
+            year = movie.releaseDate.split("-")[0];
+        } catch (e) {
+            continue;
+        }
+        if (!tempMap.has(year)) {
+            tempMap.set(year, 0)
+        }
+        let number = tempMap.get(year)!!;
+        number++;
+        tempMap.set(year, number);
+    }
+
+    const result: StatisticsPoint[] = [];
+    for (let item of tempMap) {
+        result.push({
+            x: item[0],
+            y: item[1]
+        });
+    }
+    return sortByX(result);
+}
+
 const getGenreRevenueStatistics = async (): Promise<StatisticsPoint[]> => {
     await checkForMovies();
     return processGenreRevenueStatistics(movies);
@@ -130,6 +156,11 @@ const getMovieLanguages = async (): Promise<StatisticsPoint[]> => {
     return processMovieLanguages();
 }
 
+const getNoOfReleasesByYear = async (): Promise<StatisticsPoint[]> => {
+    await checkForMovies();
+    return processMovieReleases();
+}
+
 const checkForMovies = async (): Promise<void> => {
     if (movies == null) {
         try {
@@ -146,7 +177,8 @@ const statisticsService = {
     getGenreRevenueStatistics,
     getAvgRevenueByYear,
     getAvgBudgetByYear,
-    getMovieLanguages
+    getMovieLanguages,
+    getNoOfReleasesByYear
 }
 
 export default statisticsService;

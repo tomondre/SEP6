@@ -15,6 +15,7 @@ const Chart = () => {
   const [avgRevenueByYear, setAvgRevenueByYear] = useState([]);
   const [avgBudgetByYear, setAvgBudgetByYear] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [releases, setReleases] = useState([]);
 
   useEffect(() => {
     async function call() {
@@ -22,12 +23,13 @@ const Chart = () => {
       setAvgRevenueByYear(await statisticsService.getAvgRevenueByYear() as [])
       setAvgBudgetByYear(await statisticsService.getAvgBudgetByYear() as [])
       setLanguages(await statisticsService.getMovieLanguages() as [])
+      setReleases(await statisticsService.getNoOfReleasesByYear() as [])
     }
     call()
   }, []);
 
   var COLORS = [
-    "#00FF00", // Green
+    "#8884d8", // Green
     "#0000FF", // Blue
     "#FFFF00", // Yellow
     "#FF00FF", // Magenta
@@ -59,7 +61,6 @@ const Chart = () => {
     "#00FF7F"  // Spring Green
   ];
 
-
   return (
       <>
         <div>
@@ -69,7 +70,7 @@ const Chart = () => {
                 <XAxis tick={{fontSize: 15}} dataKey="x"/>
                 <YAxis width={120} orientation={'left'} name={'Revenue'} unit={"$"}/>
                 <Tooltip/>
-                <Bar dataKey="y" fill="#82ca9d"/>
+                <Bar dataKey="y" fill="#8884d8"/>
               </BarChart>
             </div>
         </div>
@@ -79,7 +80,7 @@ const Chart = () => {
             <LineChart width={1400} height={400} data={avgRevenueByYear}>
               <XAxis dataKey="x"/>
               <YAxis width={120} orientation={'left'} name={'Revenue'} unit={"$"}/>
-              <Line type="monotone" dataKey="y" stroke="#8884d8"/>
+              <Line strokeWidth={8} type="monotone" dataKey="y" stroke="#8884d8"/>
             </LineChart>
           </div>
         </div>
@@ -89,7 +90,17 @@ const Chart = () => {
             <LineChart width={1400} height={400} data={avgBudgetByYear}>
               <XAxis dataKey="x"/>
               <YAxis width={120} orientation={'left'} name={'Revenue'} unit={"$"}/>
-              <Line type="monotone" dataKey="y" stroke="#8884d8"/>
+              <Line strokeWidth={8} type="monotone" dataKey="y" stroke="#8884d8"/>
+            </LineChart>
+          </div>
+        </div>
+        <div>
+          <h2 style={{color: 'white'}}>Number of Releases by Year</h2>
+          <div className={classes.chartsContainer}>
+            <LineChart width={1400} height={400} data={releases}>
+              <XAxis dataKey="x"/>
+              <YAxis width={120} orientation={'left'} name={'Revenue'}/>
+              <Line strokeWidth={8} type="monotone" width={20} dataKey="y" stroke="#8884d8"/>
             </LineChart>
           </div>
         </div>
@@ -117,51 +128,6 @@ const Chart = () => {
               <Tooltip />
             </PieChart>
         </div>
-            {/*<Treemap*/}
-            {/*    width={730}*/}
-            {/*    height={250}*/}
-            {/*    data={data}*/}
-            {/*    dataKey="y"*/}
-            {/*    aspectRatio={4 / 3}*/}
-            {/*    stroke="#fff"*/}
-            {/*    fill="#82ca9d"*/}
-            {/*/>*/}
-
-            {/*<AreaChart*/}
-            {/*    width={730}*/}
-            {/*    height={250}*/}
-            {/*    data={data}*/}
-            {/*    margin={{top: 10, right: 30, left: 0, bottom: 0}}*/}
-            {/*>*/}
-            {/*  <defs>*/}
-            {/*    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">*/}
-            {/*      <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>*/}
-            {/*      <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>*/}
-            {/*    </linearGradient>*/}
-            {/*    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">*/}
-            {/*      <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>*/}
-            {/*      <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>*/}
-            {/*    </linearGradient>*/}
-            {/*  </defs>*/}
-            {/*  <XAxis dataKey="x"/>*/}
-            {/*  <YAxis/>*/}
-            {/*  <CartesianGrid strokeDasharray="3 3"/>*/}
-            {/*  <Tooltip/>*/}
-            {/*  <Area*/}
-            {/*      type="monotone"*/}
-            {/*      dataKey="y"*/}
-            {/*      stroke="#8884d8"*/}
-            {/*      fillOpacity={1}*/}
-            {/*      fill="url(#colorUv)"*/}
-            {/*  />*/}
-            {/*  <Area*/}
-            {/*      type="monotone"*/}
-            {/*      dataKey="y"*/}
-            {/*      stroke="#82ca9d"*/}
-            {/*      fillOpacity={1}*/}
-            {/*      fill="url(#colorPv)"*/}
-            {/*  />*/}
-            {/*</AreaChart>*/}
         </>
   );
 };
