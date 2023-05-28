@@ -152,7 +152,7 @@ class AuthenticationServiceImplTest
 
         when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(authHeader);
         when(jwtService.extractUsername(refreshToken)).thenReturn(userEmail);
-        when(accountsRepository.findByEmail(userEmail)).thenReturn(Optional.of(user));
+        when(accountsRepository.findByUsername(userEmail)).thenReturn(Optional.of(user));
         when(jwtService.isTokenValid(refreshToken, user)).thenReturn(true);
         when(jwtService.generateToken(user)).thenReturn(accessToken);
 
@@ -162,7 +162,7 @@ class AuthenticationServiceImplTest
         // Assert
         verify(request, times(1)).getHeader(HttpHeaders.AUTHORIZATION);
         verify(jwtService, times(1)).extractUsername(refreshToken);
-        verify(accountsRepository, times(1)).findByEmail(userEmail);
+        verify(accountsRepository, times(1)).findByUsername(userEmail);
         verify(jwtService, times(1)).isTokenValid(refreshToken, user);
         verify(jwtService, times(1)).generateToken(user);
         verify(response, times(1)).getOutputStream();
