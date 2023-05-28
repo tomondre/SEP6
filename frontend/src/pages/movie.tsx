@@ -16,6 +16,7 @@ import { IReview } from "../utils/types";
 import { useForm } from "react-hook-form";
 import Reviews from "../components/Reviews";
 import RatingStars from "../components/Rating";
+import Chart from "../components/Chart";
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -93,7 +94,7 @@ const MoviePage = () => {
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
-      } 
+      }
     };
 
     fetchMovie();
@@ -116,7 +117,7 @@ const MoviePage = () => {
 
         <Grid className={classes.movieDetails}>
           <Grid className={classes.ratingGroup}>
-             {!(typeof(movie.rating)===undefined) && 
+             {!(typeof(movie.rating)===undefined) &&
             <RatingStars rating={movie.rating}/>
              }
           </Grid>
@@ -216,13 +217,13 @@ const MoviePage = () => {
           </Grid>
         </Grid>
       </Grid>
-      
+
       <Grid className={classes.starsLabel}>
         {movie.people && !!(movie.people.length) &&
         <Typography variant="h5">Movie stars</Typography>
         }
       </Grid>
-      
+
       <Grid item container className={classes.personContainer}>
         {movie.people &&
           movie.people.map((person, index) => (

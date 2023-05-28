@@ -16,16 +16,18 @@ const Navbar: FunctionComponent = () => {
   const { classes } = useStyles();
   const [userId, setUserId] = useState(getUserId());
 
-  const links: Links[] = userId
-  ? [
-    { destination: "Home", link: "/" },
-    { destination: "Profile", link: "/profile" },
-    ]
-  : [
-      { destination: "Home", link: "/" },
+  let links: Links[];
+
+  if (userId){
+    links = [{ destination: "Home", link: "/" },
+      { destination: "Profile", link: "/profile" },
+      { destination: "Statistics", link: "/statistics" }]
+  } else {
+    links = [{ destination: "Home", link: "/" },
       { destination: "Sign Up", link: "/sign-up" },
-      { destination: "Login", link: "/login" },
-    ];
+      { destination: "Statistics", link: "/statistics" },
+      { destination: "Login", link: "/login" }];
+  }
 
     const handleLogout = () => {
       authService.logout();
@@ -52,7 +54,7 @@ const Navbar: FunctionComponent = () => {
         <SearchBar />
       </Grid>
 
-      <Grid item container lg={2} className={classes.menu}>
+      <Grid item container lg={3} className={classes.menu}>
         {links.map(({ destination, link }, index) => (
           <Grid item key={index}>
             <Link href={link} key={index}>
@@ -64,7 +66,7 @@ const Navbar: FunctionComponent = () => {
         ))}
           <Grid item>
             {
-              userId && 
+              userId &&
               <Typography className={classes.navbarText + " " + classes.logout} variant="h6" onClick={handleLogout}>
                 Logout
               </Typography>
@@ -103,7 +105,7 @@ const useStyles = makeStyles()(() => ({
   },
   navbarText: {},
   menu: {
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   logout: {
     cursor: "pointer",
