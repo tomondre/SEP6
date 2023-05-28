@@ -39,6 +39,15 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public AuthenticationResponse register(RegisterRequest request)
     {
         log.info("Registering new user: {}", request.getUsername());
+
+        Date dateOfBirth;
+        try {
+            dateOfBirth = Date.valueOf(request.getDateOfBirth());
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid date format", e);
+            throw new IllegalArgumentException("Invalid date format");
+        }
+
         var user = Account.builder()
                           .name(request.getName())
                           .username(request.getUsername())
@@ -46,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
                           .email(request.getEmail())
                           .country(request.getCountry())
                           .profilePictureUrl(request.getProfilePictureUrl())
-                          .dateOfBirth(Date.valueOf(request.getDateOfBirth()))
+                          .dateOfBirth(dateOfBirth)
                           .gender(request.getGender())
                           .role(Role.USER)
                           .isEnabled(true)
