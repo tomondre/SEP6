@@ -72,6 +72,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
                 )
         );
         var user = accountsRepository.findByEmail(request.getEmail())
+                                     .or(() -> accountsRepository.findByUsername(request.getEmail()))
                                      .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -123,7 +124,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var user = this.accountsRepository.findByEmail(userEmail)
+            var user = this.accountsRepository.findByUsername(userEmail)
                                               .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
                 var accessToken = jwtService.generateToken(user);
