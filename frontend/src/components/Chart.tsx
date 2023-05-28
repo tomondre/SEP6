@@ -1,9 +1,9 @@
 import {
-    XAxis,
+  XAxis,
   YAxis,
   BarChart,
   Tooltip,
-  Bar,
+  Bar, LineChart, Line,
 } from "recharts";
 import React, {useEffect, useState} from "react";
 import { makeStyles } from "tss-react/mui";
@@ -11,12 +11,13 @@ import statisticsService from "../services/statistics-service";
 
 const Chart = () => {
   const {classes} = useStyles();
-  const [data, setData] = useState([]);
+  const [revenueByGenreData, setRevenueByGenreData] = useState([]);
+  const [avgRevenueByYear, setAvgRevenueByYear] = useState([]);
 
   useEffect(() => {
     async function call() {
-      const data = await statisticsService.getGenreRevenueStatistics() as [];
-      setData(data)
+      setRevenueByGenreData(await statisticsService.getGenreRevenueStatistics() as []);
+      setAvgRevenueByYear(await statisticsService.getAvgRevenueByYear() as [])
     }
     call()
   }, []);
@@ -26,7 +27,7 @@ const Chart = () => {
         <div>
           <h2 style={{color: 'white'}}>Revenue By Genre</h2>
             <div className={classes.chartsContainer}>
-              <BarChart width={1400} height={400} data={data}>
+              <BarChart width={1400} height={400} data={revenueByGenreData}>
                 <XAxis tick={{fontSize: 15}} dataKey="x"/>
                 <YAxis width={120} orientation={'left'} name={'Revenue'} unit={"$"}/>
                 <Tooltip/>
@@ -36,25 +37,14 @@ const Chart = () => {
         </div>
         <div>
           <h2 style={{color: 'white'}}>Average Revenue by year</h2>
+          <div className={classes.chart}>
+            <LineChart width={1400} height={400} data={avgRevenueByYear}>
+              <XAxis dataKey="x"/>
+              <YAxis/>
+              <Line type="monotone" dataKey="y" stroke="#8884d8"/>
+            </LineChart>
+          </div>
         </div>
-            {/* The 'dataKey' attribute selects the values from the 'data' object */}
-            {/*<div className={classes.chart}>*/}
-            {/*  <h6>Prices of fruits bought for this experiment</h6>*/}
-            {/*  <LineChart width={400} height={400} data={data}>*/}
-            {/*    <XAxis dataKey="x"/>*/}
-            {/*    <YAxis/>*/}
-            {/*    <Line type="monotone" dataKey="y" stroke="#8884d8"/>*/}
-            {/*  </LineChart>*/}
-            {/*</div>*/}
-
-            {/*<div className={classes.chart}>*/}
-            {/*  <h6>How many units bought</h6>*/}
-            {/*  <LineChart width={400} height={400} data={data}>*/}
-            {/*    <XAxis dataKey="x"/>*/}
-            {/*    <YAxis/>*/}
-            {/*    <Line type="monotone" dataKey="y" stroke="#8884d8"/>*/}
-            {/*  </LineChart>*/}
-            {/*</div>*/}
 
             {/*<PieChart width={730} height={250}>*/}
             {/*  <Pie*/}
