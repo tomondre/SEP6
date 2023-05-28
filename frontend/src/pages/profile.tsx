@@ -8,22 +8,11 @@ import DoneIcon from '@mui/icons-material/Done';
 import profileService from '../services/account-service';
 import Reviews from '../components/Reviews';
 import { useForm } from 'react-hook-form';
-import { IMovie, IReview} from '../utils/types';
+import { IMovie, IReview, IProfile } from '../utils/types';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteButton from '../components/FavoriteButton';
 import accountService from '../services/account-service';
 import { getUserId } from '../services/user-service';
-
-interface IProfile {
-    country: string;
-    dateOfBirth: string;
-    email: string;
-    gender: string;
-    id: number;
-    name: string;
-    profilePictureUrl: string;
-    username: string;
-  }
 
   interface ProfileInfoProps {
     label: string;
@@ -53,9 +42,9 @@ const ProfilePage = () => {
         for: "email"
         },
         {
-        field: "Username",
-        value: profile.username,
-        for: "username"
+        field: "Name",
+        value: profile.name,
+        for: "name"
         },
         {
         field: "Country",
@@ -83,7 +72,7 @@ const ProfilePage = () => {
   
         if(response){
           setValue('email', response.email);
-          setValue('username', response.username);
+          setValue('name', response.name);
           setValue('country', response.country);
           setValue('dateOfBirth', response.dateOfBirth);
           setValue('gender', response.gender);
@@ -143,9 +132,14 @@ const ProfilePage = () => {
 
   const handleSubmitForm = (data: IProfile) => {
     setProfile(data);
-
-    //request to update profile
-
+    profileService.updateProfile(data)
+    .then((res) => {
+      //toast success
+    })
+    .catch(err => {
+      console.log(err);
+      //toast error
+    });
   };
 
   const removeMovie = (movieId: number) => {
@@ -166,7 +160,7 @@ const ProfilePage = () => {
         <Grid item lg={4} className={classes.gridContainer}>
             <div className={classes.profileContainer}>
               <AccountCircleIcon className={classes.profilePic}/>
-              <Typography variant="h5">{profile.name}</Typography>
+              <Typography variant="h5">{profile.username}</Typography>
             </div>
         </Grid>
 
@@ -188,7 +182,7 @@ const ProfilePage = () => {
                       key={index}
                       label={fieldAndValue.field}
                       value={fieldAndValue.value || ""}
-                      editable={fieldAndValue.for === "username" ? false : editMode}
+                      editable={editMode}
                       profileAttribute = {fieldAndValue.for as keyof IProfile}
                   />
                   ))}
