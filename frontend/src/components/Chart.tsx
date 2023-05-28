@@ -106,6 +106,7 @@ const Chart = () => {
         </div>
         <div >
          <h2 style={{color: 'white'}}>Movie Languages</h2>
+         <div className={classes.pieChart}>
             <PieChart width={700} height={700}>
               <Pie
                 data={languages}
@@ -127,6 +128,7 @@ const Chart = () => {
               <Legend layout="vertical" verticalAlign="middle" align="right" />
               <Tooltip />
             </PieChart>
+            </div>
         </div>
         </>
   );
@@ -142,6 +144,10 @@ const useStyles = makeStyles()(() => ({
   chart: {
     background: "white",
   },
+  pieChart: {
+    display: "flex",
+    justifyContent: "center",
+  }
 }));
 
 export default Chart;
