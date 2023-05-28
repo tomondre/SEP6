@@ -67,7 +67,7 @@ public class AccountsRepositoryImpl implements AccountsRepository{
             return jpaRepository.save(user);
         } catch (Exception e) {
             log.error("Failed to save account: {}", user, e);
-            throw new IllegalArgumentException("Failed to save account.", e);
+            throw new IllegalArgumentException("Username or Email already exist");
         }
     }
 
