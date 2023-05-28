@@ -45,7 +45,7 @@ const useStyles = makeStyles()(() => ({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'repeat-y',
-        // height: '100%',
+        minHeight: '100vh',
     },
     mainContainer:{
       padding: '3rem'
