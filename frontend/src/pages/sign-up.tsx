@@ -33,7 +33,8 @@ const SignUp = () => {
     try {
       await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender, data.dateOfBirth).then(
         () => {
-          navigate("/");
+          navigate("/profile");
+          window.location.reload();
         },
         (error) => {
           toast.error(error.response.data.message);
