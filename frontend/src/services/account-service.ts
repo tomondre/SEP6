@@ -1,6 +1,7 @@
 import axios from '../api/axios';
-import {getUserId} from "./user-service";
+import { getUserId } from "./user-service";
 import authHeader from "./auth-header";
+import { IProfile } from '../utils/types';
 
 const userId = getUserId();
 
@@ -15,20 +16,36 @@ const getProfile = async () => {
     }
 };
 
-const addFavourite = (userId: number, movieId:number) => {
+const addFavourite = (userId: number, movieId: number) => {
     return axios
-      .post(`/accounts/${userId}/favourites`, {
-        userId,
-        movieId
-      }, {
-          headers: {
-              ...authHeader()
-          }
-      })
-      .then((response: { data: {}; }) => {
-        return response.data;
-      });
-  };
+        .post(`/accounts/${userId}/favourites`, {
+            userId,
+            movieId
+        }, {
+            headers: {
+                ...authHeader()
+            }
+        })
+        .then((response: { data: {}; }) => {
+            return response.data;
+        });
+};
+
+const updateProfile = async (profileData: IProfile) => {
+    try {
+        const response = await axios.put(`/accounts/${userId}`, profileData, {
+            headers: {
+                ...authHeader(),
+                'Content-Type': 'application/json',
+            },
+        });
+        const updatedProfile = response.data;
+        return updatedProfile;
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        throw error;
+    }
+};
 
 const getFavoriteMovies = async () => {
     try {
@@ -59,9 +76,9 @@ const getUserReviews = async () => {
 const deleteFavoriteMovie = async (movieId: number) => {
     try {
         await axios.delete(`/accounts/${userId}/favourites/${movieId}`, {
-                headers: {
-                    ...authHeader()
-                }
+            headers: {
+                ...authHeader()
+            }
         });
     } catch (error) {
         console.error('Error deleting favorite movie:', error);
@@ -74,7 +91,8 @@ const profileService = {
     getFavoriteMovies,
     getUserReviews,
     deleteFavoriteMovie,
-    addFavourite
+    addFavourite,
+    updateProfile
 };
 
 export default profileService;

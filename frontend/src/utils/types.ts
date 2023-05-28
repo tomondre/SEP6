@@ -40,3 +40,12 @@ export interface IPerson {
     ratingAverage: number;
     movies: IMovie[]
 }
+
+export interface IProfile {
+    country: string;
+    dateOfBirth: string;
+    email: string;
+    gender: string;
+    name: string;
+    username: string;
+}
