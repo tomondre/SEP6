@@ -54,14 +54,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("Auth header: {}", authHeader);
         jwt = authHeader.substring(7);
         try {
-            jwtService.extractUsername(jwt);
+            userEmail = jwtService.extractUsername(jwt);
+            log.info("User email: {}", userEmail);
         } catch (ExpiredJwtException e) {
             log.info("Token expired: {}", jwt);
             sendTokenExpiredResponse(response);
             return;
         }
-        userEmail = jwtService.extractUsername(jwt);
-        log.info("User email: {}", userEmail);
+
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             log.info("User details: {}", userDetails);

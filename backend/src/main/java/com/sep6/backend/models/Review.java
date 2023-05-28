@@ -49,4 +49,11 @@ public class Review {
         }
         return null;
     }
+
+    public String getAccountUsername() {
+        if (account != null) {
+            return account.getUsername();
+        }
+        return null;
+    }
 }
