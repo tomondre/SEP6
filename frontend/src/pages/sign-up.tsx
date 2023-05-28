@@ -5,6 +5,7 @@ import { Colors }  from '../constants/Colors';
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/authentication";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type IAccount = {
     name: string,
@@ -35,7 +36,7 @@ const SignUp = () => {
           navigate("/");
         },
         (error) => {
-          console.log(error);
+          toast.error(error.response.data.message);
         }
       );
     } catch (err) {
