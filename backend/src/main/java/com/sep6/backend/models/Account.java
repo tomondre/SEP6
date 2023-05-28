@@ -1,5 +1,6 @@
 package com.sep6.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sep6.backend.security.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"favourites"})
 public class Account implements UserDetails
 {
     @Id
