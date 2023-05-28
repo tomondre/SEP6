@@ -16,7 +16,6 @@ import { IReview } from "../utils/types";
 import { useForm } from "react-hook-form";
 import Reviews from "../components/Reviews";
 import RatingStars from "../components/Rating";
-import Chart from "../components/Chart";
 
 const MoviePage = () => {
   const { classes } = useStyles();
@@ -44,12 +43,9 @@ const MoviePage = () => {
     formState: { errors },
   } = useForm<IReview>();
 
-  const changeRating = (event:any, value:number|null)=>{
-    if(value)
-    setRating(value);
-  }
-
-
+  const changeRating = (event: any, value: number | null) => {
+    if (value) setRating(value);
+  };
 
   const onSubmit = handleSubmit((data) => handleData(data));
 
@@ -69,7 +65,7 @@ const MoviePage = () => {
             console.log(error);
           }
         ));
-        window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -79,18 +75,23 @@ const MoviePage = () => {
     const fetchMovie = async () => {
       try {
         if (id !== -1) {
-          const movie = await MovieService.getMovieById(id);
-          setMovie(movie);
-          const response = await profileService.getFavoriteMovies();
+          const retrievedMovie = await MovieService.getMovieById(id);
+          setMovie(retrievedMovie);
 
-          for (let index = 0; index < response.length; index++) {
-            const id = response[index].id;
-            if (id === movie.id) {
+          if (userId) {
+            const favoriteMovies = await profileService.getFavoriteMovies();
+            const foundMovieInFavoriteMovies = favoriteMovies.find(
+              (movie: IMovie) => movie.id === id
+            );
+
+            if (foundMovieInFavoriteMovies) {
               setFavMovie(true);
             }
           }
-        const reviews = await MovieService.getReviewsByMovieId(movie.id);
-        setMovieReviews(reviews);
+
+          if (retrievedMovie.reviews) {
+            setMovieReviews(retrievedMovie.reviews);
+          }
         }
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -117,16 +118,16 @@ const MoviePage = () => {
 
         <Grid className={classes.movieDetails}>
           <Grid className={classes.ratingGroup}>
-             {!(typeof(movie.rating)===undefined) &&
-            <RatingStars rating={movie.rating}/>
-             }
+            {!(typeof movie.rating === undefined) && (
+              <RatingStars rating={movie.rating} />
+            )}
           </Grid>
 
           <Grid className={classes.moviecontainer}>
             <Grid item lg={10} className={classes.movieTitle}>
               <Typography variant="h2">{movie.title}</Typography>
             </Grid>
-            <Grid >
+            <Grid>
               {userId && (
                 <FavoriteButton movieId={movie.id} isFave={favMovie} />
               )}
@@ -174,21 +175,26 @@ const MoviePage = () => {
             <Typography variant="p">{movie.description}</Typography>
           </Grid>
           <Grid>
-          {userId &&
-            <Button
-              className={classes.button}
-              variant="contained"
-              onClick={handleClickOpen}
-            >
-              Add review
-            </Button>
-}
+            {userId && (
+              <Button
+                className={classes.button}
+                variant="contained"
+                onClick={handleClickOpen}
+              >
+                Add review
+              </Button>
+            )}
             <Dialog open={open} onClose={handleClose}>
               <DialogTitle className={classes.dialogTitle}>Review</DialogTitle>
               <form onSubmit={onSubmit}>
                 <DialogContent>
                   <Box>
-                    <Rating name="customized-10" defaultValue={1} max={10} onChange={changeRating} />
+                    <Rating
+                      name="customized-10"
+                      defaultValue={1}
+                      max={10}
+                      onChange={changeRating}
+                    />
                   </Box>
                   <TextField
                     className={classes.commentArea}
@@ -219,9 +225,9 @@ const MoviePage = () => {
       </Grid>
 
       <Grid className={classes.starsLabel}>
-        {movie.people && !!(movie.people.length) &&
-        <Typography variant="h5">Movie stars</Typography>
-        }
+        {movie.people && !!movie.people.length && (
+          <Typography variant="h5">Movie stars</Typography>
+        )}
       </Grid>
 
       <Grid item container className={classes.personContainer}>
@@ -237,9 +243,7 @@ const MoviePage = () => {
             </Grid>
           ))}
       </Grid>
-      {!!(movieReviews.length) &&
-        <Reviews reviews={movieReviews} />
-      }
+      {!!movieReviews.length && <Reviews reviews={movieReviews} />}
     </Grid>
   );
 };
@@ -275,7 +279,7 @@ const useStyles = makeStyles()(() => ({
   },
   movieTitle: {
     width: "100%",
-    textAlign: "start"
+    textAlign: "start",
   },
   movieDetails: {
     width: "70%",
@@ -331,7 +335,7 @@ const useStyles = makeStyles()(() => ({
     height: "4rem",
     marginTop: "6rem",
   },
-  submitButton:{
+  submitButton: {
     fontSize: "2.188rem",
     width: "16rem",
     height: "3rem",
@@ -362,9 +366,9 @@ const useStyles = makeStyles()(() => ({
     color: Colors.black75,
     fontSize: "2rem",
   },
-  commentArea:{
-    width:'35rem'
-  }
+  commentArea: {
+    width: "35rem",
+  },
 }));
 
 export default MoviePage;
