@@ -197,9 +197,10 @@ const ProfilePage = () => {
                   </div>
           </div>
         </Grid>
-          <Reviews reviews={userReviews} />
+         {!!userReviews.length && <Reviews reviews={userReviews} />}
 
-          <Grid item container>
+          {movies.length &&
+            <Grid item container>
             <Grid item lg={12} className={classes.alignStart}>
               <Typography variant="h5">Favorite Movies</Typography>
             </Grid>
@@ -212,7 +213,7 @@ const ProfilePage = () => {
                   </Grid>
                 ))}
           </Grid>
-
+          }
     </Grid>
   );
 };
