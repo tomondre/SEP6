@@ -131,15 +131,23 @@ const ProfilePage = () => {
   };
 
   const handleSubmitForm = (data: IProfile) => {
-    setProfile(data);
-    profileService.updateProfile(data)
-    .then((res) => {
-      //toast success
-    })
-    .catch(err => {
-      console.log(err);
-      //toast error
-    });
+    if(profile){
+      const updatedInformation = {
+        ...data,
+        username: profile.username,
+      };
+  
+      setProfile(updatedInformation);
+  
+      profileService.updateProfile(data)
+      .then((res) => {
+        //toast success
+      })
+      .catch(err => {
+        console.log(err);
+        //toast error
+      });
+    }
   };
 
   const removeMovie = (movieId: number) => {
