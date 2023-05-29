@@ -1,6 +1,5 @@
 package com.sep6.backend.models.auth;
 
-import com.sep6.backend.models.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
