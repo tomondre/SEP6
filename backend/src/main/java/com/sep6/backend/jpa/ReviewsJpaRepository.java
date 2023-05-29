@@ -1,9 +1,7 @@
 package com.sep6.backend.jpa;
 
-import com.sep6.backend.models.Movie;
 import com.sep6.backend.models.Review;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
