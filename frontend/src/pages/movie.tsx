@@ -107,8 +107,8 @@ const MoviePage = () => {
 
   return (
     <Grid container>
-      <Grid className={classes.topContainer}>
-        <Grid>
+      <Grid item container>
+      <Grid item xs={12} sm={12} md={12} lg={5}>
           <img
             src={`${baseUrl}${movie.posterUrl}`}
             className={classes.poster}
@@ -116,7 +116,7 @@ const MoviePage = () => {
           />
         </Grid>
 
-        <Grid className={classes.movieDetails}>
+        <Grid item lg={7} className={classes.movieDetails}>
           <Grid className={classes.ratingGroup}>
             {!(typeof movie.rating === undefined) && (
               <RatingStars rating={movie.rating} />
@@ -225,13 +225,13 @@ const MoviePage = () => {
       </Grid>
 
       {movie.people && !!movie.people.length && (
-      <Grid item container lg={12} className={classes.personContainer}>
+      <Grid item container lg={12}>
         <Grid lg={12} className={classes.starsLabel}>
             <Typography variant="h5">Movie stars</Typography>
         </Grid>
 
         {movie.people.map((person, index) => (
-            <Grid item lg={3} key={index}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <PeopleCard
                 id={person.id}
                 profileImg={person.profileImg}
@@ -244,18 +244,14 @@ const MoviePage = () => {
         )}
 
 
-      <Grid item lg={12}>
-        {!!movieReviews.length && <Reviews reviews={movieReviews} />}
+      <Grid item lg={12} className={classes.reviewsContainer}>
+        {!!movieReviews.length && <Reviews fromProfile={false} reviews={movieReviews} />}
       </Grid>
     </Grid>
   );
 };
 
 const useStyles = makeStyles()(() => ({
-  topContainer: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
   poster: {
     height: "46rem",
   },
@@ -310,9 +306,6 @@ const useStyles = makeStyles()(() => ({
     display: "flex",
     justifyContent: "flex-start",
   },
-  personContainer: {
-    justifyContent: "space-around",
-  },
   button: {
     fontSize: "2.188rem",
     width: "22rem",
@@ -341,6 +334,9 @@ const useStyles = makeStyles()(() => ({
   commentArea: {
     width: "35rem",
   },
+  reviewsContainer: {
+    overflow: 'hidden',
+  }
 }));
 
 export default MoviePage;

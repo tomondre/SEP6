@@ -5,6 +5,7 @@ import { Colors } from "../constants/Colors";
 import SearchBar from "./SearchBar";
 import { getUserId } from "../services/user-service";
 import authService from "../services/authentication";
+import theme from "../theme/theme";
 
 interface Links {
   destination: string;
@@ -44,7 +45,7 @@ const Navbar: FunctionComponent = () => {
           </Grid>
           <Grid item className={classes.textContainer}>
             <Typography variant="h4" className={classes.title}>
-              CINEMATE
+              Best Movies
             </Typography>
           </Grid>
         </Grid>
@@ -54,20 +55,20 @@ const Navbar: FunctionComponent = () => {
         <SearchBar />
       </Grid>
 
-      <Grid item container lg={3} className={classes.menu}>
+      <Grid item container xs={12} sm={12} md={12} lg={3} className={classes.menu}>
         {links.map(({ destination, link }, index) => (
-          <Grid item key={index}>
+          <Grid item key={index} className={classes.menuItem}>
             <Link href={link} key={index}>
-              <Typography className={classes.navbarText} variant="h6">
+              <Typography variant="h6">
                 {destination}
               </Typography>
             </Link>
           </Grid>
         ))}
-          <Grid item>
+          <Grid item className={classes.menuItem}>
             {
               userId &&
-              <Typography className={classes.navbarText + " " + classes.logout} variant="h6" onClick={handleLogout}>
+              <Typography className={classes.logout} variant="h6" onClick={handleLogout}>
                 Logout
               </Typography>
             }
@@ -103,12 +104,19 @@ const useStyles = makeStyles()(() => ({
     alignItems: "center",
     padding: "0 1rem",
   },
-  navbarText: {},
   menu: {
     justifyContent: "space-around",
+    width: '100%'
   },
   logout: {
     cursor: "pointer",
+  },
+  menuItem:{
+    margin: 'auto',
+    [theme.breakpoints.down('custom1234')]: {
+      marginTop: '1rem',
+      margin: 'auto',
+    }
   }
 }));
 

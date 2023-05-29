@@ -62,13 +62,13 @@ const HomePage = () => {
       </Grid>
 
       <Grid item container>
-        <Grid item lg={12} className={classes.genreContainer}>
+        <Grid item xs={12} sm={12} md={12} lg={12} className={classes.genreContainer}>
           <GenreFilter selectedGenre={selectedGenre} onChange={handleGenreChange} />
           </Grid>
 
         {
            movies.map((movie: IMovie, index: number) => (
-            <Grid key={index} item lg={3}>
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
               <MovieCard poster={movie.posterUrl} title={movie.title} id={movie.id}/>
             </Grid>
           ))

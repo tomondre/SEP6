@@ -12,7 +12,7 @@ export interface IMovie {
     releaseDate?: string;
     genres: { id: number; name: string }[];
     people?: { id: number; name: string; profileImg: string; type: string }[];
-    reviews?: { id: number; rating: number; comment: string; createdOn: string; movieId: number; movieTitle: string; accountId: number }[];
+    reviews?: { id: number; rating: number; comment: string; createdOn: string; movieId: number; movieTitle: string; accountId: number, accountUsername: string }[];
     rating?: number
 }
 
@@ -25,6 +25,7 @@ export interface IReview {
     movieTitle: string;
     movieId: number;
     accountId: number;
+    accountUsername: string;
 }
 
 export interface IPerson {

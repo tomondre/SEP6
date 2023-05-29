@@ -47,8 +47,8 @@ const PeoplePage = () => {
 
   return (
     <Grid container>
-      <Grid className={classes.container}>
-        <Grid>
+      <Grid item container>
+        <Grid item container xs={12} sm={12} md={12} lg={5}>
           <img
             src={`${baseUrl}${people.profileImg}`}
             className={classes.image}
@@ -56,7 +56,7 @@ const PeoplePage = () => {
           />
         </Grid>
 
-        <Grid className={classes.peopleDetails}>
+        <Grid item lg={7}className={classes.peopleDetails}>
           <Grid>
              {!(typeof people.ratingAverage === undefined) && 
             <RatingStars rating={people.ratingAverage}/>
@@ -100,12 +100,12 @@ const PeoplePage = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item container  lg={12} className={classes.moviesContainer}>
+      <Grid item container  lg={12}>
         <Grid item lg={12} className={classes.knownForLabel}>
           <Typography variant="h4">Known for:</Typography>
         </Grid>
         {people.movies.map((movie, index) => (
-          <Grid item lg={3} key={index}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
             <MovieCard
               id={movie.id}
               poster={`${baseUrl}${movie.posterUrl}`}
@@ -119,9 +119,7 @@ const PeoplePage = () => {
 };
 
 const useStyles = makeStyles()(() => ({
-  container: {
-    display: "flex",
-  },
+
   image: {
     height: "46rem",
   },
@@ -147,7 +145,7 @@ const useStyles = makeStyles()(() => ({
     marginTop: "1rem",
   },
   peopleDetails: {
-    width: "70%",
+    // width: "70%",
     padding: "2rem",
   },
   specifications: {
@@ -163,9 +161,6 @@ const useStyles = makeStyles()(() => ({
     marginTop: "4rem",
     display: "flex",
     justifyContent: "flex-start",
-  },
-  moviesContainer: {
-    justifyContent: "space-around",
   },
 }));
 
