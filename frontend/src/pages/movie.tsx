@@ -145,27 +145,27 @@ const MoviePage = () => {
             </Grid>
           )}
           <Grid className={classes.specifications}>
-            <Grid className={classes.status}>
-              <Typography variant="h6">{movie.status}</Typography>
+            <Grid>
+              <Typography variant="p">{movie.status}</Typography>
             </Grid>
             {movie.releaseDate && (
-              <Grid className={classes.releaseDate}>
-                <Typography variant="h6">
+              <Grid >
+                <Typography variant="p">
                   Release date: {movie.releaseDate.substring(0, 10)}
                 </Typography>
               </Grid>
             )}
-            <Grid className={classes.runtime}>
-              <Typography variant="h6"> {movie.runtime} min.</Typography>
+            <Grid>
+              <Typography variant="p"> {movie.runtime} min.</Typography>
             </Grid>
-            <Grid className={classes.language}>
-              <Typography variant="h6">Language: {movie.language}</Typography>
+            <Grid>
+              <Typography variant="p">Language: {movie.language}</Typography>
             </Grid>
-            <Grid className={classes.budget}>
-              <Typography variant="h6">Budget: {movie.budget} $ </Typography>
+            <Grid>
+              <Typography variant="p">Budget: {movie.budget} $ </Typography>
             </Grid>
-            <Grid className={classes.boxOffice}>
-              <Typography variant="h6">
+            <Grid>
+              <Typography variant="p">
                 Box office: {movie.boxOffice} ${" "}
               </Typography>
             </Grid>
@@ -288,28 +288,9 @@ const useStyles = makeStyles()(() => ({
   specifications: {
     display: "flex",
     alignItems: "start",
-    height: "10%",
-  },
-  status: {
-    fontSize: "2rem",
-  },
-  releaseDate: {
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
-  },
-  runtime: {
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
-  },
-  language: {
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
+    justifyContent: "space-between",
+    height: "15%",
+    // border: '1px solid red'
   },
   genres: {
     display: "flex",
@@ -349,18 +330,6 @@ const useStyles = makeStyles()(() => ({
     display: "flex",
     alignItems: "center",
     marginTop: "3rem",
-  },
-  boxOffice: {
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
-  },
-  budget: {
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
   },
   dialogTitle: {
     color: Colors.black75,
