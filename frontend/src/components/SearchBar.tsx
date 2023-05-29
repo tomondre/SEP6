@@ -12,6 +12,7 @@ import PersonService from "../services/person-service";
 import SearchResults from "./SearchResults";
 import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
 import FilterSelection from "./FilterSelection";
+import theme from "../theme/theme";
 
 const SearchBar: FunctionComponent = ({}) => {
   const { classes } = useStyles();
@@ -136,6 +137,9 @@ const useStyles = makeStyles()(() => ({
     width: "32rem",
     height: "3.5rem",
     position: "relative",
+    [theme.breakpoints.down("custom522")]: {
+      width: "20rem",
+    }
   },
 }));
 

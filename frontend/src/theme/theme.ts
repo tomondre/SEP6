@@ -27,6 +27,8 @@ declare module '@mui/material/styles' {
     interface BreakpointOverrides {
         //define custom breakpoints here like this:
         ultraWide: true;
+        custom1234: true;
+        custom522: true;
 
     }
 }
@@ -41,7 +43,9 @@ const media = createTheme({
             xl: 1536,
 
             // custom breakpoints
-            ultraWide: 2000
+            ultraWide: 2000,
+            custom1234: 1234,
+            custom522: 522,
         }
     }
 })
@@ -49,17 +53,6 @@ const media = createTheme({
 export const theme = createTheme({
     ...media,
     components: {
-        // MuiOutlinedInput: {
-        //     styleOverrides: {
-        //         root: {
-        //             width: '38.5rem',
-        //             height: '2.5rem',
-        //             background: Colors.lightCyan,
-        //             border: '0.063rem',
-        //             borderRadius: '0.625rem',
-        //         },
-        //     }
-        // },
         MuiButton: {
             styleOverrides: {
                 contained: {
@@ -75,6 +68,10 @@ export const theme = createTheme({
                         backgroundColor: Colors.red2,
                         color: Colors.lightCyan,
                     },
+                    [media.breakpoints.down('custom522')]: {
+                        fontSize: '2.1rem',
+                        height: '3.9rem',
+                    }
                 },
 
             },
@@ -92,6 +89,9 @@ export const theme = createTheme({
             color: Colors.lightCyan,
             [media.breakpoints.down('sm')]: {
                 fontSize: '3.4rem'
+            },
+            [media.breakpoints.down('custom522')]: {
+                fontSize: '2.4rem'
             }
         },
         h2: {

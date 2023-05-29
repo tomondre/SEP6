@@ -11,9 +11,10 @@ import MovieService from "../services/movies";
 
 interface Props {
   review: IReview;
+  fromProfile: boolean;
 }
 
-const Review: FunctionComponent<Props> = ({ review }) => {
+const Review: FunctionComponent<Props> = ({ review, fromProfile }) => {
   const { classes } = useStyles();
   const { id, createdOn, rating, comment, user, accountId, movieId } = review;
   const userId = getUserId() || 0;
@@ -36,7 +37,7 @@ const Review: FunctionComponent<Props> = ({ review }) => {
     <div className={classes.reviewContainer}>
       <div className={classes.titleAndRatingContainer}>
         <span>
-          <Typography variant="h5">{review.movieTitle}</Typography>
+          <Typography variant="h5">{fromProfile ? review.movieTitle : review.accountUsername}</Typography>
           <Typography variant="p">{createdOn.substring(0, 10)}</Typography>
         </span>
         <Rating rating={rating} />
@@ -49,7 +50,7 @@ const Review: FunctionComponent<Props> = ({ review }) => {
           {comment}
         </Typography>
       </div>
-      {  userId&& (accountId==userId)  &&
+      {  !!userId && !!(accountId==userId)  &&
       <IconButton aria-label="delete" onClick={handleClick}>
           <DeleteIcon className={classes.deleteIcon} />
         </IconButton>

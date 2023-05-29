@@ -8,9 +8,10 @@ import { useHorizontalScroll } from "../hooks/useHorizontalScroll";
 
 interface Props {
   reviews: IReview[];
+  fromProfile: boolean;
 }
 
-const Reviews: FunctionComponent<Props> = ({ reviews }) => {
+const Reviews: FunctionComponent<Props> = ({ reviews, fromProfile }) => {
   const { classes } = useStyles();
 
   const horizontalScrollRef = useHorizontalScroll();
@@ -25,6 +26,7 @@ const Reviews: FunctionComponent<Props> = ({ reviews }) => {
         {reviews.map((review, index) => (
           <Review 
           key={index}
+          fromProfile={fromProfile}
           review={review} />
         ))}
       </div>

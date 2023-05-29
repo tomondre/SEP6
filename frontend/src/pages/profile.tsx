@@ -197,7 +197,7 @@ const ProfilePage = () => {
                   </div>
           </div>
         </Grid>
-         {!!userReviews.length && <Reviews reviews={userReviews} />}
+         {!!userReviews.length && <Reviews fromProfile={true} reviews={userReviews} />}
 
           {movies.length &&
             <Grid item container>
