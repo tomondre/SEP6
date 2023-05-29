@@ -231,7 +231,7 @@ const MoviePage = () => {
         </Grid>
 
         {movie.people.map((person, index) => (
-            <Grid item lg={2} key={index}>
+            <Grid item lg={3} key={index}>
               <PeopleCard
                 id={person.id}
                 profileImg={person.profileImg}

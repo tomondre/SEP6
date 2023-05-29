@@ -18,11 +18,12 @@ const PeopleCard: React.FC<PeopleCardProps> = ({ profileImg, name, id,type }) =>
     <div>
       <RouterLink to={`/person?id=${id}`}>
         <img src={`https://image.tmdb.org/t/p/w200${profileImg}`} className={classes.image} alt={name} />
-        <Typography variant="h6" className={classes.personName}>
+        <Typography variant="h6" className={classes.padding}>
           {name}
         </Typography>
-        </RouterLink>
-        <Typography variant="h6" className={classes.type}>
+      </RouterLink>
+      
+        <Typography variant="h6" className={classes.padding}>
           {type}
         </Typography>
       
@@ -37,13 +38,9 @@ const useStyles = makeStyles()(() => ({
       width :'16rem',
       height: '24rem'
   },
-  personName:{
+  padding:{
       padding: '1rem 0',
-      color:Colors.white
   },
-  type:{
-    padding: '1rem 0',
-}
 }));
   
 

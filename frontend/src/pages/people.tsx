@@ -105,7 +105,7 @@ const PeoplePage = () => {
           <Typography variant="h4">Known for:</Typography>
         </Grid>
         {people.movies.map((movie, index) => (
-          <Grid item lg={2} key={index}>
+          <Grid item lg={3} key={index}>
             <MovieCard
               id={movie.id}
               poster={`${baseUrl}${movie.posterUrl}`}
