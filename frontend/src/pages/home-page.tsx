@@ -78,7 +78,7 @@ const HomePage = () => {
       <Grid item className={classes.paginationContainer} lg={12}>
         <Pagination
           className={classes.pagination}
-          count={21}
+          count={39}
           page={currentPage}
           onChange={(event, page) => handlePageChange(page)}
         />

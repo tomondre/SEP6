@@ -5,6 +5,7 @@ import { Colors }  from '../constants/Colors';
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/authentication";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type IAccount = {
     name: string,
@@ -32,10 +33,11 @@ const SignUp = () => {
     try {
       await AuthService.signup(data.name,data.email,data.username, data.password,data.country,data.gender, data.dateOfBirth).then(
         () => {
-          navigate("/");
+          navigate("/profile");
+          window.location.reload();
         },
         (error) => {
-          console.log(error);
+          toast.error(error.response.data.message);
         }
       );
     } catch (err) {

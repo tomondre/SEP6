@@ -12,7 +12,7 @@ export interface IMovie {
     releaseDate?: string;
     genres: { id: number; name: string }[];
     people?: { id: number; name: string; profileImg: string; type: string }[];
-    review?: { id: number; rating: number; comment: string; createdOn: string; movieId: number; accountId: number }[];
+    reviews?: { id: number; rating: number; comment: string; createdOn: string; movieId: number; movieTitle: string; accountId: number }[];
     rating?: number
 }
 

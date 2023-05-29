@@ -13,6 +13,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteButton from '../components/FavoriteButton';
 import accountService from '../services/account-service';
 import { getUserId } from '../services/user-service';
+import { toast } from 'react-toastify';
 
   interface ProfileInfoProps {
     label: string;
@@ -141,11 +142,10 @@ const ProfilePage = () => {
   
       profileService.updateProfile(data)
       .then((res) => {
-        //toast success
+        toast("Profile updated successfully!");
       })
       .catch(err => {
-        console.log(err);
-        //toast error
+        toast.error("Error updating profile!");
       });
     }
   };
@@ -197,9 +197,10 @@ const ProfilePage = () => {
                   </div>
           </div>
         </Grid>
-          <Reviews reviews={userReviews} />
+         {!!userReviews.length && <Reviews reviews={userReviews} />}
 
-          <Grid item container>
+          {movies.length &&
+            <Grid item container>
             <Grid item lg={12} className={classes.alignStart}>
               <Typography variant="h5">Favorite Movies</Typography>
             </Grid>
@@ -212,7 +213,7 @@ const ProfilePage = () => {
                   </Grid>
                 ))}
           </Grid>
-
+          }
     </Grid>
   );
 };

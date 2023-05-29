@@ -57,8 +57,8 @@ const PeoplePage = () => {
         </Grid>
 
         <Grid className={classes.peopleDetails}>
-          <Grid className={classes.ratingGroup}>
-             {people.ratingAverage && 
+          <Grid>
+             {!(typeof people.ratingAverage === undefined) && 
             <RatingStars rating={people.ratingAverage}/>
              }
           </Grid>
@@ -68,30 +68,30 @@ const PeoplePage = () => {
           </Grid>
 
           <Grid className={classes.specifications}>
-            <Grid className={classes.type}>
-              <Typography variant="h6">{people.type}</Typography>
+            <Grid>
+              <Typography variant="p">{people.type}</Typography>
             </Grid>
             {people.dateOfBirth && (
-              <Grid className={classes.dateOfBirth}>
-                <Typography variant="h6">
+              <Grid >
+                <Typography variant="p">
                   Born: {people.dateOfBirth.substring(0, 10)}
                 </Typography>
               </Grid>
             )}
             {people.deathDate && (
-              <Grid className={classes.deathDate}>
-                <Typography variant="h6">
+              <Grid >
+                <Typography variant="p">
                   Died: {people.deathDate.substring(0, 10)}
                 </Typography>
               </Grid>
             )}
-            <Grid className={classes.birthPlace}>
-              <Typography variant="h6">
+            <Grid>
+              <Typography variant="p">
                 Place of birth: {people.placeOfBirth}
               </Typography>
             </Grid>
-            <Grid className={classes.gender}>
-              <Typography variant="h6">Gender: {people.gender}</Typography>
+            <Grid >
+              <Typography variant="p">Gender: {people.gender}</Typography>
             </Grid>
           </Grid>
 
@@ -100,12 +100,12 @@ const PeoplePage = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid className={classes.knownForLabel}>
-        <Typography variant="h4">Known for:</Typography>
-      </Grid>
-      <Grid item container className={classes.moviesContainer}>
+      <Grid item container  lg={12} className={classes.moviesContainer}>
+        <Grid item lg={12} className={classes.knownForLabel}>
+          <Typography variant="h4">Known for:</Typography>
+        </Grid>
         {people.movies.map((movie, index) => (
-          <Grid item lg={2} key={index}>
+          <Grid item lg={3} key={index}>
             <MovieCard
               id={movie.id}
               poster={`${baseUrl}${movie.posterUrl}`}
@@ -121,15 +121,9 @@ const PeoplePage = () => {
 const useStyles = makeStyles()(() => ({
   container: {
     display: "flex",
-    justifyContent: "space-around",
   },
   image: {
     height: "46rem",
-  },
-  ratingGroup: {
-    display: "flex",
-    alignItems: "center",
-    height: "10%",
   },
   star: {
     color: Colors.yellow,
@@ -149,10 +143,8 @@ const useStyles = makeStyles()(() => ({
     alignContent: "center",
   },
   peopleName: {
-    width: "100%",
-    height: "5rem",
     textAlign: "start",
-    marginTop: "3rem",
+    marginTop: "1rem",
   },
   peopleDetails: {
     width: "70%",
@@ -161,46 +153,16 @@ const useStyles = makeStyles()(() => ({
   specifications: {
     display: "flex",
     alignItems: "start",
+    justifyContent: "space-between",
     height: "10%",
-  },
-  type: {
-    color: Colors.yellow,
-    fontSize: "2rem",
-  },
-  dateOfBirth: {
-    color: Colors.yellow,
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
-  },
-  deathDate: {
-    color: Colors.yellow,
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
-  },
-  birthPlace: {
-    color: Colors.yellow,
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
-  },
-  gender: {
-    color: Colors.yellow,
-    fontWeight: "800",
-    fontSize: "2rem",
-    alignContent: "center",
-    marginLeft: "1rem",
   },
   biography: {
     textAlign: "justify",
-    fontWeight: "300",
   },
   knownForLabel: {
-    margin: "4rem 4rem 4rem 0rem",
+    marginTop: "4rem",
+    display: "flex",
+    justifyContent: "flex-start",
   },
   moviesContainer: {
     justifyContent: "space-around",
