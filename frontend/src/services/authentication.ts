@@ -4,10 +4,10 @@ const API_URL = '/auth';
 
 
 
-const signup = (name:string, email:string, username:string, password:string, country:string, gender:string, dateOfBirth:string) => {
+const signup = (name: string, email: string, username: string, password: string, country: string, gender: string, dateOfBirth: string) => {
 
-  const profilePictureUrl=""
-  const role="USER"
+  const profilePictureUrl = ""
+  const role = "USER"
 
   return axios
     .post(API_URL + "/register", {
