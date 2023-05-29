@@ -224,15 +224,13 @@ const MoviePage = () => {
         </Grid>
       </Grid>
 
-      <Grid className={classes.starsLabel}>
-        {movie.people && !!movie.people.length && (
-          <Typography variant="h5">Movie stars</Typography>
-        )}
-      </Grid>
+      {movie.people && !!movie.people.length && (
+      <Grid item container lg={12} className={classes.personContainer}>
+        <Grid lg={12} className={classes.starsLabel}>
+            <Typography variant="h5">Movie stars</Typography>
+        </Grid>
 
-      <Grid item container className={classes.personContainer}>
-        {movie.people &&
-          movie.people.map((person, index) => (
+        {movie.people.map((person, index) => (
             <Grid item lg={2} key={index}>
               <PeopleCard
                 id={person.id}
@@ -243,7 +241,12 @@ const MoviePage = () => {
             </Grid>
           ))}
       </Grid>
-      {!!movieReviews.length && <Reviews reviews={movieReviews} />}
+        )}
+
+
+      <Grid item lg={12}>
+        {!!movieReviews.length && <Reviews reviews={movieReviews} />}
+      </Grid>
     </Grid>
   );
 };
@@ -303,7 +306,9 @@ const useStyles = makeStyles()(() => ({
     fontWeight: "300",
   },
   starsLabel: {
-    margin: "4rem 4rem 4rem 0rem",
+    marginTop: "4rem",
+    display: "flex",
+    justifyContent: "flex-start",
   },
   personContainer: {
     justifyContent: "space-around",

@@ -100,10 +100,10 @@ const PeoplePage = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid className={classes.knownForLabel}>
-        <Typography variant="h4">Known for:</Typography>
-      </Grid>
-      <Grid item container className={classes.moviesContainer}>
+      <Grid item container  lg={12} className={classes.moviesContainer}>
+        <Grid item lg={12} className={classes.knownForLabel}>
+          <Typography variant="h4">Known for:</Typography>
+        </Grid>
         {people.movies.map((movie, index) => (
           <Grid item lg={2} key={index}>
             <MovieCard
@@ -160,7 +160,9 @@ const useStyles = makeStyles()(() => ({
     textAlign: "justify",
   },
   knownForLabel: {
-    margin: "4rem 4rem 4rem 0rem",
+    marginTop: "4rem",
+    display: "flex",
+    justifyContent: "flex-start",
   },
   moviesContainer: {
     justifyContent: "space-around",
