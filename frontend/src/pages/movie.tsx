@@ -138,7 +138,7 @@ const MoviePage = () => {
             <Grid className={classes.genres}>
               {movie.genres &&
                 movie.genres.map((genre, index) => (
-                  <Grid item lg={1} key={index}>
+                  <Grid item lg={2} key={index}>
                     {genre.name}
                   </Grid>
                 ))}
@@ -290,13 +290,11 @@ const useStyles = makeStyles()(() => ({
     alignItems: "start",
     justifyContent: "space-between",
     height: "15%",
-    // border: '1px solid red'
   },
   genres: {
     display: "flex",
     color: Colors.yellow,
     fontWeight: "800",
-    fontSize: "1rem",
     textAlign: "start",
     marginBottom: "1rem",
   },
