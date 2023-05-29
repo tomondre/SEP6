@@ -47,8 +47,8 @@ const PeoplePage = () => {
 
   return (
     <Grid container>
-      <Grid className={classes.container}>
-        <Grid>
+      <Grid item container>
+        <Grid item container xs={12} sm={12} md={12} lg={5}>
           <img
             src={`${baseUrl}${people.profileImg}`}
             className={classes.image}
@@ -56,7 +56,7 @@ const PeoplePage = () => {
           />
         </Grid>
 
-        <Grid className={classes.peopleDetails}>
+        <Grid item lg={7}className={classes.peopleDetails}>
           <Grid>
              {!(typeof people.ratingAverage === undefined) && 
             <RatingStars rating={people.ratingAverage}/>
@@ -119,9 +119,7 @@ const PeoplePage = () => {
 };
 
 const useStyles = makeStyles()(() => ({
-  container: {
-    display: "flex",
-  },
+
   image: {
     height: "46rem",
   },
@@ -147,7 +145,7 @@ const useStyles = makeStyles()(() => ({
     marginTop: "1rem",
   },
   peopleDetails: {
-    width: "70%",
+    // width: "70%",
     padding: "2rem",
   },
   specifications: {

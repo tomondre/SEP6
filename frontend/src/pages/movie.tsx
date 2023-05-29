@@ -107,8 +107,8 @@ const MoviePage = () => {
 
   return (
     <Grid container>
-      <Grid className={classes.topContainer}>
-        <Grid>
+      <Grid item container>
+      <Grid item xs={12} sm={12} md={12} lg={5}>
           <img
             src={`${baseUrl}${movie.posterUrl}`}
             className={classes.poster}
@@ -116,7 +116,7 @@ const MoviePage = () => {
           />
         </Grid>
 
-        <Grid className={classes.movieDetails}>
+        <Grid item lg={7} className={classes.movieDetails}>
           <Grid className={classes.ratingGroup}>
             {!(typeof movie.rating === undefined) && (
               <RatingStars rating={movie.rating} />
@@ -244,7 +244,7 @@ const MoviePage = () => {
         )}
 
 
-      <Grid item lg={12}>
+      <Grid item lg={12} className={classes.reviewsContainer}>
         {!!movieReviews.length && <Reviews fromProfile={false} reviews={movieReviews} />}
       </Grid>
     </Grid>
@@ -252,10 +252,6 @@ const MoviePage = () => {
 };
 
 const useStyles = makeStyles()(() => ({
-  topContainer: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
   poster: {
     height: "46rem",
   },
@@ -338,6 +334,9 @@ const useStyles = makeStyles()(() => ({
   commentArea: {
     width: "35rem",
   },
+  reviewsContainer: {
+    overflow: 'hidden',
+  }
 }));
 
 export default MoviePage;
