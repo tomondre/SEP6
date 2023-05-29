@@ -58,7 +58,7 @@ const PeoplePage = () => {
 
         <Grid className={classes.peopleDetails}>
           <Grid className={classes.ratingGroup}>
-             {people.ratingAverage && 
+             {!(typeof people.ratingAverage === undefined) && 
             <RatingStars rating={people.ratingAverage}/>
              }
           </Grid>
