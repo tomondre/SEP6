@@ -5,7 +5,6 @@ import { memoizedRefreshToken } from "../services/refreshToken";
 const userTokens = getUserTokens();
 
 export const BASE_URL = "https://sep6-api.tomondre.com";
-// export const BASE_URL = "http://localhost:8081";
 
 const instance = axios.create({
   baseURL: BASE_URL,
