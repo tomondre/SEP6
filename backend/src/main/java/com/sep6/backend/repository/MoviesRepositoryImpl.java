@@ -1,5 +1,6 @@
 package com.sep6.backend.repository;
 
+import com.sep6.backend.jpa.PeopleJpaRepository;
 import com.sep6.backend.projections.MovieProjection;
 import com.sep6.backend.jpa.MoviesJpaRepository;
 import com.sep6.backend.models.Genre;
@@ -19,7 +20,7 @@ import java.util.Optional;
 @Slf4j
 public class MoviesRepositoryImpl implements MoviesRepository{
     private MoviesJpaRepository jpaRepository;
-    private ActorsRepository actorsRepository;
+    private PeopleJpaRepository peopleJpaRepository;
     private GenresRepository genresRepository;
 
     @Override
@@ -28,9 +29,9 @@ public class MoviesRepositoryImpl implements MoviesRepository{
 
         List<Person> people = movie.getPeople();
         for (Person person : people) {
-            var byId = actorsRepository.findById(person.getId());
+            var byId = peopleJpaRepository.findById(person.getId());
             if (byId.isEmpty()) {
-                actorsRepository.save(person);
+                peopleJpaRepository.save(person);
             }
         }
 
