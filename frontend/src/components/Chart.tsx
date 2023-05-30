@@ -117,7 +117,7 @@ const Chart = () => {
                 outerRadius={300}
                 fill="#8884d8">
                 {
-                  languages.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                  languages.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]}/>)
                 }
                 <LabelList
                     dataKey="x"
