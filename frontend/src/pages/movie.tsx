@@ -19,7 +19,6 @@ import RatingStars from "../components/Rating";
 
 const MoviePage = () => {
   const { classes } = useStyles();
-  const navigate = useNavigate();
   const [movie, setMovie] = useState<IMovie>();
   const id = useIdFromUrl();
   const userId = getUserId();
@@ -277,7 +276,6 @@ const useStyles = makeStyles()(() => ({
     alignContent: "center",
   },
   movieTitle: {
-    width: "100%",
     textAlign: "start",
   },
   movieDetails: {
@@ -325,7 +323,7 @@ const useStyles = makeStyles()(() => ({
   moviecontainer: {
     display: "flex",
     alignItems: "center",
-    marginTop: "3rem",
+    marginTop: "1rem",
   },
   dialogTitle: {
     color: Colors.black75,

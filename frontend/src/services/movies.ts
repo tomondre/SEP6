@@ -52,23 +52,6 @@ const addReview = (movieId: number, rating: number, comment: string, createdOn: 
         });
 };
 
-const getReviewsByMovieId = async (id: number): Promise<IReview[]> => {
-    try {
-        const response = await axios.get(`${API_URL}/${id}/reviews`, {
-
-            headers: {
-                ...authHeader()
-            }
-
-        });
-        const reviews = response.data;
-        return reviews as IReview[];
-    } catch (error) {
-        console.error('Error fetching reviews:', error);
-        throw error;
-    }
-};
-
 const deleteReview = async (movieId: number, reviewId: number) => {
     try {
         await axios.delete(`${API_URL}/${movieId}/reviews/${reviewId}`, {
@@ -85,7 +68,6 @@ const MovieService = {
     getMovies,
     getMovieById,
     addReview,
-    getReviewsByMovieId,
     deleteReview
 };
 
