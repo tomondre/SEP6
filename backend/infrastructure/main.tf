@@ -16,7 +16,7 @@ module "deployments_sep6_backend" {
   port              = 8000
   host_name         = "sep6-api"
   image_tag         = var.image_tag
-  cpu_request = "500m"
+  cpu_request = "250m"
   cpu_limit = "1000m"
   env               = {
     DB_HOST         = var.db_host
