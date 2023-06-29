@@ -22,9 +22,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v3
-        context: backend
         with:
-          context: .
+          context: ./backend
           platforms: linux/amd64,linux/arm64
           push: true
           tags: tomondre/sep6-backend:${{ github.run_number }}
