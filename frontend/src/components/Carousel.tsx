@@ -12,19 +12,19 @@ interface CarouselComponentProps {
 const CarouselComponent: React.FC<CarouselComponentProps> = ({ movies }) => {
 const { classes } = useStyles();
 
- return <Carousel
+return <Carousel
           indicatorContainerProps={{
             style: {
               display: "none",
             },
-          }} 
+          }}
         >
               {movies.map((movie) => (
                   <div key={movie.id}>
                     <RouterLink to={`/movies?id=${movie.id}`}>
                       <img src={`https://image.tmdb.org/t/p/w500${movie.posterUrl}`} alt={movie.title} className={classes.image} />
                     </RouterLink>
-                  
+
                   </div>
                 ))}
             </Carousel>
