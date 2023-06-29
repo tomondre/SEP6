@@ -8,7 +8,6 @@ import Rating from "./Rating";
 import { getUserId } from "../services/user-service";
 import MovieService from "../services/movies";
 
-
 interface Props {
   review: IReview;
   fromProfile: boolean;
@@ -43,7 +42,7 @@ const Review: FunctionComponent<Props> = ({ review, fromProfile }) => {
         <Rating rating={rating} />
       </div>
       <div className={classes.delete}>
-      <div 
+      <div
         className={`${classes.description} ${showMore ? classes.seeMoreDescription : ''}`}
       >
         <Typography variant="h5r">
@@ -63,7 +62,7 @@ const Review: FunctionComponent<Props> = ({ review, fromProfile }) => {
           </Button>
         )
       }
-       
+
     </div>
   );
 };
