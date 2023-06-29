@@ -42,13 +42,15 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       KUBE_CONFIG_PATH: ~/kubeconfig.yaml
       TF_TOKEN_app_terraform_io: ${{ secrets.TERRAFORM_TOKEN }}
-    working-directory: backend/infrastructure
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Terraform Initialize
+        working-directory: backend/infrastructure
         run: terraform init
       - name: Set-up kube config
+        working-directory: backend/infrastructure
         run: echo "${{ secrets.KUBE_CONFIG }}" > ~/kubeconfig.yaml
       - name: Terraform apply
+        working-directory: backend/infrastructure
         run: terraform apply -auto-approve -var "image_tag=${{ github.run_number }}"
