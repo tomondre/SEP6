@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://${DB_HOST}
     password: ${DB_PASSWORD}
   jpa:
+    hibernate:
+      ddl-auto: create
     show-sql: false
     properties:
       hibernate:
