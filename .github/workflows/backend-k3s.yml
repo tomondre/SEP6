@@ -3,7 +3,7 @@ run-name: CI & CD worfklows for the Kubernetes deployment 🚀
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
