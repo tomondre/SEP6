@@ -1,5 +1,5 @@
-name: SEP6 Backend
-run-name: CI & CD worfklows for the Kubernetes deployment 🚀
+name: SEP6 Frontend
+run-name: CI & CD workdlows for the Kubernetes deployment 🚀
 on:
   push:
     branches:
