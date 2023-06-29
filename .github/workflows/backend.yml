@@ -29,11 +29,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: tomondre/sep6-backend:${{ github.run_number }}
-          build-args: |
-            DB_HOST=${{ secrets.DB_HOST }}
-            DB_USERNAME=${{ secrets.DB_USERNAME }}
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+
   CD:
     runs-on: self-hosted
     needs: CI
@@ -54,4 +50,4 @@ jobs:
         run: echo "${{ secrets.KUBE_CONFIG }}" > ~/kubeconfig.yaml
       - name: Terraform apply
         working-directory: backend/infrastructure
-        run: terraform apply -auto-approve -var "image_tag=${{ github.run_number }}"
+        run: terraform apply -auto-approve -var "image_tag=${{ github.run_number }}" -var "DB_HOST=${{ secrets.DB_HOST }}" -var "DB_USERNAME=${{ secrets.DB_USERNAME }}" -var "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" -var "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"

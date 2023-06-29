@@ -16,6 +16,16 @@ module "deployments_sep6_backend" {
   port              = 8000
   host_name         = "sep6-api"
   image_tag         = var.image_tag
+  env               = {
+    DB_HOST         = var.db_host
+    DB_USERNAME     = var.db_username
+    DB_PASSWORD     = var.db_password
+    JWT_SECRET_KEY  = var.jwt_secret_key
+  }
 }
 
 variable "image_tag" {}
+variable "db_host" {}
+variable "db_username" {}
+variable "db_password" {}
+variable "jwt_secret_key" {}
