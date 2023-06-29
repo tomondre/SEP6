@@ -1,45 +1,45 @@
-name: CI/CD for Frontend
-
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'frontend/**'
-  workflow_dispatch:
-
-env:
-  ECR_REPOSITORY: sep6-frontend
-  IMAGE_TAG: ${{ github.run_number }}
-
-jobs:
-  CI-CD:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-central-1
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        working-directory: frontend
-        run: |
-          FULL_REPO_PATH=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}
-          docker build -t $FULL_REPO_PATH .
-          docker push $FULL_REPO_PATH
-          
-          REPO_PATH_WITH_RUN_NUMBER=$FULL_REPO_PATH:${{ env.IMAGE_TAG }}
-          docker tag $FULL_REPO_PATH $REPO_PATH_WITH_RUN_NUMBER
-          docker push $REPO_PATH_WITH_RUN_NUMBER
-
-      - name: Redeploy elastic beanstalk to use the image with the latest tag
-        run: aws elasticbeanstalk update-environment --application-name "sep6-server" --environment-name "sep6-server" --version-label=1
-
+#name: CI/CD for Frontend
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - 'frontend/**'
+#  workflow_dispatch:
+#
+#env:
+#  ECR_REPOSITORY: sep6-frontend
+#  IMAGE_TAG: ${{ github.run_number }}
+#
+#jobs:
+#  CI-CD:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: eu-central-1
+#
+#      - name: Login to Amazon ECR
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v1
+#
+#      - name: Build, tag, and push image to Amazon ECR
+#        working-directory: frontend
+#        run: |
+#          FULL_REPO_PATH=${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}
+#          docker build -t $FULL_REPO_PATH .
+#          docker push $FULL_REPO_PATH
+#
+#          REPO_PATH_WITH_RUN_NUMBER=$FULL_REPO_PATH:${{ env.IMAGE_TAG }}
+#          docker tag $FULL_REPO_PATH $REPO_PATH_WITH_RUN_NUMBER
+#          docker push $REPO_PATH_WITH_RUN_NUMBER
+#
+#      - name: Redeploy elastic beanstalk to use the image with the latest tag
+#        run: aws elasticbeanstalk update-environment --application-name "sep6-server" --environment-name "sep6-server" --version-label=1
+#
