@@ -9,15 +9,16 @@ terraform {
 }
 
 module "deployments_sep6_backend" {
-  source            = "git::https://github.com/tomondre/raspberry-kubernetes-cluster.git//terraform-modules/reusable-modules/full-deployment"
-  health_check_path = "/actuator/health"
-  image_url         = "docker.io/tomondre/sep6-backend"
-  service_name      = "sep6-backend"
-  port              = 8000
-  host_name         = "sep6-api"
-  image_tag         = var.image_tag
-  cpu_request = "250m"
-  cpu_limit = "1000m"
+  source                              = "git::https://github.com/tomondre/raspberry-kubernetes-cluster.git//terraform-modules/reusable-modules/full-deployment"
+  health_check_path                   = "/actuator/health"
+  health_check_initial_delay_seconds  = 60
+  image_url                           = "docker.io/tomondre/sep6-backend"
+  service_name                        = "sep6-backend"
+  port                                = 8000
+  host_name                           = "sep6-api"
+  image_tag                           = var.image_tag
+  cpu_request                         = "250m"
+  cpu_limit                           = "1000m"
   env               = {
     DB_HOST         = var.db_host
     DB_USERNAME     = var.db_username
